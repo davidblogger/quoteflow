@@ -32,7 +32,7 @@ export default async function LangHome(props: PageProps<"/[lang]">) {
         <Testimonials testimonials={dict.testimonials} />
         <CtaFinal lang={lang} ctaFinal={dict.ctaFinal} />
       </main>
-      <Footer footer={dict.footer} />
+      <Footer lang={lang} footer={dict.footer} />
     </>
   );
 }

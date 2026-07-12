@@ -71,7 +71,7 @@ export default async function RequestPage({
           </div>
         </Container>
       </main>
-      <Footer footer={dict.footer} />
+      <Footer lang={lang} footer={dict.footer} />
     </>
   );
 }

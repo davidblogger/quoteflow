@@ -3,7 +3,7 @@ import { Container } from "../ui/Container";
 import { Logo } from "../ui/Logo";
 import { MobileMenu } from "./MobileMenu";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import type { Locale } from "@/app/[lang]/dictionaries";
+import type { Locale } from "@/app/[lang]/config";
 
 type NavbarProps = {
   lang: Locale;
@@ -21,11 +21,11 @@ type NavbarProps = {
 
 export function Navbar({ lang, nav, switcher }: NavbarProps) {
   const navLinks = [
-    { href: "#inicio", label: nav.home },
-    { href: "#servicios", label: nav.services },
-    { href: "#como-funciona", label: nav.howItWorks },
-    { href: "#beneficios", label: nav.benefits },
-    { href: "#contacto", label: nav.contact },
+    { href: `/${lang}#inicio`, label: nav.home },
+    { href: `/${lang}#servicios`, label: nav.services },
+    { href: `/${lang}#como-funciona`, label: nav.howItWorks },
+    { href: `/${lang}#beneficios`, label: nav.benefits },
+    { href: `/${lang}#contacto`, label: nav.contact },
   ];
 
   return (
@@ -38,7 +38,7 @@ export function Navbar({ lang, nav, switcher }: NavbarProps) {
           className="glass flex items-center justify-between gap-3 rounded-2xl px-4 py-2.5 sm:px-5"
           aria-label={nav.home}
         >
-          <Logo />
+          <Logo lang={lang} />
 
           <ul className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
@@ -56,7 +56,7 @@ export function Navbar({ lang, nav, switcher }: NavbarProps) {
           <div className="hidden items-center gap-2 lg:flex">
             <LanguageSwitcher current={lang} labels={switcher} />
             <a
-              href="#contacto"
+              href={`/${lang}#contacto`}
               className="rounded-full px-3.5 py-1.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/5 hover:text-white"
             >
               {nav.login}

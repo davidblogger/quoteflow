@@ -1,12 +1,19 @@
+import type { Locale } from "@/app/[lang]/config";
+
 type LogoProps = {
+  lang: Locale;
   className?: string;
   showWordmark?: boolean;
 };
 
-export function Logo({ className = "", showWordmark = true }: LogoProps) {
+export function Logo({
+  lang,
+  className = "",
+  showWordmark = true,
+}: LogoProps) {
   return (
     <a
-      href="#inicio"
+      href={`/${lang}`}
       className={`group inline-flex items-center gap-2.5 ${className}`}
       aria-label="QuoteFlow inicio"
     >

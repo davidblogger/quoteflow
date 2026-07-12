@@ -6,8 +6,10 @@ import {
   LinkedinIcon,
   TwitterIcon,
 } from "../icons/Icons";
+import type { Locale } from "@/app/[lang]/config";
 
 type FooterProps = {
+  lang: Locale;
   footer: {
     description: string;
     sections: Array<{
@@ -26,13 +28,13 @@ const social = [
   { label: "GitHub", href: "#", icon: GithubIcon },
 ];
 
-export function Footer({ footer }: FooterProps) {
+export function Footer({ lang, footer }: FooterProps) {
   return (
     <footer className="relative mt-10 border-t border-white/5 pt-16 pb-10 sm:pt-20">
       <Container size="wide">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_2fr]">
           <div className="flex flex-col gap-5">
-            <Logo />
+            <Logo lang={lang} />
             <p className="max-w-sm text-sm leading-relaxed text-white/55">
               {footer.description}
             </p>

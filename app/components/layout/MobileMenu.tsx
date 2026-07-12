@@ -70,7 +70,7 @@ export function MobileMenu({ lang, nav, switcher, links }: MobileMenuProps) {
             </ul>
             <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3">
               <a
-                href="#contacto"
+                href={`/${lang}#contacto`}
                 onClick={() => setOpen(false)}
                 className="rounded-xl px-4 py-3 text-center text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"
               >
