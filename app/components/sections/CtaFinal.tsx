@@ -3,6 +3,7 @@ import { Button } from "../ui/Button";
 import { ArrowRightIcon, CheckCircleIcon, SparklesIcon } from "../icons/Icons";
 
 type CtaFinalProps = {
+  lang: string;
   ctaFinal: {
     badge: string;
     title: string;
@@ -13,7 +14,7 @@ type CtaFinalProps = {
   };
 };
 
-export function CtaFinal({ ctaFinal }: CtaFinalProps) {
+export function CtaFinal({ lang, ctaFinal }: CtaFinalProps) {
   return (
     <section id="contacto" className="relative py-20 sm:py-28">
       <Container size="default">
@@ -46,7 +47,7 @@ export function CtaFinal({ ctaFinal }: CtaFinalProps) {
             </p>
 
             <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
-              <Button href="#" size="lg">
+              <Button href={`/${lang}/solicitar`} size="lg">
                 {ctaFinal.primaryCta}
                 <ArrowRightIcon className="size-4" />
               </Button>

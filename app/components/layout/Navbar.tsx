@@ -61,7 +61,7 @@ export function Navbar({ lang, nav, switcher }: NavbarProps) {
             >
               {nav.login}
             </a>
-            <Button href="#contacto" size="md">
+            <Button href={`/${lang}/solicitar`} size="md">
               {nav.cta}
             </Button>
           </div>

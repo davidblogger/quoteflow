@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://quoteflow.io";
+
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
@@ -30,6 +33,7 @@ export async function generateMetadata(
     alternates[l] = `/${l}`;
   }
   return {
+    metadataBase: new URL(SITE_URL),
     title: {
       default: dict.metadata.title,
       template: `%s · QuoteFlow`,

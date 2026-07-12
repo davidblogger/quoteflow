@@ -15,6 +15,7 @@ import {
 } from "../icons/Icons";
 
 type DashboardPreviewProps = {
+  lang: string;
   dashboard: {
     eyebrow: string;
     title: string;
@@ -71,7 +72,7 @@ const KPI_VALUES = ["12", "8", "34", "5"] as const;
 const KPI_DELTAS = ["+18%", "+4%", "+12%", "−2"] as const;
 const KPI_TONES = ["cyan", "violet", "accent", "amber"] as const;
 
-export function DashboardPreview({ dashboard: d }: DashboardPreviewProps) {
+export function DashboardPreview({ lang, dashboard: d }: DashboardPreviewProps) {
   return (
     <Section
       id="dashboard"
@@ -126,7 +127,7 @@ export function DashboardPreview({ dashboard: d }: DashboardPreviewProps) {
       </div>
 
       <div className="mt-10 flex justify-center">
-        <Button href="#contacto" size="lg">
+        <Button href={`/${lang}/solicitar`} size="lg">
           {d.cta}
           <ArrowRightIcon className="size-4" />
         </Button>

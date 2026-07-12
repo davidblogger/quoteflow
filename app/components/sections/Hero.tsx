@@ -13,6 +13,7 @@ import {
 } from "../icons/Icons";
 
 type HeroProps = {
+  lang: string;
   hero: {
     badge: string;
     titlePart1: string;
@@ -50,7 +51,7 @@ type HeroProps = {
   };
 };
 
-export function Hero({ hero }: HeroProps) {
+export function Hero({ lang, hero }: HeroProps) {
   return (
     <section
       id="inicio"
@@ -74,7 +75,7 @@ export function Hero({ hero }: HeroProps) {
           </p>
 
           <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
-            <Button href="#contacto" size="lg">
+            <Button href={`/${lang}/solicitar`} size="lg">
               {hero.primaryCta}
               <ArrowRightIcon className="size-4" />
             </Button>

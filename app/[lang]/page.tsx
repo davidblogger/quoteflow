@@ -24,13 +24,13 @@ export default async function LangHome(props: PageProps<"/[lang]">) {
         switcher={dict.languageSwitcher}
       />
       <main>
-        <Hero hero={dict.hero} />
+        <Hero lang={lang} hero={dict.hero} />
         <Benefits benefits={dict.benefits} />
         <HowItWorks howItWorks={dict.howItWorks} />
         <Services services={dict.services} />
-        <DashboardPreview dashboard={dict.dashboard} />
+        <DashboardPreview lang={lang} dashboard={dict.dashboard} />
         <Testimonials testimonials={dict.testimonials} />
-        <CtaFinal ctaFinal={dict.ctaFinal} />
+        <CtaFinal lang={lang} ctaFinal={dict.ctaFinal} />
       </main>
       <Footer footer={dict.footer} />
     </>

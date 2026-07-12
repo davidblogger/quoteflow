@@ -77,7 +77,7 @@ export function MobileMenu({ lang, nav, switcher, links }: MobileMenuProps) {
                 {nav.login}
               </a>
               <Button
-                href="#contacto"
+                href={`/${lang}/solicitar`}
                 size="lg"
                 className="w-full"
               >

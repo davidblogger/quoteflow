@@ -5,6 +5,53 @@
     "seeAll": "Ver todas",
     "seeHowItWorks": "Ver cómo funciona"
   },
+  "requestPage": {
+    "metaTitle": "Solicitar cotización",
+    "eyebrow": "Cuéntanos sobre tu proyecto",
+    "title": "Solicita tu cotización personalizada",
+    "description": "Completa el formulario y nuestro equipo te contactará en menos de 24 horas hábiles con una propuesta adaptada a tu negocio.",
+    "fields": {
+      "name": "Nombre completo",
+      "namePlaceholder": "Tu nombre completo",
+      "email": "Email de trabajo",
+      "emailPlaceholder": "tu@empresa.com",
+      "company": "Empresa",
+      "companyPlaceholder": "Nombre de tu empresa",
+      "phone": "Teléfono (opcional)",
+      "phonePlaceholder": "+34 600 000 000",
+      "service": "Tipo de servicio",
+      "servicePlaceholder": "Selecciona una opción",
+      "message": "Cuéntanos sobre tu proyecto",
+      "messagePlaceholder": "¿Qué necesitas? Comparte los detalles que nos ayuden a preparar una mejor propuesta."
+    },
+    "services": {
+      "professional": "Servicios profesionales",
+      "construction": "Construcción",
+      "maintenance": "Mantenimiento",
+      "installations": "Instalaciones",
+      "consulting": "Consultoría",
+      "other": "Otro"
+    },
+    "submit": "Enviar solicitud",
+    "submitting": "Enviando…",
+    "privacy": "Al enviar este formulario aceptas nuestra política de privacidad. Solo te contactaremos sobre tu solicitud.",
+    "success": {
+      "title": "¡Solicitud recibida!",
+      "description": "Gracias por contactarnos. Nuestro equipo revisará tu información y te responderá en menos de 24 horas hábiles.",
+      "secondary": "Volver al inicio"
+    },
+    "errors": {
+      "required": "Este campo es obligatorio",
+      "email": "Introduce un email válido",
+      "generic": "Algo salió mal. Inténtalo de nuevo."
+    }
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "No encontramos esa página",
+    "description": "La página que buscas pudo haber sido movida, renombrada o nunca existió.",
+    "homeCta": "Volver al inicio"
+  },
   "languageSwitcher": {
     "label": "Idioma",
     "en": "EN",
