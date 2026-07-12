@@ -1,0 +1,363 @@
+{
+  "common": {
+    "requestQuote": "Request quote",
+    "learnMore": "Learn more",
+    "seeAll": "View all",
+    "seeHowItWorks": "See how it works"
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "en": "EN",
+    "es": "ES"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "howItWorks": "How it works",
+    "benefits": "Benefits",
+    "contact": "Contact",
+    "login": "Sign in",
+    "cta": "Request quote"
+  },
+  "hero": {
+    "badge": "All-in-one platform for service businesses",
+    "titlePart1": "Turn customer requests into",
+    "titleAccent": "new business opportunities",
+    "titlePart2": "",
+    "subtitle": "A modern solution for service businesses that need to capture leads, organize quotes, and follow up on every opportunity from a single place.",
+    "primaryCta": "Request quote",
+    "secondaryCta": "Learn more",
+    "bullets": [
+      "No credit card required",
+      "Setup in minutes",
+      "Human support"
+    ],
+    "mockBrowserUrl": "app.quoteflow.io/dashboard",
+    "mockSummaryPrefix": "You have",
+    "mockSummaryHighlight": "12 new requests",
+    "mockNewQuoteCta": "New quote",
+    "mockKpiRequests": "Requests",
+    "mockKpiQuotes": "Quotes",
+    "mockKpiClients": "Active clients",
+    "mockActivityTitle": "Recent activity",
+    "mockActivitySubtitle": "Last 24h",
+    "mockFunnelTitle": "Funnel",
+    "mockFunnelReceived": "Received",
+    "mockFunnelInProgress": "In progress",
+    "mockFunnelSent": "Sent",
+    "mockFunnelClosed": "Closed",
+    "mockFloatingNew": "New request",
+    "mockFloatingNewSub": "Full renovation · 4 min ago",
+    "mockFloatingAccepted": "Quote accepted",
+    "mockFloatingAcceptedSub": "Client #2148 · $4,250",
+    "mockPlanTitle": "Plan",
+    "mockPlanName": "Professional",
+    "mockPlanUsage": "75% used this month",
+    "mockSidebarDashboard": "Dashboard",
+    "mockSidebarRequests": "Requests",
+    "mockSidebarQuotes": "Quotes",
+    "mockSidebarClients": "Clients"
+  },
+  "benefits": {
+    "eyebrow": "Benefits",
+    "title": "Everything your sales team needs",
+    "description": "Built for service businesses that want to respond faster, never miss an opportunity, and ditch manual processes.",
+    "items": [
+      {
+        "title": "More clients, fewer missed opportunities",
+        "description": "Capture requests from your website and organize every opportunity in a clear flow your team can handle without losing anything."
+      },
+      {
+        "title": "Faster quotes",
+        "description": "Manage requests and generate professional proposals in minutes, with templates, client data, and follow-up built in."
+      },
+      {
+        "title": "Smart follow-up",
+        "description": "Stay on top of every client and every conversation. Reminders, statuses, and notes so you never forget the next step."
+      },
+      {
+        "title": "Everything in one place",
+        "description": "Centralize all your commercial information on a single platform. Search clients, filter opportunities, and export whenever you need."
+      }
+    ]
+  },
+  "howItWorks": {
+    "eyebrow": "How it works",
+    "title": "From request to client, in four steps",
+    "description": "A simple flow that adapts to how your business already works, with zero learning curve.",
+    "steps": [
+      {
+        "title": "The customer requests information",
+        "description": "From your website, WhatsApp, or email. QuoteFlow captures the request and automatically turns it into an opportunity."
+      },
+      {
+        "title": "Your business receives the opportunity",
+        "description": "All client information is organized in a single card: contact, need, estimated budget, and source."
+      },
+      {
+        "title": "Prepare and send the quote",
+        "description": "Create clear proposals with your service catalog. Attach terms, timelines, and pricing in a professional format."
+      },
+      {
+        "title": "Follow up until you close",
+        "description": "Automatic reminders, clear statuses, and per-conversation notes. Turn every opportunity into a client."
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "Solutions by industry",
+    "title": "Solutions tailored to your business",
+    "description": "QuoteFlow adapts to how your business already captures and serves clients, no matter the industry.",
+    "items": [
+      {
+        "title": "Professional services",
+        "description": "Firms, agencies, and consultancies that need to organize their proposals and follow up with every client."
+      },
+      {
+        "title": "Construction",
+        "description": "Builders and contractors who receive requests from the web and need to respond quickly with formal quotes."
+      },
+      {
+        "title": "Maintenance",
+        "description": "Maintenance and installation companies that serve multiple clients and need traceability per request."
+      },
+      {
+        "title": "Installations",
+        "description": "Technical teams that scope needs, quote, and close jobs without losing information along the way."
+      },
+      {
+        "title": "Consulting",
+        "description": "Independent consultants who want a clear system to capture leads, present proposals, and follow up."
+      },
+      {
+        "title": "Local businesses",
+        "description": "Service businesses looking for a modern, professional way to capture clients from their own website."
+      }
+    ]
+  },
+  "dashboard": {
+    "eyebrow": "The product",
+    "title": "A dashboard designed for your sales team",
+    "description": "See the real state of your business: new requests, quotes in progress, active clients, and pending follow-ups — all in one place.",
+    "cta": "Request quote",
+    "browserTab": "QuoteFlow · Dashboard",
+    "searchPlaceholder": "Search client, request…",
+    "sidebarGroups": [
+      {
+        "items": [
+          { "label": "Dashboard", "active": true },
+          { "label": "Requests", "badge": "12" },
+          { "label": "Quotes", "badge": "8" },
+          { "label": "Clients" }
+        ]
+      },
+      {
+        "title": "Follow-up",
+        "items": [
+          { "label": "Pending", "badge": "5" },
+          { "label": "Closed" },
+          { "label": "Reports" }
+        ]
+      },
+      {
+        "title": "General",
+        "items": [
+          { "label": "Settings" }
+        ]
+      }
+    ],
+    "quickAction": {
+      "title": "Quick action",
+      "description": "Create a quote from a request in seconds."
+    },
+    "mainGreeting": "Good morning, team",
+    "mainTitle": "Opportunities overview",
+    "filterCta": "Filter",
+    "newQuoteCta": "New quote",
+    "kpis": [
+      { "label": "New requests", "note": "vs. last week" },
+      { "label": "Pending quotes", "note": "awaiting response" },
+      { "label": "Active clients", "note": "in the last 30 days" },
+      { "label": "Follow-ups", "note": "due soon" }
+    ],
+    "tableTitle": "Recent requests",
+    "viewAll": "View all →",
+    "columns": {
+      "client": "Client",
+      "service": "Service",
+      "status": "Status",
+      "amount": "Amount",
+      "ago": "Ago"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "sent": "Sent",
+      "accepted": "Accepted",
+      "review": "In review"
+    },
+    "requests": [
+      {
+        "client": "Ana Martin",
+        "company": "Lumen Studio",
+        "service": "Office renovation",
+        "statusKey": "pending",
+        "amount": "$4,250",
+        "time": "4 min ago"
+      },
+      {
+        "client": "Carlos Perez",
+        "company": "Perez & Assoc.",
+        "service": "Monthly maintenance",
+        "statusKey": "sent",
+        "amount": "$1,180",
+        "time": "1 h ago"
+      },
+      {
+        "client": "Lucy Romero",
+        "company": "North Builders",
+        "service": "Construction quote",
+        "statusKey": "accepted",
+        "amount": "$12,900",
+        "time": "3 h ago"
+      },
+      {
+        "client": "Diego Soto",
+        "company": "Delta Commercial",
+        "service": "Electrical installation",
+        "statusKey": "review",
+        "amount": "$2,640",
+        "time": "yesterday"
+      },
+      {
+        "client": "Maria Vega",
+        "company": "Vega Buildings",
+        "service": "Technical diagnostic",
+        "statusKey": "pending",
+        "amount": "$380",
+        "time": "yesterday"
+      }
+    ],
+    "activityTitle": "Activity",
+    "activityToday": "Today",
+    "activity": [
+      {
+        "who": "Carlos Perez",
+        "action": "accepted the quote",
+        "target": "Monthly maintenance",
+        "time": "12 min ago",
+        "tone": "success"
+      },
+      {
+        "who": "Ana Martin",
+        "action": "submitted a new request",
+        "target": "Office renovation",
+        "time": "38 min ago",
+        "tone": "cyan"
+      },
+      {
+        "who": "Lucy Romero",
+        "action": "reviewed the proposal",
+        "target": "Construction quote",
+        "time": "1 h ago",
+        "tone": "violet"
+      },
+      {
+        "who": "System",
+        "action": "follow-up reminder",
+        "target": "Client #2148",
+        "time": "2 h ago",
+        "tone": "amber"
+      },
+      {
+        "who": "Diego Soto",
+        "action": "requested information",
+        "target": "Electrical installation",
+        "time": "3 h ago",
+        "tone": "accent"
+      }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "title": "Teams already working better",
+    "description": "Sales teams across industries use QuoteFlow to respond faster and close more opportunities without losing information along the way.",
+    "items": [
+      {
+        "quote": "Now we can organize every request and respond to clients faster. The team stopped losing opportunities in email threads.",
+        "author": "Maria Gonzalez",
+        "role": "Sales Director",
+        "company": "Atlas Services",
+        "initials": "MG"
+      },
+      {
+        "quote": "We went from tracking follow-ups in a spreadsheet to having everything centralized. Within a week we could see which opportunities were about to close.",
+        "author": "Robert Silva",
+        "role": "Founder",
+        "company": "North Studio",
+        "initials": "RS"
+      },
+      {
+        "quote": "The quote-to-follow-up flow is much clearer for the team. Clients notice we respond faster and with more professional proposals.",
+        "author": "Patricia Lara",
+        "role": "Operations Manager",
+        "company": "Pro Maintenance",
+        "initials": "PL"
+      }
+    ]
+  },
+  "ctaFinal": {
+    "badge": "Start whenever you want",
+    "title": "Ready to organize your business opportunities?",
+    "description": "Request a quote and see how QuoteFlow can help your team capture more clients and respond faster.",
+    "primaryCta": "Request quote",
+    "secondaryCta": "See how it works",
+    "bullets": [
+      "No credit card required",
+      "Guided setup in minutes",
+      "Human support included"
+    ]
+  },
+  "footer": {
+    "description": "QuoteFlow helps service businesses capture requests, organize quotes, and follow up on every opportunity from a single place.",
+    "sections": [
+      {
+        "title": "Product",
+        "links": [
+          { "label": "How it works" },
+          { "label": "Benefits" },
+          { "label": "Dashboard" },
+          { "label": "Pricing" }
+        ]
+      },
+      {
+        "title": "Solutions",
+        "links": [
+          { "label": "Professional services" },
+          { "label": "Construction" },
+          { "label": "Maintenance" },
+          { "label": "Consulting" }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          { "label": "Contact" },
+          { "label": "About" },
+          { "label": "Blog" },
+          { "label": "Support" }
+        ]
+      }
+    ],
+    "legal": {
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "cookies": "Cookies"
+    },
+    "copyright": "All rights reserved."
+  },
+  "metadata": {
+    "title": "QuoteFlow — Smart quotes for service businesses",
+    "description": "QuoteFlow turns your customer requests into organized opportunities. Capture quotes, manage clients, and follow up from a single place.",
+    "ogLocale": "en_US"
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "common": {
+    "requestQuote": "Solicitar cotización",
+    "learnMore": "Conocer más",
+    "seeAll": "Ver todas",
+    "seeHowItWorks": "Ver cómo funciona"
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "en": "EN",
+    "es": "ES"
+  },
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "howItWorks": "Cómo funciona",
+    "benefits": "Beneficios",
+    "contact": "Contacto",
+    "login": "Iniciar sesión",
+    "cta": "Solicitar cotización"
+  },
+  "hero": {
+    "badge": "Plataforma todo-en-uno para empresas de servicios",
+    "titlePart1": "Convierte solicitudes de clientes en",
+    "titleAccent": "nuevas oportunidades",
+    "titlePart2": "de negocio",
+    "subtitle": "Una solución moderna para empresas de servicios que necesitan captar clientes, organizar cotizaciones y hacer seguimiento de cada oportunidad desde un solo lugar.",
+    "primaryCta": "Solicitar cotización",
+    "secondaryCta": "Conocer más",
+    "bullets": [
+      "Sin tarjeta de crédito",
+      "Configuración en minutos",
+      "Soporte humano"
+    ],
+    "mockBrowserUrl": "app.quoteflow.io/dashboard",
+    "mockSummaryPrefix": "Tienes",
+    "mockSummaryHighlight": "12 nuevas solicitudes",
+    "mockNewQuoteCta": "Nueva cotización",
+    "mockKpiRequests": "Solicitudes",
+    "mockKpiQuotes": "Cotizaciones",
+    "mockKpiClients": "Clientes activos",
+    "mockActivityTitle": "Actividad reciente",
+    "mockActivitySubtitle": "Últimas 24h",
+    "mockFunnelTitle": "Embudo",
+    "mockFunnelReceived": "Recibidas",
+    "mockFunnelInProgress": "En curso",
+    "mockFunnelSent": "Enviadas",
+    "mockFunnelClosed": "Cerradas",
+    "mockFloatingNew": "Nueva solicitud",
+    "mockFloatingNewSub": "Reforma integral · hace 4 min",
+    "mockFloatingAccepted": "Cotización aceptada",
+    "mockFloatingAcceptedSub": "Cliente #2148 · $4.250",
+    "mockPlanTitle": "Plan",
+    "mockPlanName": "Profesional",
+    "mockPlanUsage": "75% usado este mes",
+    "mockSidebarDashboard": "Dashboard",
+    "mockSidebarRequests": "Solicitudes",
+    "mockSidebarQuotes": "Cotizaciones",
+    "mockSidebarClients": "Clientes"
+  },
+  "benefits": {
+    "eyebrow": "Beneficios",
+    "title": "Todo lo que tu equipo comercial necesita",
+    "description": "Diseñado para empresas de servicios que quieren responder más rápido, sin perder oportunidades y sin procesos manuales.",
+    "items": [
+      {
+        "title": "Más clientes, menos oportunidades perdidas",
+        "description": "Captura solicitudes desde tu sitio web y organiza cada oportunidad en un flujo claro que tu equipo puede atender sin perder nada."
+      },
+      {
+        "title": "Cotizaciones más rápidas",
+        "description": "Gestiona solicitudes y genera propuestas profesionales en minutos, con plantillas, datos del cliente y seguimiento integrado."
+      },
+      {
+        "title": "Seguimiento inteligente",
+        "description": "Mantén control sobre cada cliente y cada conversación. Recordatorios, estados y notas para nunca olvidar un próximo paso."
+      },
+      {
+        "title": "Todo organizado",
+        "description": "Centraliza información comercial en una sola plataforma. Busca clientes, filtra oportunidades y exporta cuando lo necesites."
+      }
+    ]
+  },
+  "howItWorks": {
+    "eyebrow": "Cómo funciona",
+    "title": "De la solicitud al cliente, en cuatro pasos",
+    "description": "Un flujo simple que se adapta a la forma en que tu empresa ya trabaja, sin curvas de aprendizaje.",
+    "steps": [
+      {
+        "title": "El cliente solicita información",
+        "description": "Desde tu web, WhatsApp o email. QuoteFlow captura la solicitud y la convierte automáticamente en una oportunidad."
+      },
+      {
+        "title": "Tu empresa recibe la oportunidad",
+        "description": "Toda la información del cliente queda organizada en una tarjeta: contacto, necesidad, presupuesto estimado y origen."
+      },
+      {
+        "title": "Preparas y envías la cotización",
+        "description": "Crea propuestas claras con tu catálogo de servicios. Adjunta condiciones, plazos y precios de forma profesional."
+      },
+      {
+        "title": "Haces seguimiento hasta cerrar",
+        "description": "Recordatorios automáticos, estados claros y notas por conversación. Convierte cada oportunidad en cliente."
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "Soluciones por industria",
+    "title": "Soluciones adaptadas a tu negocio",
+    "description": "QuoteFlow se adapta a la forma en que tu empresa ya capta y atiende clientes, sin importar la industria.",
+    "items": [
+      {
+        "title": "Servicios profesionales",
+        "description": "Despachos, agencias y consultorías que necesitan ordenar sus propuestas y dar seguimiento a cada cliente."
+      },
+      {
+        "title": "Construcción",
+        "description": "Constructoras y contratistas que reciben solicitudes desde la web y necesitan responder rápido con cotizaciones formales."
+      },
+      {
+        "title": "Mantenimiento",
+        "description": "Empresas de mantenimiento e instalaciones que atienden múltiples clientes y necesitan trazabilidad por solicitud."
+      },
+      {
+        "title": "Instalaciones",
+        "description": "Equipos técnicos que relevan necesidades, presupuestan y cierran trabajos sin perder información en el camino."
+      },
+      {
+        "title": "Consultoría",
+        "description": "Consultores independientes que quieren un sistema claro para captar leads, presentar propuestas y dar seguimiento."
+      },
+      {
+        "title": "Empresas locales",
+        "description": "Negocios de servicios que buscan una forma moderna y profesional de captar clientes desde su propio sitio web."
+      }
+    ]
+  },
+  "dashboard": {
+    "eyebrow": "El producto",
+    "title": "Un dashboard diseñado para tu equipo comercial",
+    "description": "Visualiza el estado real de tu negocio: nuevas solicitudes, cotizaciones en curso, clientes activos y seguimientos pendientes, todo en un solo lugar.",
+    "cta": "Solicitar cotización",
+    "browserTab": "QuoteFlow · Dashboard",
+    "searchPlaceholder": "Buscar cliente, solicitud…",
+    "sidebarGroups": [
+      {
+        "items": [
+          { "label": "Dashboard", "active": true },
+          { "label": "Solicitudes", "badge": "12" },
+          { "label": "Cotizaciones", "badge": "8" },
+          { "label": "Clientes" }
+        ]
+      },
+      {
+        "title": "Seguimiento",
+        "items": [
+          { "label": "Pendientes", "badge": "5" },
+          { "label": "Cerradas" },
+          { "label": "Reportes" }
+        ]
+      },
+      {
+        "title": "General",
+        "items": [
+          { "label": "Ajustes" }
+        ]
+      }
+    ],
+    "quickAction": {
+      "title": "Acción rápida",
+      "description": "Crea una cotización desde una solicitud en segundos."
+    },
+    "mainGreeting": "Buen día, equipo",
+    "mainTitle": "Resumen de oportunidades",
+    "filterCta": "Filtrar",
+    "newQuoteCta": "Nueva cotización",
+    "kpis": [
+      { "label": "Nuevas solicitudes", "note": "vs. semana anterior" },
+      { "label": "Cotizaciones pendientes", "note": "esperando respuesta" },
+      { "label": "Clientes activos", "note": "en los últimos 30 días" },
+      { "label": "Seguimientos", "note": "próximas a vencer" }
+    ],
+    "tableTitle": "Solicitudes recientes",
+    "viewAll": "Ver todas →",
+    "columns": {
+      "client": "Cliente",
+      "service": "Servicio",
+      "status": "Estado",
+      "amount": "Monto",
+      "ago": "Hace"
+    },
+    "statuses": {
+      "pending": "Pendiente",
+      "sent": "Enviada",
+      "accepted": "Aceptada",
+      "review": "En revisión"
+    },
+    "requests": [
+      {
+        "client": "Ana Martínez",
+        "company": "Estudio Lumen",
+        "service": "Reforma oficina",
+        "statusKey": "pending",
+        "amount": "$ 4.250",
+        "time": "hace 4 min"
+      },
+      {
+        "client": "Carlos Pérez",
+        "company": "Pérez & Asoc.",
+        "service": "Mantenimiento mensual",
+        "statusKey": "sent",
+        "amount": "$ 1.180",
+        "time": "hace 1 h"
+      },
+      {
+        "client": "Lucía Romero",
+        "company": "Constructora Norte",
+        "service": "Cotización obra",
+        "statusKey": "accepted",
+        "amount": "$ 12.900",
+        "time": "hace 3 h"
+      },
+      {
+        "client": "Diego Soto",
+        "company": "Comercial Delta",
+        "service": "Instalación eléctrica",
+        "statusKey": "review",
+        "amount": "$ 2.640",
+        "time": "ayer"
+      },
+      {
+        "client": "María Vega",
+        "company": "Edificaciones Vega",
+        "service": "Diagnóstico técnico",
+        "statusKey": "pending",
+        "amount": "$ 380",
+        "time": "ayer"
+      }
+    ],
+    "activityTitle": "Actividad",
+    "activityToday": "Hoy",
+    "activity": [
+      {
+        "who": "Carlos Pérez",
+        "action": "aceptó la cotización",
+        "target": "Mantenimiento mensual",
+        "time": "hace 12 min",
+        "tone": "success"
+      },
+      {
+        "who": "Ana Martínez",
+        "action": "envió una nueva solicitud",
+        "target": "Reforma oficina",
+        "time": "hace 38 min",
+        "tone": "cyan"
+      },
+      {
+        "who": "Lucía Romero",
+        "action": "revisó la propuesta",
+        "target": "Cotización obra",
+        "time": "hace 1 h",
+        "tone": "violet"
+      },
+      {
+        "who": "Sistema",
+        "action": "recordatorio de seguimiento",
+        "target": "Cliente #2148",
+        "time": "hace 2 h",
+        "tone": "amber"
+      },
+      {
+        "who": "Diego Soto",
+        "action": "solicitó información",
+        "target": "Instalación eléctrica",
+        "time": "hace 3 h",
+        "tone": "accent"
+      }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "Testimonios",
+    "title": "Equipos que ya trabajan mejor",
+    "description": "Equipos comerciales de distintos rubros usan QuoteFlow para responder más rápido y cerrar más oportunidades sin perder información en el camino.",
+    "items": [
+      {
+        "quote": "Ahora podemos organizar todas nuestras solicitudes y responder más rápido a nuestros clientes. El equipo dejó de perder oportunidades en el correo.",
+        "author": "María González",
+        "role": "Directora comercial",
+        "company": "Servicios Atlas",
+        "initials": "MG"
+      },
+      {
+        "quote": "Pasamos de hacer seguimiento en una hoja de cálculo a tener todo centralizado. En una semana ya veíamos qué oportunidades estaban por cerrarse.",
+        "author": "Roberto Silva",
+        "role": "Fundador",
+        "company": "Estudio Norte",
+        "initials": "RS"
+      },
+      {
+        "quote": "El flujo de cotización a seguimiento es mucho más claro para el equipo. Los clientes notan que respondemos más rápido y con propuestas más profesionales.",
+        "author": "Patricia Lara",
+        "role": "Gerente de operaciones",
+        "company": "Mantenimiento Pro",
+        "initials": "PL"
+      }
+    ]
+  },
+  "ctaFinal": {
+    "badge": "Empieza cuando quieras",
+    "title": "¿Listo para organizar tus oportunidades de negocio?",
+    "description": "Solicita una cotización y descubre cómo QuoteFlow puede ayudar a tu equipo a captar más clientes y responder más rápido.",
+    "primaryCta": "Solicitar cotización",
+    "secondaryCta": "Ver cómo funciona",
+    "bullets": [
+      "Sin tarjeta de crédito",
+      "Configuración guiada en minutos",
+      "Soporte humano incluido"
+    ]
+  },
+  "footer": {
+    "description": "QuoteFlow ayuda a empresas de servicios a captar solicitudes, organizar cotizaciones y hacer seguimiento de cada oportunidad desde un solo lugar.",
+    "sections": [
+      {
+        "title": "Producto",
+        "links": [
+          { "label": "Cómo funciona" },
+          { "label": "Beneficios" },
+          { "label": "Dashboard" },
+          { "label": "Precios" }
+        ]
+      },
+      {
+        "title": "Soluciones",
+        "links": [
+          { "label": "Servicios profesionales" },
+          { "label": "Construcción" },
+          { "label": "Mantenimiento" },
+          { "label": "Consultoría" }
+        ]
+      },
+      {
+        "title": "Empresa",
+        "links": [
+          { "label": "Contacto" },
+          { "label": "Acerca de" },
+          { "label": "Blog" },
+          { "label": "Soporte" }
+        ]
+      }
+    ],
+    "legal": {
+      "terms": "Términos",
+      "privacy": "Privacidad",
+      "cookies": "Cookies"
+    },
+    "copyright": "Todos los derechos reservados."
+  },
+  "metadata": {
+    "title": "QuoteFlow — Cotizaciones inteligentes para empresas de servicios",
+    "description": "QuoteFlow convierte las solicitudes de tus clientes en oportunidades organizadas. Captura cotizaciones, gestiona clientes y haz seguimiento desde un solo lugar.",
+    "ogLocale": "es_ES"
+  }
+}
