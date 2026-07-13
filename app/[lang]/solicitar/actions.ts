@@ -5,7 +5,7 @@ import { getSupabase } from "@/lib/supabase";
 
 export type QuoteRequestState = {
   ok: boolean;
-  message: string;
+  message: "success" | "invalid" | "noProfile" | "error";
   fieldErrors?: Partial<
     Record<"name" | "email" | "company" | "phone" | "service" | "message", string>
   >;
@@ -43,9 +43,17 @@ export async function submitQuoteRequest(
     };
   }
 
-  const profileId = await getOnlyProfileId();
-  if (!profileId) {
+  let profileId: string | null;
+  try {
+    profileId = await getOnlyProfileId();
+  } catch (e) {
+    console.error("[QuoteFlow] profile lookup failed", e);
     return { ok: false, message: "error" };
+  }
+
+  if (!profileId) {
+    console.warn("[QuoteFlow] no profile in DB; request rejected");
+    return { ok: false, message: "noProfile" };
   }
 
   const supabase = getSupabase();
@@ -61,7 +69,11 @@ export async function submitQuoteRequest(
   });
 
   if (error) {
-    console.error("[QuoteFlow] insert request failed", error);
+    console.error("[QuoteFlow] insert request failed", {
+      code: error.code,
+      message: error.message,
+      hint: error.hint,
+    });
     return { ok: false, message: "error" };
   }
 

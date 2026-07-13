@@ -196,7 +196,8 @@
     "errors": {
       "required": "This field is required",
       "email": "Enter a valid email address",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "noProfile": "QuoteFlow is not configured yet. Please contact the site administrator."
     }
   },
   "notFound": {

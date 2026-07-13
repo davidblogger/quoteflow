@@ -38,13 +38,13 @@ type RequestFormProps = {
       description: string;
       secondary: string;
     };
-    errors: { required: string; email: string; generic: string };
+    errors: { required: string; email: string; generic: string; noProfile: string };
   };
   locale: string;
   homeHref: string;
 };
 
-const initialState: QuoteRequestState = { ok: false, message: "" };
+const initialState: QuoteRequestState = { ok: false, message: "invalid" };
 
 export function RequestForm({ copy, locale, homeHref }: RequestFormProps) {
   const [state, formAction] = useActionState(submitQuoteRequest, initialState);
@@ -128,13 +128,23 @@ export function RequestForm({ copy, locale, homeHref }: RequestFormProps) {
         rows={5}
       />
 
-      {state.message === "invalid" && (
+      {state.message === "noProfile" && (
         <p
           role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
+          className="flex items-start gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-200"
         >
-          <AlertCircleIcon className="size-4" />
-          {copy.errors.generic}
+          <AlertCircleIcon className="mt-0.5 size-4 shrink-0" />
+          <span>{copy.errors.noProfile}</span>
+        </p>
+      )}
+
+      {state.message === "error" && (
+        <p
+          role="alert"
+          className="flex items-start gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
+        >
+          <AlertCircleIcon className="mt-0.5 size-4 shrink-0" />
+          <span>{copy.errors.generic}</span>
         </p>
       )}
 

@@ -196,7 +196,8 @@
     "errors": {
       "required": "Este campo es obligatorio",
       "email": "Introduce un email válido",
-      "generic": "Algo salió mal. Inténtalo de nuevo."
+      "generic": "Algo salió mal. Inténtalo de nuevo.",
+      "noProfile": "QuoteFlow aún no está configurado. Por favor contacta al administrador del sitio."
     }
   },
   "notFound": {
