@@ -1,5 +1,6 @@
 import "server-only";
 import { getSupabaseServer } from "@/lib/supabase/server";
+import { getSupabase } from "@/lib/supabase";
 import type { Profile } from "@/lib/supabase/types";
 
 /**
@@ -9,29 +10,37 @@ import type { Profile } from "@/lib/supabase/types";
  * deployed per-tenant in this iteration, so the public `/solicitar` form
  * attaches new requests to this single profile.
  *
+ * Implemented as an RPC call to `public.get_only_profile_id`, a SECURITY
+ * DEFINER function that bypasses RLS and returns a single UUID. This avoids
+ * exposing the `profiles` table to the anonymous client.
+ *
  * When the SaaS evolves to multi-tenant, this helper is replaced by slug
  * resolution from the URL.
  */
 export async function getOnlyProfileId(): Promise<string | null> {
-  const supabase = await getSupabaseServer();
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("id")
-    .order("created_at", { ascending: true })
-    .limit(1)
-    .maybeSingle();
+  const supabase = getSupabase();
+  const { data, error } = await supabase.rpc("get_only_profile_id");
 
-  if (error || !data) return null;
-  return data.id;
+  if (error) return null;
+  return (data as string | null) ?? null;
 }
 
-export async function getOnlyProfile(): Promise<Profile | null> {
+/**
+ * Authenticated variant: reads the full profile of the current user via the
+ * existing `profiles_select_own` RLS policy. Used by dashboard pages where a
+ * session is present.
+ */
+export async function getCurrentProfile(): Promise<Profile | null> {
   const supabase = await getSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
-    .order("created_at", { ascending: true })
-    .limit(1)
+    .eq("id", user.id)
     .maybeSingle();
 
   if (error || !data) return null;
