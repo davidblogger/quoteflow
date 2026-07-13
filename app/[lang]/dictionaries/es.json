@@ -5,6 +5,16 @@
     "seeAll": "Ver todas",
     "seeHowItWorks": "Ver cómo funciona"
   },
+  "app": {
+    "placeholder": {
+      "metaTitle": "Panel",
+      "eyebrow": "Sesión activa",
+      "title": "Estás dentro.",
+      "subtitle": "Bienvenido a QuoteFlow, {email}. Esta es una pantalla temporal mientras se construye el panel real.",
+      "signOut": "Cerrar sesión",
+      "backHome": "Volver al inicio"
+    }
+  },
   "auth": {
     "login": {
       "metaTitle": "Iniciar sesión",

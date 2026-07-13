@@ -57,7 +57,7 @@ export async function signInAction(
     };
   }
 
-  redirect(next ?? `/${lang}`);
+  redirect(next ?? `/${lang}/app`);
 }
 
 export async function signUpAction(
@@ -115,7 +115,7 @@ export async function signUpAction(
     };
   }
 
-  redirect(next ?? `/${lang}`);
+  redirect(next ?? `/${lang}/app`);
 }
 
 export async function signOutAction(lang: string = "en"): Promise<void> {

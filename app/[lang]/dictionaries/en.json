@@ -5,6 +5,16 @@
     "seeAll": "View all",
     "seeHowItWorks": "See how it works"
   },
+  "app": {
+    "placeholder": {
+      "metaTitle": "Dashboard",
+      "eyebrow": "Signed in",
+      "title": "You're in.",
+      "subtitle": "Welcome to QuoteFlow, {email}. This is a temporary landing while the real dashboard is being built.",
+      "signOut": "Sign out",
+      "backHome": "Back to home"
+    }
+  },
   "auth": {
     "login": {
       "metaTitle": "Sign in",
