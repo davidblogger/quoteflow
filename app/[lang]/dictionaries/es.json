@@ -14,6 +14,40 @@
       "signOut": "Cerrar sesión",
       "backHome": "Volver al inicio"
     },
+    "requests": {
+        "metaTitle": "Solicitudes",
+        "title": "Solicitudes",
+        "subtitle": "Cada solicitud de cotización que llega desde tu formulario público aparece aquí.",
+        "newCta": "Nueva solicitud",
+        "filters": {
+          "all": "Todas",
+          "new": "Nuevas",
+          "contacted": "Contactadas",
+          "qualified": "Cualificadas",
+          "converted": "Convertidas",
+          "closed": "Cerradas"
+        },
+        "columns": {
+          "client": "Cliente",
+          "company": "Empresa",
+          "service": "Servicio",
+          "message": "Mensaje",
+          "status": "Estado",
+          "received": "Recibida"
+        },
+        "empty": {
+          "title": "Aún no hay solicitudes",
+          "description": "Cuando alguien complete tu formulario público, la solicitud aparecerá aquí.",
+          "openFormCta": "Abrir formulario público"
+        },
+        "statusBadge": {
+          "new": "Nueva",
+          "contacted": "Contactada",
+          "qualified": "Cualificada",
+          "converted": "Convertida",
+          "closed": "Cerrada"
+        }
+      },
     "shell": {
       "brand": "QuoteFlow",
       "nav": {

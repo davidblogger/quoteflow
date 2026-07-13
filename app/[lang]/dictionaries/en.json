@@ -14,6 +14,40 @@
       "signOut": "Sign out",
       "backHome": "Back to home"
     },
+    "requests": {
+        "metaTitle": "Requests",
+        "title": "Requests",
+        "subtitle": "Every quote request submitted through your public form lands here.",
+        "newCta": "New request",
+        "filters": {
+          "all": "All",
+          "new": "New",
+          "contacted": "Contacted",
+          "qualified": "Qualified",
+          "converted": "Converted",
+          "closed": "Closed"
+        },
+        "columns": {
+          "client": "Client",
+          "company": "Company",
+          "service": "Service",
+          "message": "Message",
+          "status": "Status",
+          "received": "Received"
+        },
+        "empty": {
+          "title": "No requests yet",
+          "description": "When someone fills your public quote form, the request will appear here.",
+          "openFormCta": "Open public form"
+        },
+        "statusBadge": {
+          "new": "New",
+          "contacted": "Contacted",
+          "qualified": "Qualified",
+          "converted": "Converted",
+          "closed": "Closed"
+        }
+      },
     "shell": {
       "brand": "QuoteFlow",
       "nav": {

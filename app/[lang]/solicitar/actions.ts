@@ -1,5 +1,8 @@
 "use server";
 
+import { getOnlyProfileId } from "@/lib/queries/profile";
+import { getSupabase } from "@/lib/supabase";
+
 export type QuoteRequestState = {
   ok: boolean;
   message: string;
@@ -40,15 +43,27 @@ export async function submitQuoteRequest(
     };
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 600));
+  const profileId = await getOnlyProfileId();
+  if (!profileId) {
+    return { ok: false, message: "error" };
+  }
 
-  console.info("[QuoteFlow] New quote request", {
-    ...fields,
-    receivedAt: new Date().toISOString(),
+  const supabase = getSupabase();
+  const { error } = await supabase.from("requests").insert({
+    profile_id: profileId,
+    name: fields.name,
+    email: fields.email,
+    company: fields.company || null,
+    phone: fields.phone || null,
+    service: fields.service || null,
+    message: fields.message,
+    status: "new",
   });
 
-  return {
-    ok: true,
-    message: "success",
-  };
+  if (error) {
+    console.error("[QuoteFlow] insert request failed", error);
+    return { ok: false, message: "error" };
+  }
+
+  return { ok: true, message: "success" };
 }
