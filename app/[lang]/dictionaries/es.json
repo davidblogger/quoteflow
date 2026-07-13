@@ -14,6 +14,78 @@
       "signOut": "Cerrar sesión",
       "backHome": "Volver al inicio"
     },
+    "clients": {
+      "metaTitle": "Clientes",
+      "title": "Clientes",
+      "subtitle": "Cada cliente con el que trabajas. Agrégalos manualmente o convierte una solicitud cuando esté cualificada.",
+      "newCta": "Nuevo cliente",
+      "columns": {
+        "name": "Nombre",
+        "company": "Empresa",
+        "email": "Email",
+        "phone": "Teléfono",
+        "createdAt": "Agregado"
+      },
+      "empty": {
+        "title": "Aún no hay clientes",
+        "description": "Agrega tu primer cliente manualmente. Pronto también podrás convertir una solicitud cualificada en cliente con un click.",
+        "newCta": "Agregar primer cliente"
+      },
+      "form": {
+        "newTitle": "Nuevo cliente",
+        "editTitle": "Editar cliente",
+        "fields": {
+          "name": "Nombre completo",
+          "namePlaceholder": "Nombre del contacto",
+          "company": "Empresa",
+          "companyPlaceholder": "Nombre de la empresa (opcional)",
+          "email": "Email",
+          "emailPlaceholder": "nombre@empresa.com",
+          "phone": "Teléfono",
+          "phonePlaceholder": "+34 600 000 000",
+          "address": "Dirección",
+          "addressPlaceholder": "Calle, ciudad, país",
+          "notes": "Notas internas",
+          "notesPlaceholder": "Lo que tu equipo deba recordar sobre este cliente…"
+        },
+        "submitNew": "Crear cliente",
+        "submitEdit": "Guardar cambios",
+        "submitting": "Guardando…",
+        "cancel": "Cancelar",
+        "successCreate": "Cliente creado.",
+        "successUpdate": "Cliente actualizado.",
+        "errors": {
+          "required": "Este campo es obligatorio",
+          "email": "Introduce un email válido",
+          "generic": "Algo salió mal. Inténtalo de nuevo."
+        }
+      },
+      "detail": {
+        "backCta": "Volver a clientes",
+        "deleteCta": "Eliminar cliente",
+        "deleteConfirm": "¿Eliminar este cliente? Esta acción no se puede deshacer.",
+        "sections": {
+          "contact": "Contacto",
+          "notes": "Notas internas",
+          "meta": "Información"
+        },
+        "fields": {
+          "company": "Empresa",
+          "email": "Email",
+          "phone": "Teléfono",
+          "address": "Dirección",
+          "createdAt": "Agregado",
+          "updatedAt": "Última actualización",
+          "id": "ID"
+        },
+        "empty": "No proporcionado",
+        "notFound": {
+          "title": "Cliente no encontrado",
+          "description": "Este cliente no existe o no tienes acceso a él.",
+          "backCta": "Volver a clientes"
+        }
+      }
+    },
     "requests": {
         "metaTitle": "Solicitudes",
         "title": "Solicitudes",
@@ -46,6 +118,41 @@
           "qualified": "Cualificada",
           "converted": "Convertida",
           "closed": "Cerrada"
+        },
+        "detail": {
+          "metaTitle": "Detalle de solicitud",
+          "backCta": "Volver a solicitudes",
+          "viewAction": "Ver",
+          "sections": {
+            "contact": "Contacto",
+            "message": "Mensaje",
+            "status": "Estado",
+            "meta": "Información"
+          },
+          "fields": {
+            "name": "Nombre",
+            "email": "Email",
+            "company": "Empresa",
+            "phone": "Teléfono",
+            "service": "Servicio",
+            "message": "Mensaje",
+            "createdAt": "Recibida",
+            "updatedAt": "Última actualización",
+            "id": "ID"
+          },
+          "empty": "No proporcionado",
+          "statusChanger": {
+            "label": "Cambiar estado",
+            "save": "Guardar estado",
+            "saving": "Guardando…",
+            "success": "Estado actualizado.",
+            "error": "No se pudo actualizar el estado. Inténtalo de nuevo."
+          },
+          "notFound": {
+            "title": "Solicitud no encontrada",
+            "description": "Esta solicitud no existe o no tienes acceso a ella.",
+            "backCta": "Volver a solicitudes"
+          }
         }
       },
     "shell": {

@@ -14,6 +14,78 @@
       "signOut": "Sign out",
       "backHome": "Back to home"
     },
+    "clients": {
+      "metaTitle": "Clients",
+      "title": "Clients",
+      "subtitle": "Every customer you work with. Add them manually or convert a request once it's qualified.",
+      "newCta": "New client",
+      "columns": {
+        "name": "Name",
+        "company": "Company",
+        "email": "Email",
+        "phone": "Phone",
+        "createdAt": "Added"
+      },
+      "empty": {
+        "title": "No clients yet",
+        "description": "Add your first customer manually. Soon you'll also be able to convert a qualified request into a client with one click.",
+        "newCta": "Add your first client"
+      },
+      "form": {
+        "newTitle": "New client",
+        "editTitle": "Edit client",
+        "fields": {
+          "name": "Full name",
+          "namePlaceholder": "Contact name",
+          "company": "Company",
+          "companyPlaceholder": "Company name (optional)",
+          "email": "Email",
+          "emailPlaceholder": "name@company.com",
+          "phone": "Phone",
+          "phonePlaceholder": "+1 555 000 0000",
+          "address": "Address",
+          "addressPlaceholder": "Street, city, country",
+          "notes": "Internal notes",
+          "notesPlaceholder": "Anything your team should remember about this client…"
+        },
+        "submitNew": "Create client",
+        "submitEdit": "Save changes",
+        "submitting": "Saving…",
+        "cancel": "Cancel",
+        "successCreate": "Client created.",
+        "successUpdate": "Client updated.",
+        "errors": {
+          "required": "This field is required",
+          "email": "Enter a valid email address",
+          "generic": "Something went wrong. Please try again."
+        }
+      },
+      "detail": {
+        "backCta": "Back to clients",
+        "deleteCta": "Delete client",
+        "deleteConfirm": "Delete this client? This cannot be undone.",
+        "sections": {
+          "contact": "Contact",
+          "notes": "Internal notes",
+          "meta": "Meta"
+        },
+        "fields": {
+          "company": "Company",
+          "email": "Email",
+          "phone": "Phone",
+          "address": "Address",
+          "createdAt": "Added",
+          "updatedAt": "Last update",
+          "id": "ID"
+        },
+        "empty": "Not provided",
+        "notFound": {
+          "title": "Client not found",
+          "description": "This client does not exist or you don't have access to it.",
+          "backCta": "Back to clients"
+        }
+      }
+    },
     "requests": {
         "metaTitle": "Requests",
         "title": "Requests",
@@ -46,6 +118,41 @@
           "qualified": "Qualified",
           "converted": "Converted",
           "closed": "Closed"
+        },
+        "detail": {
+          "metaTitle": "Request detail",
+          "backCta": "Back to requests",
+          "viewAction": "View",
+          "sections": {
+            "contact": "Contact",
+            "message": "Message",
+            "status": "Status",
+            "meta": "Meta"
+          },
+          "fields": {
+            "name": "Name",
+            "email": "Email",
+            "company": "Company",
+            "phone": "Phone",
+            "service": "Service",
+            "message": "Message",
+            "createdAt": "Received",
+            "updatedAt": "Last update",
+            "id": "ID"
+          },
+          "empty": "Not provided",
+          "statusChanger": {
+            "label": "Change status",
+            "save": "Save status",
+            "saving": "Saving…",
+            "success": "Status updated.",
+            "error": "Could not update status. Please try again."
+          },
+          "notFound": {
+            "title": "Request not found",
+            "description": "This request does not exist or you don't have access to it.",
+            "backCta": "Back to requests"
+          }
         }
       },
     "shell": {
