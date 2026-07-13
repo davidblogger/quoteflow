@@ -5,6 +5,63 @@
     "seeAll": "Ver todas",
     "seeHowItWorks": "Ver cómo funciona"
   },
+  "auth": {
+    "login": {
+      "metaTitle": "Iniciar sesión",
+      "eyebrow": "Bienvenido de nuevo",
+      "title": "Inicia sesión en tu cuenta",
+      "subtitle": "Accede a tu panel, cotizaciones y clientes.",
+      "fields": {
+        "email": "Email",
+        "emailPlaceholder": "tu@empresa.com",
+        "password": "Contraseña",
+        "passwordPlaceholder": "Tu contraseña"
+      },
+      "submit": "Iniciar sesión",
+      "submitting": "Iniciando sesión…",
+      "noAccount": "¿No tienes cuenta?",
+      "signupCta": "Crea una",
+      "back": "Volver al inicio",
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "email": "Introduce un email válido",
+        "invalidCredentials": "Email o contraseña incorrectos.",
+        "generic": "Algo salió mal. Inténtalo de nuevo."
+      }
+    },
+    "signup": {
+      "metaTitle": "Crear cuenta",
+      "eyebrow": "Empezar",
+      "title": "Crea tu cuenta",
+      "subtitle": "Configura tu espacio de trabajo en menos de un minuto.",
+      "checkEmailTitle": "Revisa tu correo",
+      "checkEmailDescription": "Enviamos un enlace de confirmación a {email}. Haz clic en él para activar tu cuenta e iniciar sesión.",
+      "checkEmailLoginCta": "Volver a iniciar sesión",
+      "fields": {
+        "company": "Nombre de la empresa",
+        "companyPlaceholder": "Nombre de tu empresa",
+        "email": "Email",
+        "emailPlaceholder": "tu@empresa.com",
+        "password": "Contraseña",
+        "passwordPlaceholder": "Mínimo 8 caracteres",
+        "confirmPassword": "Confirma la contraseña",
+        "confirmPasswordPlaceholder": "Repite tu contraseña"
+      },
+      "submit": "Crear cuenta",
+      "submitting": "Creando cuenta…",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "loginCta": "Inicia sesión",
+      "back": "Volver al inicio",
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "email": "Introduce un email válido",
+        "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "emailTaken": "Ya existe una cuenta con este email.",
+        "generic": "Algo salió mal. Inténtalo de nuevo."
+      }
+    }
+  },
   "requestPage": {
     "metaTitle": "Solicitar cotización",
     "eyebrow": "Cuéntanos sobre tu proyecto",

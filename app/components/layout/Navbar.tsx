@@ -56,7 +56,7 @@ export function Navbar({ lang, nav, switcher }: NavbarProps) {
           <div className="hidden items-center gap-2 lg:flex">
             <LanguageSwitcher current={lang} labels={switcher} />
             <a
-              href={`/${lang}#contacto`}
+              href={`/${lang}/login`}
               className="rounded-full px-3.5 py-1.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/5 hover:text-white"
             >
               {nav.login}

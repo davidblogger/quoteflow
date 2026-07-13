@@ -5,6 +5,63 @@
     "seeAll": "View all",
     "seeHowItWorks": "See how it works"
   },
+  "auth": {
+    "login": {
+      "metaTitle": "Sign in",
+      "eyebrow": "Welcome back",
+      "title": "Sign in to your account",
+      "subtitle": "Access your dashboard, quotes, and clients.",
+      "fields": {
+        "email": "Email",
+        "emailPlaceholder": "you@company.com",
+        "password": "Password",
+        "passwordPlaceholder": "Your password"
+      },
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "noAccount": "Don't have an account?",
+      "signupCta": "Create one",
+      "back": "Back to home",
+      "errors": {
+        "required": "This field is required",
+        "email": "Enter a valid email",
+        "invalidCredentials": "Incorrect email or password.",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
+    "signup": {
+      "metaTitle": "Create account",
+      "eyebrow": "Get started",
+      "title": "Create your account",
+      "subtitle": "Set up your workspace in less than a minute.",
+      "checkEmailTitle": "Check your inbox",
+      "checkEmailDescription": "We sent a confirmation link to {email}. Click it to activate your account and sign in.",
+      "checkEmailLoginCta": "Back to sign in",
+      "fields": {
+        "company": "Company name",
+        "companyPlaceholder": "Your company name",
+        "email": "Email",
+        "emailPlaceholder": "you@company.com",
+        "password": "Password",
+        "passwordPlaceholder": "At least 8 characters",
+        "confirmPassword": "Confirm password",
+        "confirmPasswordPlaceholder": "Repeat your password"
+      },
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "haveAccount": "Already have an account?",
+      "loginCta": "Sign in",
+      "back": "Back to home",
+      "errors": {
+        "required": "This field is required",
+        "email": "Enter a valid email",
+        "passwordTooShort": "Password must be at least 8 characters",
+        "passwordMismatch": "Passwords don't match",
+        "emailTaken": "An account with this email already exists.",
+        "generic": "Something went wrong. Please try again."
+      }
+    }
+  },
   "requestPage": {
     "metaTitle": "Request a quote",
     "eyebrow": "Tell us about your project",
