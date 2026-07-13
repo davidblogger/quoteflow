@@ -13,6 +13,58 @@
       "subtitle": "Welcome to QuoteFlow, {email}. This is a temporary landing while the real dashboard is being built.",
       "signOut": "Sign out",
       "backHome": "Back to home"
+    },
+    "shell": {
+      "brand": "QuoteFlow",
+      "nav": {
+        "dashboard": "Dashboard",
+        "requests": "Requests",
+        "quotes": "Quotes",
+        "clients": "Clients",
+        "followup": "Follow-up",
+        "settings": "Settings"
+      },
+      "navGroups": {
+        "main": "Main",
+        "followup": "Follow-up",
+        "general": "General"
+      },
+      "topbar": {
+        "search": "Search client, request…",
+        "signOut": "Sign out"
+      },
+      "overview": {
+        "metaTitle": "Dashboard",
+        "greeting": "Good morning, {name}",
+        "title": "Opportunities overview",
+        "filterCta": "Filter",
+        "newQuoteCta": "New quote",
+        "kpis": [
+          { "label": "New requests", "note": "this week" },
+          { "label": "Pending quotes", "note": "awaiting response" },
+          { "label": "Active clients", "note": "last 30 days" },
+          { "label": "Follow-ups", "note": "due soon" }
+        ],
+        "tableTitle": "Recent requests",
+        "viewAll": "View all",
+        "columns": {
+          "client": "Client",
+          "service": "Service",
+          "status": "Status",
+          "amount": "Amount",
+          "ago": "Ago"
+        },
+        "statuses": {
+          "pending": "Pending",
+          "sent": "Sent",
+          "accepted": "Accepted",
+          "review": "In review"
+        },
+        "activityTitle": "Activity",
+        "activityToday": "Today",
+        "emptyKpis": "Connect your first client to start seeing metrics.",
+        "emptyRequests": "No recent requests yet."
+      }
     }
   },
   "auth": {

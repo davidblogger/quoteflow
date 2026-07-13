@@ -13,6 +13,58 @@
       "subtitle": "Bienvenido a QuoteFlow, {email}. Esta es una pantalla temporal mientras se construye el panel real.",
       "signOut": "Cerrar sesión",
       "backHome": "Volver al inicio"
+    },
+    "shell": {
+      "brand": "QuoteFlow",
+      "nav": {
+        "dashboard": "Panel",
+        "requests": "Solicitudes",
+        "quotes": "Cotizaciones",
+        "clients": "Clientes",
+        "followup": "Seguimiento",
+        "settings": "Ajustes"
+      },
+      "navGroups": {
+        "main": "Principal",
+        "followup": "Seguimiento",
+        "general": "General"
+      },
+      "topbar": {
+        "search": "Buscar cliente, solicitud…",
+        "signOut": "Cerrar sesión"
+      },
+      "overview": {
+        "metaTitle": "Panel",
+        "greeting": "Buen día, {name}",
+        "title": "Resumen de oportunidades",
+        "filterCta": "Filtrar",
+        "newQuoteCta": "Nueva cotización",
+        "kpis": [
+          { "label": "Nuevas solicitudes", "note": "esta semana" },
+          { "label": "Cotizaciones pendientes", "note": "esperando respuesta" },
+          { "label": "Clientes activos", "note": "últimos 30 días" },
+          { "label": "Seguimientos", "note": "próximos a vencer" }
+        ],
+        "tableTitle": "Solicitudes recientes",
+        "viewAll": "Ver todas",
+        "columns": {
+          "client": "Cliente",
+          "service": "Servicio",
+          "status": "Estado",
+          "amount": "Monto",
+          "ago": "Hace"
+        },
+        "statuses": {
+          "pending": "Pendiente",
+          "sent": "Enviada",
+          "accepted": "Aceptada",
+          "review": "En revisión"
+        },
+        "activityTitle": "Actividad",
+        "activityToday": "Hoy",
+        "emptyKpis": "Conecta tu primer cliente para empezar a ver métricas.",
+        "emptyRequests": "Aún no hay solicitudes recientes."
+      }
     }
   },
   "auth": {

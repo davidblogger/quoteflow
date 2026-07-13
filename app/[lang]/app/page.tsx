@@ -1,71 +1,105 @@
-import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { hasLocale, getDictionary, type Locale } from "../dictionaries";
-import { getUser } from "@/lib/supabase/server";
-import { Container } from "@/app/components/ui/Container";
-import { CheckCircleIcon } from "@/app/components/icons/Icons";
-import { LogoutButton } from "./logout-button";
-
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "es" }];
-}
+import { getSupabaseServer } from "@/lib/supabase/server";
+import { Button } from "@/app/components/ui/Button";
+import { PlusIcon, FilterIcon } from "@/app/components/icons/Icons";
 
 export async function generateMetadata(
   props: { params: Promise<{ lang: string }> },
-): Promise<Metadata> {
+) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang);
-  return { title: dict.app.placeholder.metaTitle };
+  return { title: dict.app.shell.overview.metaTitle };
 }
 
-export default async function AppHome(
+export default async function AppOverview(
   props: { params: Promise<{ lang: string }> },
 ) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) redirect(`/${lang}`);
 
-  const user = await getUser();
-  if (!user) {
-    redirect(`/${lang}/login?next=/${lang}/app`);
-  }
+  const supabase = await getSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect(`/${lang}/login?next=/${lang}/app`);
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("company_name")
+    .eq("id", user.id)
+    .single();
 
   const dict = await getDictionary(lang satisfies Locale);
-  const copy = dict.app.placeholder;
+  const copy = dict.app.shell.overview;
+
+  const displayName =
+    profile?.company_name?.trim() || user.email?.split("@")[0] || "";
 
   return (
-    <div className="relative min-h-dvh overflow-hidden">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 0%, rgba(124,140,255,0.18), transparent 60%), radial-gradient(40% 40% at 80% 100%, rgba(236,72,153,0.12), transparent 60%)",
-        }}
-      />
-      <Container size="default" className="flex min-h-dvh items-center py-16">
-        <div className="mx-auto w-full max-w-lg">
-          <div className="glass-strong rounded-3xl p-8 sm:p-10">
-            <div className="mb-6 flex flex-col items-center gap-4 text-center">
-              <span className="inline-flex size-14 items-center justify-center rounded-full bg-success/15 text-success shadow-[0_0_30px_rgba(52,211,153,0.4)]">
-                <CheckCircleIcon className="size-8" />
-              </span>
-              <span className="text-xs font-medium uppercase tracking-wider text-accent-2">
-                {copy.eyebrow}
-              </span>
-              <h1 className="text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                {copy.title}
-              </h1>
-              <p className="text-pretty text-sm leading-relaxed text-white/65">
-                {copy.subtitle.replace("{email}", user.email ?? "")}
-              </p>
-            </div>
-            <div className="mt-8 flex flex-col gap-2">
-              <LogoutButton lang={lang} label={copy.signOut} />
-            </div>
-          </div>
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            {copy.greeting.replace("{name}", displayName)}
+          </h1>
+          <p className="text-sm text-white/55">{copy.title}</p>
         </div>
-      </Container>
+        <div className="flex items-center gap-2">
+          <Button variant="secondary" size="md">
+            <FilterIcon className="size-4" />
+            {copy.filterCta}
+          </Button>
+          <Button size="md">
+            <PlusIcon className="size-4" />
+            {copy.newQuoteCta}
+          </Button>
+        </div>
+      </div>
+
+      <section
+        aria-label="KPIs"
+        className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+      >
+        {copy.kpis.map((kpi) => (
+          <div
+            key={kpi.label}
+            className="glass rounded-2xl p-5"
+          >
+            <p className="text-sm font-medium text-white/75">{kpi.label}</p>
+            <p className="mt-3 text-3xl font-semibold tracking-tight text-white">—</p>
+            <p className="mt-1 text-xs text-white/45">{kpi.note}</p>
+          </div>
+        ))}
+      </section>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <section
+          aria-label={copy.tableTitle}
+          className="glass rounded-2xl p-5 lg:col-span-2"
+        >
+          <header className="mb-4 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-white">{copy.tableTitle}</h2>
+            <span className="text-xs text-white/40">{copy.viewAll}</span>
+          </header>
+          <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/10 px-4 py-12 text-center">
+            <p className="text-sm text-white/65">{copy.emptyRequests}</p>
+          </div>
+        </section>
+
+        <section aria-label={copy.activityTitle} className="glass rounded-2xl p-5">
+          <header className="mb-4 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-white">
+              {copy.activityTitle}
+            </h2>
+            <span className="text-xs text-white/40">{copy.activityToday}</span>
+          </header>
+          <p className="rounded-xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/55">
+            {copy.emptyKpis}
+          </p>
+        </section>
+      </div>
     </div>
   );
 }
