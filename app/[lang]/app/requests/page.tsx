@@ -115,38 +115,51 @@ export default async function RequestsPage(props: {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {requests.map((r) => (
-                  <tr key={r.id} className="text-white/80 hover:bg-white/[0.02]">
-                    <td className="px-5 py-3.5 align-top">
-                      <div className="flex flex-col">
-                        <span className="font-medium text-white">{r.name}</span>
-                        <span className="text-xs text-white/50">{r.email}</span>
-                      </div>
-                    </td>
-                    <td className="px-5 py-3.5 align-top text-white/75">
-                      {r.company ?? "—"}
-                    </td>
-                    <td className="px-5 py-3.5 align-top text-white/75">
-                      {r.service ?? "—"}
-                    </td>
-                    <td className="max-w-xs truncate px-5 py-3.5 align-top text-white/65">
-                      {r.message}
-                    </td>
-                    <td className="px-5 py-3.5 align-top">
-                      <RequestStatusBadge
-                        status={r.status}
-                        labels={copy.statusBadge}
-                      />
-                    </td>
-                    <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-white/55">
-                      {new Date(r.created_at).toLocaleDateString(lang, {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </td>
-                  </tr>
-                ))}
+                {requests.map((r) => {
+                  const href = `/${lang}/app/requests/${r.id}`;
+                  return (
+                    <tr
+                      key={r.id}
+                      className="text-white/80 transition-colors hover:bg-white/[0.03]"
+                    >
+                      <td className="px-5 py-3.5 align-top">
+                        <a
+                          href={href}
+                          className="-mx-1 block rounded px-1 py-0.5 transition-colors hover:text-white"
+                        >
+                          <span className="block font-medium text-white">
+                            {r.name}
+                          </span>
+                          <span className="block text-xs text-white/50">
+                            {r.email}
+                          </span>
+                        </a>
+                      </td>
+                      <td className="px-5 py-3.5 align-top text-white/75">
+                        {r.company ?? "—"}
+                      </td>
+                      <td className="px-5 py-3.5 align-top text-white/75">
+                        {r.service ?? "—"}
+                      </td>
+                      <td className="max-w-xs truncate px-5 py-3.5 align-top text-white/65">
+                        {r.message}
+                      </td>
+                      <td className="px-5 py-3.5 align-top">
+                        <RequestStatusBadge
+                          status={r.status}
+                          labels={copy.statusBadge}
+                        />
+                      </td>
+                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-white/55">
+                        {new Date(r.created_at).toLocaleDateString(lang, {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

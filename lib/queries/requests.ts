@@ -1,29 +1,13 @@
 import "server-only";
 import { getSupabaseServer } from "@/lib/supabase/server";
+import type { QuoteRequest, RequestStatus } from "@/lib/types/request";
 
-export type RequestStatus = "new" | "contacted" | "qualified" | "converted" | "closed";
-
-export type QuoteRequest = {
-  id: string;
-  profile_id: string;
-  name: string;
-  email: string;
-  company: string | null;
-  phone: string | null;
-  service: string | null;
-  message: string;
-  status: RequestStatus;
-  created_at: string;
-  updated_at: string;
-};
-
-export const REQUEST_STATUSES: readonly RequestStatus[] = [
-  "new",
-  "contacted",
-  "qualified",
-  "converted",
-  "closed",
-] as const;
+export {
+  REQUEST_STATUSES,
+  parseStatusFilter,
+  type QuoteRequest,
+  type RequestStatus,
+} from "@/lib/types/request";
 
 export async function listRequests(
   profileId: string,
@@ -45,10 +29,42 @@ export async function listRequests(
   return data as QuoteRequest[];
 }
 
-export function parseStatusFilter(value: string | undefined): RequestStatus | null {
-  if (!value) return null;
-  if ((REQUEST_STATUSES as readonly string[]).includes(value)) {
-    return value as RequestStatus;
+export async function getRequestById(
+  profileId: string,
+  id: string,
+): Promise<QuoteRequest | null> {
+  const supabase = await getSupabaseServer();
+  const { data, error } = await supabase
+    .from("requests")
+    .select("*")
+    .eq("id", id)
+    .eq("profile_id", profileId)
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return data as QuoteRequest;
+}
+
+export async function updateRequestStatus(
+  profileId: string,
+  id: string,
+  status: RequestStatus,
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await getSupabaseServer();
+  const { error } = await supabase
+    .from("requests")
+    .update({ status })
+    .eq("id", id)
+    .eq("profile_id", profileId);
+
+  if (error) {
+    console.error("[QuoteFlow] update request status failed", {
+      id,
+      status,
+      code: error.code,
+      message: error.message,
+    });
+    return { ok: false, error: error.message };
   }
-  return null;
+  return { ok: true };
 }
