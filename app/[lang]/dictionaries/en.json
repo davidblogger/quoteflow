@@ -327,6 +327,28 @@
             "title": "Convert to client",
             "description": "This request is qualified. Create a client record so you can track quotes and follow-ups against them.",
             "cta": "Create client from this request"
+          },
+          "tip": {
+            "new": {
+              "title": "New request — what's next?",
+              "body": "Reach out to the client to confirm scope and budget. Update the status as you go: Mark as **Contacted** once you've spoken, **Qualified** when it's a real opportunity, or **Converted** when you have all the info you need — that step creates the client record so you can attach quotes to them.",
+              "footer": "Tip: a quote can only be attached to a client, not directly to a request."
+            },
+            "contacted": {
+              "title": "Already in conversation",
+              "body": "Once you have enough info to move forward, mark this request as **Qualified**. When you have all the details, mark it as **Converted** to create the client record — that's the only way to attach a quote.",
+              "footer": null
+            },
+            "qualified": {
+              "title": "Ready to convert",
+              "body": "Mark this request as **Converted** to spin up the client record. After that, you can create a quote attached to them.",
+              "footer": null
+            },
+            "converted": {
+              "title": "Client created",
+              "body": "This request is now a client. You can create a quote attached to them from the new-quote page.",
+              "footer": null
+            }
           }
         }
       },

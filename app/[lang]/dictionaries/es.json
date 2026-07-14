@@ -327,6 +327,28 @@
             "title": "Convertir en cliente",
             "description": "Esta solicitud está cualificada. Crea un registro de cliente para llevar el seguimiento de cotizaciones y comunicaciones.",
             "cta": "Crear cliente desde esta solicitud"
+          },
+          "tip": {
+            "new": {
+              "title": "Solicitud nueva — ¿qué hago ahora?",
+              "body": "Contacta al cliente para confirmar alcance y presupuesto. Cambia el status según avances: márcala como **Contacted** cuando ya hables con ellos, **Qualified** si es una oportunidad real, o **Converted** cuando tengas toda la info — ese paso crea el registro de cliente para poder adjuntar cotizaciones.",
+              "footer": "Tip: una cotización solo puede adjuntarse a un cliente, no directamente a una solicitud."
+            },
+            "contacted": {
+              "title": "Ya estás en conversación",
+              "body": "Cuando tengas la info suficiente para avanzar, marca esta solicitud como **Qualified**. Cuando tengas todos los detalles, márcala como **Converted** para crear el registro de cliente — es la única forma de adjuntar una cotización.",
+              "footer": null
+            },
+            "qualified": {
+              "title": "Lista para convertir",
+              "body": "Marca esta solicitud como **Converted** para crear el registro de cliente. Después podrás crear una cotización adjunta a ellos.",
+              "footer": null
+            },
+            "converted": {
+              "title": "Cliente creado",
+              "body": "Esta solicitud ya es un cliente. Puedes crear una cotización adjunta desde la página de nueva cotización.",
+              "footer": null
+            }
           }
         }
       },

@@ -5,6 +5,7 @@ import { getSupabaseServer } from "@/lib/supabase/server";
 import { getRequestById } from "@/lib/queries/requests";
 import { RequestStatusBadge } from "../status-badge";
 import { StatusChanger } from "./status-changer";
+import { WorkflowTip } from "./workflow-tip";
 import {
   ArrowRightIcon,
   InboxIcon,
@@ -85,6 +86,8 @@ export default async function RequestDetailPage(props: {
           labels={dict.app.requests.statusBadge}
         />
       </header>
+
+      <WorkflowTip status={request.status} copy={copy.tip} />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <section className="glass rounded-2xl p-5 lg:col-span-2">
