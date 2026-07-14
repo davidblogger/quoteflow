@@ -4,6 +4,7 @@ import { hasLocale, getDictionary, type Locale } from "../../dictionaries";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import { getCurrentProfile } from "@/lib/queries/profile";
 import { SettingsForm } from "./settings-form";
+import { ChangePasswordForm } from "./change-password-form";
 import { ensureProfileAction } from "./ensure-profile-action";
 import { UsersIcon } from "@/app/components/icons/Icons";
 
@@ -53,6 +54,7 @@ export default async function SettingsPage(props: {
       </header>
 
       <SettingsForm profile={profile} lang={lang} copy={copy} />
+      <ChangePasswordForm lang={lang} copy={dict.app.password} />
     </div>
   );
 }

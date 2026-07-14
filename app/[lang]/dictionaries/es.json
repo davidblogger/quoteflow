@@ -299,6 +299,28 @@
         "generic": "No se pudieron guardar los ajustes. Inténtalo de nuevo."
       }
     },
+    "password": {
+      "title": "Seguridad",
+      "description": "Actualiza la contraseña con la que inicias sesión. Permanecerás conectado después.",
+      "fields": {
+        "current": "Contraseña actual",
+        "currentPlaceholder": "Tu contraseña actual",
+        "next": "Nueva contraseña",
+        "nextPlaceholder": "Mínimo 8 caracteres",
+        "confirm": "Confirma la nueva contraseña",
+        "confirmPlaceholder": "Repite la nueva contraseña"
+      },
+      "submit": "Actualizar contraseña",
+      "submitting": "Actualizando…",
+      "success": "Contraseña actualizada.",
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "tooShort": "Usa al menos 8 caracteres",
+        "mismatch": "Las contraseñas no coinciden",
+        "currentIncorrect": "La contraseña actual es incorrecta",
+        "generic": "No se pudo actualizar tu contraseña. Inténtalo de nuevo."
+      }
+    },
     "requests": {
         "metaTitle": "Solicitudes",
         "title": "Solicitudes",

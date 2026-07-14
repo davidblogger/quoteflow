@@ -299,6 +299,28 @@
         "generic": "Could not save your settings. Please try again."
       }
     },
+    "password": {
+      "title": "Security",
+      "description": "Update the password you use to sign in. You'll stay signed in afterwards.",
+      "fields": {
+        "current": "Current password",
+        "currentPlaceholder": "Your current password",
+        "next": "New password",
+        "nextPlaceholder": "At least 8 characters",
+        "confirm": "Confirm new password",
+        "confirmPlaceholder": "Repeat the new password"
+      },
+      "submit": "Update password",
+      "submitting": "Updating…",
+      "success": "Password updated.",
+      "errors": {
+        "required": "This field is required",
+        "tooShort": "Use at least 8 characters",
+        "mismatch": "Passwords don't match",
+        "currentIncorrect": "Current password is incorrect",
+        "generic": "Could not update your password. Please try again."
+      }
+    },
     "requests": {
         "metaTitle": "Requests",
         "title": "Requests",

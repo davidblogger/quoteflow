@@ -4,6 +4,74 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import { updateProfile } from "@/lib/queries/profile";
 
+const MIN_PASSWORD_LENGTH = 8;
+
+export type PasswordFormState = {
+  ok: boolean;
+  message: "idle" | "success" | "invalid" | "error";
+  fieldErrors?: Partial<
+    Record<"current" | "next" | "confirm", "required" | "tooShort" | "mismatch">
+  >;
+  formError?: "currentIncorrect" | "generic";
+};
+
+/**
+ * Verify the current password then update to a new one. The pattern is:
+ *   1. signInWithPassword(current) — cheap, server-side proof that the
+ *      caller knows the current password. Throttling is handled by
+ *      Supabase Auth.
+ *   2. updateUser({ password: new }) — only on success.
+ * On failure (wrong current, network, weak new password) we return a
+ * typed state without redirecting so the form can show the exact error.
+ */
+export async function changePasswordAction(
+  _prev: PasswordFormState,
+  formData: FormData,
+): Promise<PasswordFormState> {
+  const lang = (formData.get("lang") ?? "en").toString();
+  const current = (formData.get("current") ?? "").toString();
+  const next = (formData.get("next") ?? "").toString();
+  const confirm = (formData.get("confirm") ?? "").toString();
+
+  const fieldErrors: PasswordFormState["fieldErrors"] = {};
+  if (!current) fieldErrors.current = "required";
+  if (!next) fieldErrors.next = "required";
+  else if (next.length < MIN_PASSWORD_LENGTH) fieldErrors.next = "tooShort";
+  if (!confirm) fieldErrors.confirm = "required";
+  else if (next !== confirm) fieldErrors.confirm = "mismatch";
+
+  if (Object.keys(fieldErrors).length > 0) {
+    return { ok: false, message: "invalid", fieldErrors };
+  }
+
+  const supabase = await getSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user?.email) {
+    return { ok: false, message: "error", formError: "generic" };
+  }
+
+  const { error: signInErr } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: current,
+  });
+  if (signInErr) {
+    return { ok: false, message: "error", formError: "currentIncorrect" };
+  }
+
+  const { error: updateErr } = await supabase.auth.updateUser({
+    password: next,
+  });
+  if (updateErr) {
+    console.error("[QuoteFlow] changePassword failed", updateErr);
+    return { ok: false, message: "error", formError: "generic" };
+  }
+
+  revalidatePath(`/${lang}/app/settings`);
+  return { ok: true, message: "success" };
+}
+
 export type SettingsFormState = {
   ok: boolean;
   message: "idle" | "success" | "invalid" | "error";
