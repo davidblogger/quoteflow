@@ -82,7 +82,7 @@ export function EditItemForm({
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1fr_1fr_auto_auto]">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-[7rem_10rem_auto_auto] sm:items-end">
         <NumberField
           name="quantity"
           label={copy.fields.quantity}
@@ -99,10 +99,10 @@ export function EditItemForm({
           min="0"
           error={fe.unit_price ? copy.errors.invalidNumber : undefined}
         />
-        <div className="flex items-end">
+        <div className="flex items-end col-span-2 sm:col-span-1">
           <SubmitButton idleLabel={copy.saveChanges} pendingLabel={copy.saving} />
         </div>
-        <div className="flex items-end">
+        <div className="flex items-end col-span-2 sm:col-span-1">
           <a
             href={cancelHref}
             className="inline-flex h-11 w-full items-center justify-center rounded-full px-5 text-sm font-medium text-white/65 transition-colors hover:text-white sm:w-auto"

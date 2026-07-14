@@ -59,7 +59,7 @@ export function AddItemForm({ quoteId, lang, copy }: AddItemFormProps) {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1fr_1fr_auto]">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-[7rem_10rem_auto] sm:items-end">
         <NumberField
           name="quantity"
           label={copy.fields.quantity}
@@ -76,7 +76,7 @@ export function AddItemForm({ quoteId, lang, copy }: AddItemFormProps) {
           min="0"
           error={fe.unit_price ? copy.errors.invalidNumber : undefined}
         />
-        <div className="flex items-end">
+        <div className="flex items-end col-span-2 sm:col-span-1">
           <SubmitButton idleLabel={copy.submit} pendingLabel={copy.submitting} />
         </div>
       </div>
