@@ -46,3 +46,42 @@ export async function getCurrentProfile(): Promise<Profile | null> {
   if (error || !data) return null;
   return data as Profile;
 }
+
+export type ProfileEditableFields = {
+  company_name: string;
+  phone: string | null;
+  address: string | null;
+  currency: string;
+  tax_rate: number;
+};
+
+/**
+ * Updates the editable fields of the current user's own profile.
+ * Does NOT touch email (auth-managed) or created_at (immutable).
+ */
+export async function updateProfile(
+  profileId: string,
+  input: ProfileEditableFields,
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await getSupabaseServer();
+  const { error } = await supabase
+    .from("profiles")
+    .update({
+      company_name: input.company_name,
+      phone: input.phone,
+      address: input.address,
+      currency: input.currency,
+      tax_rate: input.tax_rate,
+    })
+    .eq("id", profileId);
+
+  if (error) {
+    console.error("[QuoteFlow] update profile failed", {
+      profileId,
+      code: error.code,
+      message: error.message,
+    });
+    return { ok: false, error: error.message };
+  }
+  return { ok: true };
+}

@@ -270,6 +270,35 @@
         }
       }
     },
+    "settings": {
+      "metaTitle": "Settings",
+      "title": "Settings",
+      "subtitle": "Your company info and the defaults that pre-fill every new quote.",
+      "sections": {
+        "company": "Company info",
+        "defaults": "Defaults"
+      },
+      "fields": {
+        "companyName": "Company name",
+        "companyNamePlaceholder": "Your business name",
+        "email": "Email (sign-in)",
+        "emailHint": "This is the address you used to sign in. Contact support to change it.",
+        "phone": "Phone",
+        "phonePlaceholder": "+1 555 000 0000",
+        "address": "Address",
+        "addressPlaceholder": "Street, city, country",
+        "currency": "Currency",
+        "taxRate": "Default tax rate (%)"
+      },
+      "submit": "Save changes",
+      "submitting": "Saving…",
+      "saveSuccess": "Settings saved.",
+      "errors": {
+        "required": "This field is required",
+        "invalidTaxRate": "Enter a number between 0 and 100",
+        "generic": "Could not save your settings. Please try again."
+      }
+    },
     "requests": {
         "metaTitle": "Requests",
         "title": "Requests",

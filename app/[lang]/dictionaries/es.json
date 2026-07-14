@@ -270,6 +270,35 @@
         }
       }
     },
+    "settings": {
+      "metaTitle": "Ajustes",
+      "title": "Ajustes",
+      "subtitle": "Información de tu empresa y los valores por defecto que se rellenan en cada nueva cotización.",
+      "sections": {
+        "company": "Información de la empresa",
+        "defaults": "Valores por defecto"
+      },
+      "fields": {
+        "companyName": "Nombre de la empresa",
+        "companyNamePlaceholder": "Nombre de tu negocio",
+        "email": "Email (inicio de sesión)",
+        "emailHint": "Esta es la dirección con la que iniciaste sesión. Contacta soporte para cambiarla.",
+        "phone": "Teléfono",
+        "phonePlaceholder": "+34 600 000 000",
+        "address": "Dirección",
+        "addressPlaceholder": "Calle, ciudad, país",
+        "currency": "Moneda",
+        "taxRate": "Impuesto por defecto (%)"
+      },
+      "submit": "Guardar cambios",
+      "submitting": "Guardando…",
+      "saveSuccess": "Ajustes guardados.",
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "invalidTaxRate": "Introduce un número entre 0 y 100",
+        "generic": "No se pudieron guardar los ajustes. Inténtalo de nuevo."
+      }
+    },
     "requests": {
         "metaTitle": "Solicitudes",
         "title": "Solicitudes",
