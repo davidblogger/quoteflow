@@ -56,7 +56,7 @@ export function MobileMenu({ lang, nav, switcher, links }: MobileMenuProps) {
             id="mobile-menu-panel"
             className="fixed inset-x-0 top-[72px] z-[60] px-4 sm:px-6"
           >
-          <div className="glass-strong mx-auto mt-2 max-w-7xl rounded-2xl p-4 shadow-2xl shadow-black/60">
+          <div className="mx-auto mt-2 max-w-7xl rounded-2xl border border-white/10 bg-[#060814]/95 p-4 shadow-2xl shadow-black/70 backdrop-blur-md">
             <ul className="flex flex-col gap-1">
               {links.map((link) => (
                 <li key={link.href}>
