@@ -313,10 +313,13 @@
       "submit": "Actualizar contraseña",
       "submitting": "Actualizando…",
       "success": "Contraseña actualizada.",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
       "errors": {
         "required": "Este campo es obligatorio",
         "tooShort": "Usa al menos 8 caracteres",
         "mismatch": "Las contraseñas no coinciden",
+        "sameAsCurrent": "La nueva contraseña debe ser diferente de la actual.",
         "currentIncorrect": "La contraseña actual es incorrecta",
         "generic": "No se pudo actualizar tu contraseña. Inténtalo de nuevo."
       }

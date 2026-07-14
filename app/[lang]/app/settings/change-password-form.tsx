@@ -1,9 +1,14 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { changePasswordAction, type PasswordFormState } from "./actions";
-import { AlertCircleIcon, CheckCircleIcon } from "@/app/components/icons/Icons";
+import {
+  AlertCircleIcon,
+  CheckCircleIcon,
+  EyeIcon,
+  EyeOffIcon,
+} from "@/app/components/icons/Icons";
 
 type ChangePasswordFormProps = {
   lang: string;
@@ -21,10 +26,13 @@ type ChangePasswordFormProps = {
     submit: string;
     submitting: string;
     success: string;
+    showPassword: string;
+    hidePassword: string;
     errors: {
       required: string;
       tooShort: string;
       mismatch: string;
+      sameAsCurrent: string;
       currentIncorrect: string;
       generic: string;
     };
@@ -33,9 +41,19 @@ type ChangePasswordFormProps = {
 
 const initialState: PasswordFormState = { ok: false, message: "idle" };
 
+type FieldKey = "current" | "next" | "confirm";
+
 export function ChangePasswordForm({ lang, copy }: ChangePasswordFormProps) {
   const [state, formAction] = useActionState(changePasswordAction, initialState);
+  const [visible, setVisible] = useState<Record<FieldKey, boolean>>({
+    current: false,
+    next: false,
+    confirm: false,
+  });
   const fe = state.fieldErrors ?? {};
+
+  const toggle = (key: FieldKey) =>
+    setVisible((v) => ({ ...v, [key]: !v[key] }));
 
   if (state.message === "success") {
     return (
@@ -72,18 +90,24 @@ export function ChangePasswordForm({ lang, copy }: ChangePasswordFormProps) {
       <form action={formAction} className="flex flex-col gap-4" noValidate>
         <Field
           id="current"
-          type="password"
           label={copy.fields.current}
           placeholder={copy.fields.currentPlaceholder}
           autoComplete="current-password"
+          revealed={visible.current}
+          onToggleReveal={() => toggle("current")}
+          showLabel={copy.showPassword}
+          hideLabel={copy.hidePassword}
           error={fe.current ? copy.errors.required : undefined}
         />
         <Field
           id="next"
-          type="password"
           label={copy.fields.next}
           placeholder={copy.fields.nextPlaceholder}
           autoComplete="new-password"
+          revealed={visible.next}
+          onToggleReveal={() => toggle("next")}
+          showLabel={copy.showPassword}
+          hideLabel={copy.hidePassword}
           error={
             fe.next
               ? copy.errors[fe.next as "required" | "tooShort" | "mismatch"]
@@ -92,10 +116,13 @@ export function ChangePasswordForm({ lang, copy }: ChangePasswordFormProps) {
         />
         <Field
           id="confirm"
-          type="password"
           label={copy.fields.confirm}
           placeholder={copy.fields.confirmPlaceholder}
           autoComplete="new-password"
+          revealed={visible.confirm}
+          onToggleReveal={() => toggle("confirm")}
+          showLabel={copy.showPassword}
+          hideLabel={copy.hidePassword}
           error={
             fe.confirm
               ? copy.errors[fe.confirm as "required" | "tooShort" | "mismatch"]
@@ -110,6 +137,15 @@ export function ChangePasswordForm({ lang, copy }: ChangePasswordFormProps) {
           >
             <AlertCircleIcon className="size-4 shrink-0" />
             {copy.errors.currentIncorrect}
+          </p>
+        )}
+        {state.formError === "sameAsCurrent" && (
+          <p
+            role="alert"
+            className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
+          >
+            <AlertCircleIcon className="size-4 shrink-0" />
+            {copy.errors.sameAsCurrent}
           </p>
         )}
         {state.formError === "generic" && (
@@ -139,15 +175,21 @@ function Field({
   id,
   label,
   placeholder,
-  type = "text",
   autoComplete,
+  revealed,
+  onToggleReveal,
+  showLabel,
+  hideLabel,
   error,
 }: {
   id: string;
   label: string;
   placeholder: string;
-  type?: string;
   autoComplete?: string;
+  revealed: boolean;
+  onToggleReveal: () => void;
+  showLabel: string;
+  hideLabel: string;
   error?: string;
 }) {
   return (
@@ -158,20 +200,35 @@ function Field({
       >
         {label}
       </label>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className={`h-11 rounded-xl border bg-white/[0.03] px-4 text-sm text-white placeholder:text-white/35 transition-colors focus:outline-none focus:bg-white/[0.05] ${
-          error
-            ? "border-danger/50 focus:border-danger"
-            : "border-white/10 focus:border-white/25"
-        }`}
-      />
+      <div className="relative">
+        <input
+          id={id}
+          name={id}
+          type={revealed ? "text" : "password"}
+          autoComplete={autoComplete}
+          placeholder={placeholder}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className={`h-11 w-full rounded-xl border bg-white/[0.03] pr-11 pl-4 text-sm text-white placeholder:text-white/35 transition-colors focus:outline-none focus:bg-white/[0.05] ${
+            error
+              ? "border-danger/50 focus:border-danger"
+              : "border-white/10 focus:border-white/25"
+          }`}
+        />
+        <button
+          type="button"
+          onClick={onToggleReveal}
+          aria-label={revealed ? hideLabel : showLabel}
+          aria-pressed={revealed}
+          className="absolute right-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white/45 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+        >
+          {revealed ? (
+            <EyeOffIcon className="size-4" />
+          ) : (
+            <EyeIcon className="size-4" />
+          )}
+        </button>
+      </div>
       {error && (
         <span
           id={`${id}-error`}

@@ -12,7 +12,7 @@ export type PasswordFormState = {
   fieldErrors?: Partial<
     Record<"current" | "next" | "confirm", "required" | "tooShort" | "mismatch">
   >;
-  formError?: "currentIncorrect" | "generic";
+  formError?: "currentIncorrect" | "sameAsCurrent" | "generic";
 };
 
 /**
@@ -42,6 +42,16 @@ export async function changePasswordAction(
 
   if (Object.keys(fieldErrors).length > 0) {
     return { ok: false, message: "invalid", fieldErrors };
+  }
+
+  // Catch the "same as current" case before hitting Supabase — it's a
+  // friendlier message than the generic one Supabase would return.
+  if (current === next) {
+    return {
+      ok: false,
+      message: "error",
+      formError: "sameAsCurrent",
+    };
   }
 
   const supabase = await getSupabaseServer();
