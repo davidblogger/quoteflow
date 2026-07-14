@@ -51,7 +51,7 @@ export function Sidebar({ lang, copy, currentPath }: SidebarProps) {
   ];
 
   return (
-    <aside className="hidden h-full w-64 shrink-0 flex-col gap-6 border-r border-white/5 bg-[#060814]/40 backdrop-blur-xl lg:flex">
+    <aside className="hidden h-full w-64 shrink-0 flex-col gap-6 border-r border-white/5 bg-[#060814]/40 backdrop-blur-xl print:hidden lg:flex">
       <div className="flex h-16 items-center px-5">
         <Logo lang={lang} />
       </div>

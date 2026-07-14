@@ -104,10 +104,20 @@ export default async function QuoteDetailPage(props: {
         </div>
         <div className="flex items-center gap-3">
           {!editingHeader && (
-            <EditQuoteLink
-              href={`/${lang}/app/quotes/${quote.id}?edit=header`}
-              label={copy.detail.edit.cta}
-            />
+            <>
+              <a
+                href={`/${lang}/app/quotes/${quote.id}/pdf`}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+              >
+                {copy.detail.pdf.downloadCta}
+              </a>
+              <EditQuoteLink
+                href={`/${lang}/app/quotes/${quote.id}?edit=header`}
+                label={copy.detail.edit.cta}
+              />
+            </>
           )}
           <QuoteStatusBadge status={quote.status} labels={copy.statusBadge} />
         </div>

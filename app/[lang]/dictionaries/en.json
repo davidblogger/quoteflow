@@ -150,6 +150,29 @@
             "invalidNumber": "Enter a valid number",
             "generic": "Could not save the quote. Please try again."
           }
+        },
+        "pdf": {
+          "downloadCta": "Download PDF",
+          "title": "Quote",
+          "quoteLabel": "Quote",
+          "preparedFor": "Prepared for",
+          "issueDate": "Issued",
+          "validUntil": "Valid until",
+          "table": {
+            "description": "Description",
+            "quantity": "Qty",
+            "unitPrice": "Unit price",
+            "subtotal": "Subtotal"
+          },
+          "totals": {
+            "subtotal": "Subtotal",
+            "tax": "Tax",
+            "total": "Total"
+          },
+          "noItems": "No items in this quote.",
+          "noNotes": null,
+          "autoPrintHint": "Opening the print dialog…",
+          "backCta": "Back to quote"
         }
       },
       "statusChanger": {

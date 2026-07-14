@@ -13,7 +13,7 @@ type TopbarProps = {
 
 export function Topbar({ lang, email, copy }: TopbarProps) {
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-white/5 bg-[#060814]/60 px-4 backdrop-blur-xl sm:gap-4 sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-white/5 bg-[#060814]/60 px-4 backdrop-blur-xl print:hidden sm:gap-4 sm:px-6">
       <label className="relative flex h-10 flex-1 items-center">
         <span className="pointer-events-none absolute left-3.5 flex items-center text-white/40">
           <SearchIcon className="size-4" />

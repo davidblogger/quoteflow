@@ -150,6 +150,29 @@
             "invalidNumber": "Introduce un número válido",
             "generic": "No se pudo guardar la cotización. Inténtalo de nuevo."
           }
+        },
+        "pdf": {
+          "downloadCta": "Descargar PDF",
+          "title": "Cotización",
+          "quoteLabel": "Cotización",
+          "preparedFor": "Para",
+          "issueDate": "Emitida",
+          "validUntil": "Válida hasta",
+          "table": {
+            "description": "Descripción",
+            "quantity": "Cant.",
+            "unitPrice": "P. unit.",
+            "subtotal": "Subtotal"
+          },
+          "totals": {
+            "subtotal": "Subtotal",
+            "tax": "Impuesto",
+            "total": "Total"
+          },
+          "noItems": "Esta cotización no incluye items.",
+          "noNotes": null,
+          "autoPrintHint": "Abriendo el diálogo de impresión…",
+          "backCta": "Volver a la cotización"
         }
       },
       "statusChanger": {
