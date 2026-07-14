@@ -14,6 +14,100 @@
       "signOut": "Cerrar sesión",
       "backHome": "Volver al inicio"
     },
+    "quotes": {
+      "metaTitle": "Cotizaciones",
+      "title": "Cotizaciones",
+      "subtitle": "Propuestas que preparas y envías a tus clientes. Cada una empieza como borrador y se cierra al ser aceptada.",
+      "newCta": "Nueva cotización",
+      "columns": {
+        "title": "Título",
+        "client": "Cliente",
+        "status": "Estado",
+        "total": "Total",
+        "validUntil": "Válida hasta",
+        "createdAt": "Creada"
+      },
+      "statusBadge": {
+        "draft": "Borrador",
+        "sent": "Enviada",
+        "accepted": "Aceptada",
+        "rejected": "Rechazada"
+      },
+      "empty": {
+        "title": "Aún no hay cotizaciones",
+        "description": "Cuando tengas clientes, crea tu primera cotización y hazle seguimiento de borrador a aceptada.",
+        "newCta": "Nueva cotización"
+      },
+      "new": {
+        "metaTitle": "Nueva cotización",
+        "title": "Nueva cotización",
+        "selectClient": "Selecciona un cliente",
+        "noClients": {
+          "title": "Necesitas un cliente primero",
+          "description": "Las cotizaciones siempre se asocian a un cliente. Crea uno para empezar a preparar tu primera cotización.",
+          "cta": "Crear primer cliente"
+        }
+      },
+      "form": {
+        "fields": {
+          "client": "Cliente",
+          "title": "Título",
+          "titlePlaceholder": "Ej: Reforma oficina — fase 1",
+          "currency": "Moneda",
+          "taxRate": "Impuesto (%)",
+          "validUntil": "Válida hasta",
+          "notes": "Notas internas",
+          "notesPlaceholder": "Contexto para tu equipo (no se muestra al cliente)"
+        },
+        "selectClient": "Selecciona un cliente",
+        "submit": "Crear cotización",
+        "submitting": "Creando…",
+        "cancel": "Cancelar",
+        "errors": {
+          "required": "Este campo es obligatorio",
+          "clientRequired": "Selecciona un cliente",
+          "generic": "Algo salió mal. Inténtalo de nuevo."
+        }
+      },
+      "detail": {
+        "backCta": "Volver a cotizaciones",
+        "sections": {
+          "info": "Información",
+          "items": "Items",
+          "totals": "Totales",
+          "meta": "Información"
+        },
+        "fields": {
+          "client": "Cliente",
+          "currency": "Moneda",
+          "taxRate": "Impuesto",
+          "validUntil": "Válida hasta",
+          "notes": "Notas",
+          "subtotal": "Subtotal",
+          "total": "Total",
+          "createdAt": "Creada",
+          "updatedAt": "Última actualización",
+          "id": "ID"
+        },
+        "itemsPlaceholder": {
+          "title": "Aún no hay items",
+          "description": "Los items se agregan en la próxima iteración. Por ahora, deja el contexto en las notas."
+        },
+        "empty": "No proporcionado",
+        "notFound": {
+          "title": "Cotización no encontrada",
+          "description": "Esta cotización no existe o no tienes acceso a ella.",
+          "backCta": "Volver a cotizaciones"
+        }
+      },
+      "statusChanger": {
+        "label": "Cambiar estado",
+        "save": "Guardar estado",
+        "saving": "Guardando…",
+        "success": "Estado actualizado.",
+        "error": "No se pudo actualizar el estado. Inténtalo de nuevo."
+      }
+    },
     "clients": {
       "metaTitle": "Clientes",
       "title": "Clientes",

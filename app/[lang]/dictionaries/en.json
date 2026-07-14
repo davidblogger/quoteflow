@@ -14,6 +14,100 @@
       "signOut": "Sign out",
       "backHome": "Back to home"
     },
+    "quotes": {
+      "metaTitle": "Quotes",
+      "title": "Quotes",
+      "subtitle": "Proposals you prepare and send to clients. Each one starts as a draft and becomes final once accepted.",
+      "newCta": "New quote",
+      "columns": {
+        "title": "Title",
+        "client": "Client",
+        "status": "Status",
+        "total": "Total",
+        "validUntil": "Valid until",
+        "createdAt": "Created"
+      },
+      "statusBadge": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "accepted": "Accepted",
+        "rejected": "Rejected"
+      },
+      "empty": {
+        "title": "No quotes yet",
+        "description": "Once you have clients, create your first quote and track it from draft to accepted.",
+        "newCta": "New quote"
+      },
+      "new": {
+        "metaTitle": "New quote",
+        "title": "New quote",
+        "selectClient": "Select a client",
+        "noClients": {
+          "title": "You need a client first",
+          "description": "Quotes are always attached to a client. Create one to start preparing your first quote.",
+          "cta": "Create your first client"
+        }
+      },
+      "form": {
+        "fields": {
+          "client": "Client",
+          "title": "Title",
+          "titlePlaceholder": "e.g. Office renovation — phase 1",
+          "currency": "Currency",
+          "taxRate": "Tax rate (%)",
+          "validUntil": "Valid until",
+          "notes": "Internal notes",
+          "notesPlaceholder": "Context for your team (not shown to the client)"
+        },
+        "selectClient": "Select a client",
+        "submit": "Create quote",
+        "submitting": "Creating…",
+        "cancel": "Cancel",
+        "errors": {
+          "required": "This field is required",
+          "clientRequired": "Select a client",
+          "generic": "Something went wrong. Please try again."
+        }
+      },
+      "detail": {
+        "backCta": "Back to quotes",
+        "sections": {
+          "info": "Info",
+          "items": "Items",
+          "totals": "Totals",
+          "meta": "Meta"
+        },
+        "fields": {
+          "client": "Client",
+          "currency": "Currency",
+          "taxRate": "Tax rate",
+          "validUntil": "Valid until",
+          "notes": "Notes",
+          "subtotal": "Subtotal",
+          "total": "Total",
+          "createdAt": "Created",
+          "updatedAt": "Last update",
+          "id": "ID"
+        },
+        "itemsPlaceholder": {
+          "title": "No items yet",
+          "description": "Line items arrive in the next iteration. For now, draft the quote's context in the notes."
+        },
+        "empty": "Not provided",
+        "notFound": {
+          "title": "Quote not found",
+          "description": "This quote does not exist or you don't have access to it.",
+          "backCta": "Back to quotes"
+        }
+      },
+      "statusChanger": {
+        "label": "Change status",
+        "save": "Save status",
+        "saving": "Saving…",
+        "success": "Status updated.",
+        "error": "Could not update status. Please try again."
+      }
+    },
     "clients": {
       "metaTitle": "Clients",
       "title": "Clients",
