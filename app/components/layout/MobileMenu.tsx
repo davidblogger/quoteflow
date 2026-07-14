@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "../ui/Button";
 import { CloseIcon, MenuIcon } from "../icons/Icons";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -49,11 +50,12 @@ export function MobileMenu({ lang, nav, switcher, links }: MobileMenuProps) {
         {open ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
       </button>
 
-      {open && (
-        <div
-          id="mobile-menu-panel"
-          className="fixed inset-x-0 top-[72px] z-40 px-4 sm:px-6"
-        >
+      {open &&
+        createPortal(
+          <div
+            id="mobile-menu-panel"
+            className="fixed inset-x-0 top-[72px] z-[60] px-4 sm:px-6"
+          >
           <div className="glass-strong mx-auto mt-2 max-w-7xl rounded-2xl p-4 shadow-2xl shadow-black/60">
             <ul className="flex flex-col gap-1">
               {links.map((link) => (
@@ -85,8 +87,9 @@ export function MobileMenu({ lang, nav, switcher, links }: MobileMenuProps) {
               </Button>
             </div>
           </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
