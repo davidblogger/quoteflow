@@ -17,7 +17,7 @@ export default async function AppLayout(
 
   return (
     <div className="flex min-h-dvh bg-[#060814] text-white">
-      <Sidebar lang={lang} copy={dict.app.shell} currentPath={`/${lang}/app`} />
+      <Sidebar lang={lang} copy={dict.app.shell} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar lang={lang} email={user.email ?? ""} copy={dict.app.shell.topbar} />
         <main className="flex-1 overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8 lg:px-8">

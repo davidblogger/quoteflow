@@ -47,6 +47,63 @@ export async function getCurrentProfile(): Promise<Profile | null> {
   return data as Profile;
 }
 
+/**
+ * Like {@link getCurrentProfile}, but tries to create the profile row
+ * on-the-fly when it's missing. Returns the row once it exists (either
+ * just-created or already there).
+ *
+ * Behavior:
+ * 1. SELECT — most common path, returns the row.
+ * 2. INSERT with defaults — used when SELECT returned nothing (trigger
+ *    broken, profile deleted, signup race).
+ * 3. Re-SELECT on `23505` unique-violation — covers the race where
+ *    another concurrent request inserted the row between our SELECT and
+ *    INSERT.
+ * 4. Returns null on any other failure and logs the error.
+ */
+export async function getOrCreateCurrentProfile(): Promise<Profile | null> {
+  const supabase = await getSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data: existing } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (existing) return existing as Profile;
+
+  const fallbackEmail = user.email ?? "";
+  const { data: created, error: createErr } = await supabase
+    .from("profiles")
+    .insert({
+      id: user.id,
+      email: fallbackEmail,
+      company_name: fallbackEmail.split("@")[0] || "",
+      currency: "USD",
+      tax_rate: 0,
+    })
+    .select("*")
+    .single();
+
+  if (created) return created as Profile;
+
+  if (createErr?.code === "23505") {
+    const { data: reFetch } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+    if (reFetch) return reFetch as Profile;
+  }
+
+  console.error("[QuoteFlow] self-heal profile failed", createErr);
+  return null;
+}
+
 export type ProfileEditableFields = {
   company_name: string;
   phone: string | null;
