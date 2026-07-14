@@ -20,8 +20,10 @@ export async function generateMetadata(
 
 export default async function QuoteDetailPage(props: {
   params: Promise<{ lang: string; id: string }>;
+  searchParams: Promise<{ edit?: string }>;
 }) {
   const { lang, id } = await props.params;
+  const { edit } = await props.searchParams;
   if (!hasLocale(lang)) redirect(`/${lang}`);
 
   const supabase = await getSupabaseServer();
@@ -102,6 +104,7 @@ export default async function QuoteDetailPage(props: {
           quoteId={quote.id}
           lang={lang}
           currency={quote.currency}
+          editingItemId={edit ?? null}
           copy={copy.detail.items}
         />
 

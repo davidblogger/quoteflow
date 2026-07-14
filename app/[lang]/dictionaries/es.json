@@ -83,10 +83,13 @@
             "quantity": "Cant.",
             "unitPrice": "P. unit.",
             "subtotal": "Subtotal",
-            "remove": "Quitar"
+            "remove": "Quitar",
+            "edit": "Editar"
           },
           "empty": "Aún no hay items. Agrega el primero abajo.",
           "addTitle": "Agregar item",
+          "title": "Editar item",
+          "hint": "Editando este item. Guarda para aplicar o cancela para descartar.",
           "fields": {
             "description": "¿Qué cubre este item?",
             "descriptionPlaceholder": "Ej: Diseño de logo con 3 propuestas y 2 rondas de revisión",
@@ -95,10 +98,13 @@
           },
           "submit": "Agregar item",
           "submitting": "Agregando…",
+          "saveChanges": "Guardar cambios",
+          "saving": "Guardando…",
+          "cancel": "Cancelar",
           "errors": {
             "required": "Este campo es obligatorio",
             "invalidNumber": "Introduce un número válido",
-            "generic": "No se pudo agregar el item. Inténtalo de nuevo."
+            "generic": "No se pudo guardar el item. Inténtalo de nuevo."
           },
           "deleteConfirm": "¿Quitar este item?"
         },

@@ -72,6 +72,54 @@ export async function addQuoteItem(
 }
 
 /**
+ * Updates a line item (ownership verified), then recomputes the parent
+ * quote's subtotal/total.
+ */
+export async function updateQuoteItem(
+  profileId: string,
+  itemId: string,
+  input: QuoteItemInsert,
+): Promise<{ ok: boolean; quoteId?: string; error?: string }> {
+  const supabase = await getSupabaseServer();
+
+  const { data: item } = await supabase
+    .from("quote_items")
+    .select("id, quote_id")
+    .eq("id", itemId)
+    .maybeSingle();
+  if (!item) return { ok: false, error: "item_not_found" };
+
+  const { data: quote } = await supabase
+    .from("quotes")
+    .select("id")
+    .eq("id", item.quote_id)
+    .eq("profile_id", profileId)
+    .maybeSingle();
+  if (!quote) return { ok: false, error: "quote_not_found" };
+
+  const { error } = await supabase
+    .from("quote_items")
+    .update({
+      description: input.description,
+      quantity: input.quantity,
+      unit_price: input.unit_price,
+    })
+    .eq("id", itemId);
+
+  if (error) {
+    console.error("[QuoteFlow] update quote item failed", {
+      itemId,
+      code: error.code,
+      message: error.message,
+    });
+    return { ok: false, error: error.message };
+  }
+
+  await recomputeQuoteTotals(profileId, item.quote_id);
+  return { ok: true, quoteId: item.quote_id };
+}
+
+/**
  * Deletes a line item (ownership verified via join to quotes), then
  * recomputes the parent quote's subtotal/total.
  */

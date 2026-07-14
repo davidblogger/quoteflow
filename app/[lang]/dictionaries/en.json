@@ -83,10 +83,13 @@
             "quantity": "Qty",
             "unitPrice": "Unit price",
             "subtotal": "Subtotal",
-            "remove": "Remove"
+            "remove": "Remove",
+            "edit": "Edit"
           },
           "empty": "No items yet. Add the first one below.",
           "addTitle": "Add item",
+          "title": "Edit item",
+          "hint": "Editing this item. Save to apply or cancel to discard.",
           "fields": {
             "description": "What does this item cover?",
             "descriptionPlaceholder": "e.g. Logo design with 3 concepts and 2 rounds of revisions",
@@ -95,10 +98,13 @@
           },
           "submit": "Add item",
           "submitting": "Adding…",
+          "saveChanges": "Save changes",
+          "saving": "Saving…",
+          "cancel": "Cancel",
           "errors": {
             "required": "This field is required",
             "invalidNumber": "Enter a valid number",
-            "generic": "Could not add the item. Please try again."
+            "generic": "Could not save the item. Please try again."
           },
           "deleteConfirm": "Remove this item?"
         },
