@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { hasLocale, getDictionary, type Locale } from "../../dictionaries";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import { listClients } from "@/lib/queries/clients";
+import { countQuotesByClient } from "@/lib/queries/quotes";
 import { Button } from "@/app/components/ui/Button";
 import { PlusIcon, UsersIcon } from "@/app/components/icons/Icons";
 
@@ -27,7 +28,10 @@ export default async function ClientsPage(props: {
   } = await supabase.auth.getUser();
   if (!user) redirect(`/${lang}/login?next=/${lang}/app/clients`);
 
-  const clients = await listClients(user.id);
+  const [clients, quoteCounts] = await Promise.all([
+    listClients(user.id),
+    countQuotesByClient(user.id),
+  ]);
   const dict = await getDictionary(lang satisfies Locale);
   const copy = dict.app.clients;
 
@@ -70,6 +74,7 @@ export default async function ClientsPage(props: {
                   <th className="px-5 py-3 font-medium">{copy.columns.email}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.phone}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.createdAt}</th>
+                  <th className="px-5 py-3 font-medium">{copy.columns.quotes}</th>
                   <th className="px-5 py-3 text-right font-medium">
                     {copy.columns.action}
                   </th>
@@ -110,6 +115,12 @@ export default async function ClientsPage(props: {
                           year: "numeric",
                         })}
                       </td>
+                      <td className="px-5 py-3.5 align-top">
+                        <QuotesBadge
+                          counts={quoteCounts.get(c.id)}
+                          copy={copy.columns.quotesCount}
+                        />
+                      </td>
                       <td className="px-5 py-3.5 align-top text-right">
                         <a
                           href={newQuoteHref}
@@ -128,5 +139,48 @@ export default async function ClientsPage(props: {
         </div>
       )}
     </div>
+  );
+}
+
+function QuotesBadge({
+  counts,
+  copy,
+}: {
+  counts: { total: number; active: number } | undefined;
+  copy: {
+    activeOne: string;
+    activeMany: string;
+    historicalOnly: string;
+    noQuotes: string | null;
+  };
+}) {
+  if (!counts || counts.total === 0) {
+    return <span className="text-white/30">—</span>;
+  }
+
+  if (counts.active > 0) {
+    const label =
+      counts.active === 1
+        ? copy.activeOne
+        : copy.activeMany.replace("{count}", String(counts.active));
+    const tone =
+      "bg-success/15 text-success ring-1 ring-inset ring-success/30";
+    return (
+      <span
+        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ${tone}`}
+      >
+        <span className="size-1.5 rounded-full bg-success" />
+        {counts.total} <span className="text-success/70">·</span> {label}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white/55 ring-1 ring-inset ring-white/15">
+      <span className="size-1.5 rounded-full bg-white/40" />
+      {counts.total}
+      <span className="text-white/35">·</span>
+      {copy.historicalOnly}
+    </span>
   );
 }

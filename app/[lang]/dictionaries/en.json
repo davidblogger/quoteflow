@@ -195,7 +195,14 @@
         "phone": "Phone",
         "createdAt": "Added",
         "action": "Action",
-        "newQuote": "New quote"
+        "newQuote": "New quote",
+        "quotes": "Quotes",
+        "quotesCount": {
+          "activeOne": "1 active",
+          "activeMany": "{count} active",
+          "historicalOnly": "historical",
+          "noQuotes": null
+        }
       },
       "empty": {
         "title": "No clients yet",

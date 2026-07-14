@@ -137,3 +137,37 @@ export async function updateQuote(
   }
   return { ok: true };
 }
+
+export type ClientQuoteCounts = Map<string, { total: number; active: number }>;
+
+/**
+ * Returns a map of client_id -> { total, active } counts for all quotes
+ * owned by this profile. One query, grouped in memory — the dataset per
+ * tenant is small enough that an aggregation RPC is not worth the
+ * complexity yet.
+ *
+ * Active = draft or sent (still in flight). The remaining
+ * (accepted or rejected) are treated as historical.
+ */
+export async function countQuotesByClient(
+  profileId: string,
+): Promise<ClientQuoteCounts> {
+  const supabase = await getSupabaseServer();
+  const { data, error } = await supabase
+    .from("quotes")
+    .select("client_id, status")
+    .eq("profile_id", profileId);
+
+  const counts: ClientQuoteCounts = new Map();
+  if (error || !data) return counts;
+
+  for (const row of data) {
+    const existing = counts.get(row.client_id) ?? { total: 0, active: 0 };
+    existing.total += 1;
+    if (row.status === "draft" || row.status === "sent") {
+      existing.active += 1;
+    }
+    counts.set(row.client_id, existing);
+  }
+  return counts;
+}

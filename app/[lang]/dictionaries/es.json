@@ -195,7 +195,14 @@
         "phone": "Teléfono",
         "createdAt": "Agregado",
         "action": "Acción",
-        "newQuote": "Nueva cotización"
+        "newQuote": "Nueva cotización",
+        "quotes": "Cotizaciones",
+        "quotesCount": {
+          "activeOne": "1 activa",
+          "activeMany": "{count} activas",
+          "historicalOnly": "cerradas",
+          "noQuotes": null
+        }
       },
       "empty": {
         "title": "Aún no hay clientes",
