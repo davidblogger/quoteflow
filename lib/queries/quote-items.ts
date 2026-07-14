@@ -168,7 +168,7 @@ export async function deleteQuoteItem(
  * Sums all line items, applies the quote's tax_rate, and writes
  * subtotal + total back to the quotes row.
  */
-async function recomputeQuoteTotals(
+export async function recomputeQuoteTotals(
   profileId: string,
   quoteId: string,
 ): Promise<void> {

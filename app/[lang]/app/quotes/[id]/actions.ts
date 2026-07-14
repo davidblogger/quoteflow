@@ -7,6 +7,7 @@ import {
   addQuoteItem,
   updateQuoteItem,
   deleteQuoteItem,
+  recomputeQuoteTotals,
 } from "@/lib/queries/quote-items";
 import { updateQuote } from "@/lib/queries/quotes";
 import type { QuoteItemFieldErrors } from "@/lib/types/quote-item";
@@ -168,6 +169,8 @@ export async function updateQuoteAction(
   });
 
   if (!result.ok) return { ok: false, message: "error" };
+
+  await recomputeQuoteTotals(user.id, quoteId);
 
   revalidatePath(`/${lang}/app/quotes/${quoteId}`);
   revalidatePath(`/${lang}/app/quotes`);
