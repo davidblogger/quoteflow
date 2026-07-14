@@ -5,7 +5,11 @@ import { getSupabaseServer } from "@/lib/supabase/server";
 import { getRequestById } from "@/lib/queries/requests";
 import { RequestStatusBadge } from "../status-badge";
 import { StatusChanger } from "./status-changer";
-import { ArrowRightIcon, InboxIcon } from "@/app/components/icons/Icons";
+import {
+  ArrowRightIcon,
+  InboxIcon,
+  UsersIcon,
+} from "@/app/components/icons/Icons";
 
 export async function generateMetadata(
   props: { params: Promise<{ lang: string; id: string }> },
@@ -140,6 +144,33 @@ export default async function RequestDetailPage(props: {
             </div>
           </dl>
         </section>
+
+        {request.status === "converted" && (
+          <section className="glass-strong rounded-2xl p-5 lg:col-span-3">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-4">
+                <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-success/15 text-success">
+                  <UsersIcon className="size-5" />
+                </span>
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-sm font-semibold text-white">
+                    {copy.createClient.title}
+                  </h2>
+                  <p className="max-w-xl text-sm text-white/65">
+                    {copy.createClient.description}
+                  </p>
+                </div>
+              </div>
+              <a
+                href={`/${lang}/app/clients/new?from=${request.id}`}
+                className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full gradient-accent px-5 text-sm font-medium text-white shadow-[0_10px_30px_-10px_rgba(124,140,255,0.55)] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_14px_40px_-10px_rgba(124,140,255,0.75)]"
+              >
+                {copy.createClient.cta}
+                <ArrowRightIcon className="size-4" />
+              </a>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

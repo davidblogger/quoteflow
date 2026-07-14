@@ -34,6 +34,7 @@
       "form": {
         "newTitle": "Nuevo cliente",
         "editTitle": "Editar cliente",
+        "fromRequestLabel": "Pre-llenado desde una solicitud",
         "fields": {
           "name": "Nombre completo",
           "namePlaceholder": "Nombre del contacto",
@@ -152,6 +153,11 @@
             "title": "Solicitud no encontrada",
             "description": "Esta solicitud no existe o no tienes acceso a ella.",
             "backCta": "Volver a solicitudes"
+          },
+          "createClient": {
+            "title": "Convertir en cliente",
+            "description": "Esta solicitud está cualificada. Crea un registro de cliente para llevar el seguimiento de cotizaciones y comunicaciones.",
+            "cta": "Crear cliente desde esta solicitud"
           }
         }
       },

@@ -34,6 +34,7 @@
       "form": {
         "newTitle": "New client",
         "editTitle": "Edit client",
+        "fromRequestLabel": "Pre-filled from request",
         "fields": {
           "name": "Full name",
           "namePlaceholder": "Contact name",
@@ -152,6 +153,11 @@
             "title": "Request not found",
             "description": "This request does not exist or you don't have access to it.",
             "backCta": "Back to requests"
+          },
+          "createClient": {
+            "title": "Convert to client",
+            "description": "This request is qualified. Create a client record so you can track quotes and follow-ups against them.",
+            "cta": "Create client from this request"
           }
         }
       },
