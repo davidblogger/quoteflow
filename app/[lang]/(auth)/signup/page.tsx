@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { hasLocale, getDictionary, type Locale } from "../../dictionaries";
+import { getSupabaseServer } from "@/lib/supabase/server";
 import { SignupForm } from "./SignupForm";
 
 export async function generateStaticParams() {
@@ -21,6 +22,12 @@ export default async function SignupPage(
 ) {
   const { lang } = await props.params;
   if (!hasLocale(lang)) notFound();
+
+  const supabase = await getSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) redirect(`/${lang}/app`);
 
   const dict = await getDictionary(lang satisfies Locale);
 
