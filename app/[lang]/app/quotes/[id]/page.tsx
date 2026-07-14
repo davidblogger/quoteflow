@@ -6,6 +6,7 @@ import { getQuoteById } from "@/lib/queries/quotes";
 import { getClientById } from "@/lib/queries/clients";
 import { QuoteStatusBadge } from "../status-badge";
 import { QuoteStatusChanger } from "./status-changer";
+import { ItemsSection } from "./items-section";
 import { ArrowRightIcon, FileTextIcon } from "@/app/components/icons/Icons";
 
 export async function generateMetadata(
@@ -97,19 +98,12 @@ export default async function QuoteDetailPage(props: {
       </header>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <section className="glass rounded-2xl p-5 lg:col-span-2">
-          <h2 className="mb-4 text-sm font-semibold text-white">
-            {copy.detail.sections.items}
-          </h2>
-          <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-white/10 px-4 py-12 text-center">
-            <p className="text-sm font-medium text-white">
-              {copy.detail.itemsPlaceholder.title}
-            </p>
-            <p className="max-w-md text-xs text-white/55">
-              {copy.detail.itemsPlaceholder.description}
-            </p>
-          </div>
-        </section>
+        <ItemsSection
+          quoteId={quote.id}
+          lang={lang}
+          currency={quote.currency}
+          copy={copy.detail.items}
+        />
 
         <section className="glass rounded-2xl p-5">
           <h2 className="mb-4 text-sm font-semibold text-white">

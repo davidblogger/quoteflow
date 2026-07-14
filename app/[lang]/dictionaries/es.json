@@ -77,6 +77,31 @@
           "totals": "Totales",
           "meta": "Información"
         },
+        "items": {
+          "table": {
+            "description": "Descripción",
+            "quantity": "Cant.",
+            "unitPrice": "P. unit.",
+            "subtotal": "Subtotal",
+            "remove": "Quitar"
+          },
+          "empty": "Aún no hay items. Agrega el primero abajo.",
+          "addTitle": "Agregar item",
+          "fields": {
+            "description": "¿Qué cubre este item?",
+            "descriptionPlaceholder": "Ej: Diseño de logo con 3 propuestas y 2 rondas de revisión",
+            "quantity": "Cant.",
+            "unitPrice": "Precio unit."
+          },
+          "submit": "Agregar item",
+          "submitting": "Agregando…",
+          "errors": {
+            "required": "Este campo es obligatorio",
+            "invalidNumber": "Introduce un número válido",
+            "generic": "No se pudo agregar el item. Inténtalo de nuevo."
+          },
+          "deleteConfirm": "¿Quitar este item?"
+        },
         "fields": {
           "client": "Cliente",
           "currency": "Moneda",
