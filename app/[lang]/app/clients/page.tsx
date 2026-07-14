@@ -70,11 +70,15 @@ export default async function ClientsPage(props: {
                   <th className="px-5 py-3 font-medium">{copy.columns.email}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.phone}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.createdAt}</th>
+                  <th className="px-5 py-3 text-right font-medium">
+                    {copy.columns.action}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {clients.map((c) => {
                   const href = `/${lang}/app/clients/${c.id}`;
+                  const newQuoteHref = `/${lang}/app/quotes/new?client=${c.id}`;
                   return (
                     <tr
                       key={c.id}
@@ -105,6 +109,15 @@ export default async function ClientsPage(props: {
                           month: "short",
                           year: "numeric",
                         })}
+                      </td>
+                      <td className="px-5 py-3.5 align-top text-right">
+                        <a
+                          href={newQuoteHref}
+                          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04 px-3 text-xs font-medium text-white transition-colors hover:bg-white/10 hover:border-white/20"
+                        >
+                          <PlusIcon className="size-3.5" />
+                          {copy.columns.newQuote}
+                        </a>
                       </td>
                     </tr>
                   );

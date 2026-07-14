@@ -193,7 +193,9 @@
         "company": "Company",
         "email": "Email",
         "phone": "Phone",
-        "createdAt": "Added"
+        "createdAt": "Added",
+        "action": "Action",
+        "newQuote": "New quote"
       },
       "empty": {
         "title": "No clients yet",
@@ -234,6 +236,11 @@
         "backCta": "Back to clients",
         "deleteCta": "Delete client",
         "deleteConfirm": "Delete this client? This cannot be undone.",
+        "createQuote": {
+          "title": "Start a quote for this client",
+          "description": "Their contact info is already saved. We'll pre-select this client in the new-quote form.",
+          "cta": "New quote →"
+        },
         "sections": {
           "contact": "Contact",
           "notes": "Internal notes",

@@ -193,7 +193,9 @@
         "company": "Empresa",
         "email": "Email",
         "phone": "Teléfono",
-        "createdAt": "Agregado"
+        "createdAt": "Agregado",
+        "action": "Acción",
+        "newQuote": "Nueva cotización"
       },
       "empty": {
         "title": "Aún no hay clientes",
@@ -234,6 +236,11 @@
         "backCta": "Volver a clientes",
         "deleteCta": "Eliminar cliente",
         "deleteConfirm": "¿Eliminar este cliente? Esta acción no se puede deshacer.",
+        "createQuote": {
+          "title": "Iniciar cotización para este cliente",
+          "description": "La información de contacto ya está guardada. Pre-seleccionaremos este cliente en el formulario de nueva cotización.",
+          "cta": "Nueva cotización →"
+        },
         "sections": {
           "contact": "Contacto",
           "notes": "Notas internas",

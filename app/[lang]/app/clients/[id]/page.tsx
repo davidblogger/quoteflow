@@ -5,7 +5,7 @@ import { getSupabaseServer } from "@/lib/supabase/server";
 import { getClientById } from "@/lib/queries/clients";
 import { ClientForm } from "../client-form";
 import { DeleteClientButton } from "./delete-button";
-import { ArrowRightIcon, UsersIcon } from "@/app/components/icons/Icons";
+import { ArrowRightIcon, FileTextIcon, UsersIcon } from "@/app/components/icons/Icons";
 
 export async function generateMetadata(
   props: { params: Promise<{ lang: string; id: string }> },
@@ -79,6 +79,29 @@ export default async function ClientDetailPage(props: {
           </div>
         </div>
       </header>
+
+      <a
+        href={`/${lang}/app/quotes/new?client=${client.id}`}
+        className="flex flex-col gap-2 rounded-2xl border border-accent-2/20 bg-accent-2/[0.04] px-4 py-3.5 transition-colors hover:border-accent-2/40 hover:bg-accent-2/[0.08] sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+      >
+        <div className="flex items-start gap-3">
+          <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-2/15 text-accent-2">
+            <FileTextIcon className="size-5" />
+          </span>
+          <div className="flex flex-col gap-1">
+            <h2 className="text-sm font-semibold text-white">
+              {copy.detail.createQuote.title}
+            </h2>
+            <p className="text-sm text-white/65">
+              {copy.detail.createQuote.description}
+            </p>
+          </div>
+        </div>
+        <span className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-full gradient-accent px-5 text-sm font-medium text-white shadow-[0_10px_30px_-10px_rgba(124,140,255,0.55)] transition-all duration-200 hover:-translate-y-px hover:shadow-[0_14px_40px_-10px_rgba(124,140,255,0.75)] sm:self-auto">
+          {copy.detail.createQuote.cta}
+          <ArrowRightIcon className="size-4" />
+        </span>
+      </a>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <section className="glass rounded-2xl p-5 lg:col-span-2">

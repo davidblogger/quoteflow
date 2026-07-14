@@ -1,6 +1,7 @@
 import type { RequestStatus } from "@/lib/types/request";
 import { LightbulbIcon } from "@/app/components/icons/Icons";
 
+
 type TipCopy = {
   title: string;
   body: string;
@@ -16,13 +17,6 @@ type WorkflowTipProps = {
     converted: TipCopy;
   };
 };
-
-const VISIBLE_STATUSES: readonly RequestStatus[] = [
-  "new",
-  "contacted",
-  "qualified",
-  "converted",
-] as const;
 
 export function WorkflowTip({ status, copy }: WorkflowTipProps) {
   if (status === "closed") return null;

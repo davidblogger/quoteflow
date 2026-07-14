@@ -35,6 +35,7 @@ type QuoteFormProps = {
   lang: string;
   cancelHref: string;
   clients: QuoteFormClient[];
+  initialClientId?: string;
   defaults?: {
     currency?: string;
     taxRate?: number;
@@ -48,6 +49,7 @@ export function QuoteForm({
   lang,
   cancelHref,
   clients,
+  initialClientId,
   defaults,
 }: QuoteFormProps) {
   const [state, formAction] = useActionState(createQuoteAction, initialState);
@@ -68,7 +70,7 @@ export function QuoteForm({
             id="clientId"
             name="clientId"
             required
-            defaultValue=""
+            defaultValue={initialClientId ?? ""}
             aria-invalid={Boolean(fe.client)}
             aria-describedby={fe.client ? "clientId-error" : undefined}
             className={`h-11 w-full appearance-none rounded-xl border bg-white/[0.03] px-4 pr-10 text-sm text-white transition-colors focus:outline-none focus:bg-white/[0.05] ${

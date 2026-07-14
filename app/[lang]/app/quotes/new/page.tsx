@@ -9,8 +9,10 @@ import { ArrowRightIcon, UsersIcon } from "@/app/components/icons/Icons";
 
 export default async function NewQuotePage(props: {
   params: Promise<{ lang: string }>;
+  searchParams: Promise<{ client?: string }>;
 }) {
   const { lang } = await props.params;
+  const { client: clientFromQuery } = await props.searchParams;
   if (!hasLocale(lang)) redirect(`/${lang}`);
 
   const supabase = await getSupabaseServer();
@@ -23,6 +25,12 @@ export default async function NewQuotePage(props: {
     listClients(user.id),
     getCurrentProfile(),
   ]);
+
+  // Only pre-select if the client id actually belongs to this user.
+  const preselectedClientId =
+    clientFromQuery && clients.some((c) => c.id === clientFromQuery)
+      ? clientFromQuery
+      : undefined;
 
   const dict = await getDictionary(lang satisfies Locale);
   const copy = dict.app.quotes;
@@ -75,6 +83,7 @@ export default async function NewQuotePage(props: {
               label: c.name,
               company: c.company,
             }))}
+            initialClientId={preselectedClientId}
             defaults={{
               currency: profile?.currency ?? "USD",
               taxRate: profile?.tax_rate ?? 0,
