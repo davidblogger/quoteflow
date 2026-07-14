@@ -7,6 +7,8 @@ import { getClientById } from "@/lib/queries/clients";
 import { QuoteStatusBadge } from "../status-badge";
 import { QuoteStatusChanger } from "./status-changer";
 import { ItemsSection } from "./items-section";
+import { EditQuoteLink } from "./edit-quote-link";
+import { EditQuoteForm } from "./edit-quote-form";
 import { ArrowRightIcon, FileTextIcon } from "@/app/components/icons/Icons";
 
 export async function generateMetadata(
@@ -40,6 +42,10 @@ export default async function QuoteDetailPage(props: {
   if (!quote) {
     return <NotFoundState listHref={listHref} copy={copy.detail.notFound} />;
   }
+
+  const editingHeader = edit === "header";
+  const editingItemId =
+    edit && edit !== "header" && edit !== "new" ? edit : null;
 
   const client = await getClientById(user.id, quote.client_id);
 
@@ -96,15 +102,33 @@ export default async function QuoteDetailPage(props: {
             </p>
           </div>
         </div>
-        <QuoteStatusBadge status={quote.status} labels={copy.statusBadge} />
+        <div className="flex items-center gap-3">
+          {!editingHeader && (
+            <EditQuoteLink
+              href={`/${lang}/app/quotes/${quote.id}?edit=header`}
+              label={copy.detail.edit.cta}
+            />
+          )}
+          <QuoteStatusBadge status={quote.status} labels={copy.statusBadge} />
+        </div>
       </header>
+
+      {editingHeader && (
+        <EditQuoteForm
+          quote={quote}
+          clientName={client?.name ?? copy.detail.empty}
+          lang={lang}
+          cancelHref={`/${lang}/app/quotes/${quote.id}`}
+          copy={copy.detail.edit}
+        />
+      )}
 
       <div className="grid gap-6 lg:grid-cols-3">
         <ItemsSection
           quoteId={quote.id}
           lang={lang}
           currency={quote.currency}
-          editingItemId={edit ?? null}
+          editingItemId={editingItemId}
           copy={copy.detail.items}
         />
 

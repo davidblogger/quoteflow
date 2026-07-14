@@ -129,6 +129,27 @@
           "title": "Quote not found",
           "description": "This quote does not exist or you don't have access to it.",
           "backCta": "Back to quotes"
+        },
+        "edit": {
+          "cta": "Edit quote",
+          "title": "Edit quote",
+          "hint": "Editing the quote header. Save to apply or cancel to discard.",
+          "fields": {
+            "title": "Title",
+            "currency": "Currency",
+            "taxRate": "Tax rate (%)",
+            "validUntil": "Valid until",
+            "notes": "Internal notes",
+            "notesPlaceholder": "Context for your team (not shown to the client)"
+          },
+          "saveChanges": "Save changes",
+          "saving": "Saving…",
+          "cancel": "Cancel",
+          "errors": {
+            "required": "This field is required",
+            "invalidNumber": "Enter a valid number",
+            "generic": "Could not save the quote. Please try again."
+          }
         }
       },
       "statusChanger": {

@@ -95,3 +95,45 @@ export async function updateQuoteStatus(
   }
   return { ok: true };
 }
+
+export type QuoteEditableFields = {
+  title: string;
+  currency: string;
+  tax_rate: number;
+  valid_until: string | null;
+  notes: string | null;
+};
+
+/**
+ * Updates the editable header fields of a quote. Does NOT touch client_id
+ * (which would require migrating line items) or status (which has its own
+ * dedicated action).
+ */
+export async function updateQuote(
+  profileId: string,
+  id: string,
+  input: QuoteEditableFields,
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await getSupabaseServer();
+  const { error } = await supabase
+    .from("quotes")
+    .update({
+      title: input.title,
+      currency: input.currency,
+      tax_rate: input.tax_rate,
+      valid_until: input.valid_until,
+      notes: input.notes,
+    })
+    .eq("id", id)
+    .eq("profile_id", profileId);
+
+  if (error) {
+    console.error("[QuoteFlow] update quote failed", {
+      id,
+      code: error.code,
+      message: error.message,
+    });
+    return { ok: false, error: error.message };
+  }
+  return { ok: true };
+}

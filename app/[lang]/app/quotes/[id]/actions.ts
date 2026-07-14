@@ -8,6 +8,7 @@ import {
   updateQuoteItem,
   deleteQuoteItem,
 } from "@/lib/queries/quote-items";
+import { updateQuote } from "@/lib/queries/quotes";
 import type { QuoteItemFieldErrors } from "@/lib/types/quote-item";
 
 export type AddItemFormState = {
@@ -101,6 +102,69 @@ export async function updateQuoteItemAction(
     description,
     quantity: quantity as number,
     unit_price: unitPrice as number,
+  });
+
+  if (!result.ok) return { ok: false, message: "error" };
+
+  revalidatePath(`/${lang}/app/quotes/${quoteId}`);
+  revalidatePath(`/${lang}/app/quotes`);
+
+  redirect(`/${lang}/app/quotes/${quoteId}`);
+}
+
+export type EditQuoteFormState = {
+  ok: boolean;
+  message: "idle" | "invalid" | "error";
+  fieldErrors?: Partial<
+    Record<
+      "title" | "currency" | "taxRate" | "validUntil",
+      "required" | "invalidNumber"
+    >
+  >;
+};
+
+export async function updateQuoteAction(
+  _prev: EditQuoteFormState,
+  formData: FormData,
+): Promise<EditQuoteFormState> {
+  const lang = (formData.get("lang") ?? "en").toString();
+  const quoteId = (formData.get("quoteId") ?? "").toString();
+
+  const title = (formData.get("title") ?? "").toString().trim();
+  const currency = (formData.get("currency") ?? "USD").toString().trim() || "USD";
+  const taxRateRaw = (formData.get("taxRate") ?? "").toString().trim();
+  const validUntilRaw = (formData.get("validUntil") ?? "").toString().trim();
+  const notes = (formData.get("notes") ?? "").toString().trim();
+
+  const fieldErrors: EditQuoteFormState["fieldErrors"] = {};
+  if (!title) fieldErrors.title = "required";
+
+  let taxRate = 0;
+  if (taxRateRaw) {
+    const parsed = Number(taxRateRaw.replace(",", "."));
+    if (Number.isNaN(parsed) || parsed < 0) {
+      fieldErrors.taxRate = "invalidNumber";
+    } else {
+      taxRate = parsed;
+    }
+  }
+
+  if (!quoteId || Object.keys(fieldErrors).length > 0) {
+    return { ok: false, message: "invalid", fieldErrors };
+  }
+
+  const supabase = await getSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, message: "error" };
+
+  const result = await updateQuote(user.id, quoteId, {
+    title,
+    currency,
+    tax_rate: taxRate,
+    valid_until: validUntilRaw || null,
+    notes: notes || null,
   });
 
   if (!result.ok) return { ok: false, message: "error" };

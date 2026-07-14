@@ -129,6 +129,27 @@
           "title": "Cotización no encontrada",
           "description": "Esta cotización no existe o no tienes acceso a ella.",
           "backCta": "Volver a cotizaciones"
+        },
+        "edit": {
+          "cta": "Editar cotización",
+          "title": "Editar cotización",
+          "hint": "Editando el encabezado. Guarda para aplicar o cancela para descartar.",
+          "fields": {
+            "title": "Título",
+            "currency": "Moneda",
+            "taxRate": "Impuesto (%)",
+            "validUntil": "Válida hasta",
+            "notes": "Notas internas",
+            "notesPlaceholder": "Contexto para tu equipo (no se muestra al cliente)"
+          },
+          "saveChanges": "Guardar cambios",
+          "saving": "Guardando…",
+          "cancel": "Cancelar",
+          "errors": {
+            "required": "Este campo es obligatorio",
+            "invalidNumber": "Introduce un número válido",
+            "generic": "No se pudo guardar la cotización. Inténtalo de nuevo."
+          }
         }
       },
       "statusChanger": {
