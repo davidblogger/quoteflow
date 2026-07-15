@@ -7,6 +7,7 @@ import {
   InboxIcon,
   FileTextIcon,
   UsersIcon,
+  BellIcon,
   SettingsIcon,
 } from "@/app/components/icons/Icons";
 
@@ -14,6 +15,7 @@ type NavItem = {
   href: string;
   label: string;
   icon: ComponentType<{ className?: string }>;
+  badge?: number;
 };
 
 type AppSidebarProps = {
@@ -33,6 +35,7 @@ type AppSidebarProps = {
     general: string;
   };
   logo: ReactNode;
+  followupBadge: number;
 };
 
 export function AppSidebar({
@@ -41,6 +44,7 @@ export function AppSidebar({
   nav,
   navGroups,
   logo,
+  followupBadge,
 }: AppSidebarProps) {
   const pathname = usePathname();
 
@@ -49,6 +53,14 @@ export function AppSidebar({
     { href: `/${lang}/app/requests`, label: nav.requests, icon: InboxIcon },
     { href: `/${lang}/app/quotes`, label: nav.quotes, icon: FileTextIcon },
     { href: `/${lang}/app/clients`, label: nav.clients, icon: UsersIcon },
+  ];
+  const followup: NavItem[] = [
+    {
+      href: `/${lang}/app/followup`,
+      label: nav.followup,
+      icon: BellIcon,
+      badge: followupBadge,
+    },
   ];
   const general: NavItem[] = [
     { href: `/${lang}/app/settings`, label: nav.settings, icon: SettingsIcon },
@@ -63,6 +75,11 @@ export function AppSidebar({
         className="flex flex-1 flex-col gap-6 px-3 pb-6"
       >
         <NavGroup title={navGroups.main} items={main} pathname={pathname} />
+        <NavGroup
+          title={navGroups.followup}
+          items={followup}
+          pathname={pathname}
+        />
         <NavGroup
           title={navGroups.general}
           items={general}
@@ -103,7 +120,12 @@ function NavGroup({
                 }`}
               >
                 <Icon className="size-4" />
-                {item.label}
+                <span className="flex-1 truncate">{item.label}</span>
+                {item.badge !== undefined && item.badge > 0 && (
+                  <span className="inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-accent-2/20 px-1.5 text-[10px] font-semibold text-accent-2">
+                    {item.badge}
+                  </span>
+                )}
               </a>
             </li>
           );

@@ -20,9 +20,10 @@ type SidebarProps = {
       general: string;
     };
   };
+  followupBadge: number;
 };
 
-export function Sidebar({ lang, copy }: SidebarProps) {
+export function Sidebar({ lang, copy, followupBadge }: SidebarProps) {
   return (
     <AppSidebar
       lang={lang}
@@ -30,6 +31,7 @@ export function Sidebar({ lang, copy }: SidebarProps) {
       nav={copy.nav}
       navGroups={copy.navGroups}
       logo={<Logo lang={lang} />}
+      followupBadge={followupBadge}
     />
   );
 }

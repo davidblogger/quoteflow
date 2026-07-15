@@ -1,3 +1,11 @@
+export type ClientStatus = "active" | "paused" | "closed";
+
+export const CLIENT_STATUSES: readonly ClientStatus[] = [
+  "active",
+  "paused",
+  "closed",
+] as const;
+
 export type Client = {
   id: string;
   profile_id: string;
@@ -7,6 +15,7 @@ export type Client = {
   phone: string | null;
   address: string | null;
   notes: string | null;
+  status: ClientStatus;
   created_at: string;
   updated_at: string;
 };

@@ -243,6 +243,13 @@
         "backCta": "Volver a clientes",
         "deleteCta": "Eliminar cliente",
         "deleteConfirm": "¿Eliminar este cliente? Esta acción no se puede deshacer.",
+        "status": {
+          "label": "Estado",
+          "active": "Activo",
+          "paused": "Pausado",
+          "closed": "Cerrado",
+          "saved": "Estado actualizado."
+        },
         "createQuote": {
           "title": "Iniciar cotización para este cliente",
           "description": "La información de contacto ya está guardada. Pre-seleccionaremos este cliente en el formulario de nueva cotización.",
@@ -268,6 +275,60 @@
           "description": "Este cliente no existe o no tienes acceso a él.",
           "backCta": "Volver a clientes"
         }
+      }
+    },
+    "followup": {
+      "metaTitle": "Seguimiento",
+      "title": "Seguimiento",
+      "subtitle": "Recordatorios y notas vinculados a clientes. Mantén el control de cada relación activa.",
+      "tabs": {
+        "overdue": "Vencidos",
+        "today": "Hoy",
+        "upcoming": "Próximos",
+        "completed": "Completados"
+      },
+      "empty": {
+        "title": "Aún no hay seguimientos",
+        "description": "Programa un recordatorio o anota una interacción con un cliente. Aparecerán aquí organizados por fecha de vencimiento.",
+        "cta": "Crear primer seguimiento"
+      },
+      "statusBadge": {
+        "pending": "Pendiente",
+        "done": "Hecho",
+        "cancelled": "Cancelado"
+      },
+      "table": {
+        "subject": "Asunto",
+        "client": "Cliente",
+        "due": "Vence",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "actions": {
+        "complete": "Marcar hecho",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "completeConfirm": "¿Marcar este seguimiento como hecho?",
+        "cancelConfirm": "¿Cancelar este seguimiento? Ya no aparecerá en las listas activas.",
+        "deleteConfirm": "¿Eliminar este seguimiento? Esta acción no se puede deshacer."
+      },
+      "newTitle": "Nuevo seguimiento",
+      "form": {
+        "subject": "Asunto",
+        "subjectPlaceholder": "Ej: Llamar a Lumen sobre la cotización #45",
+        "client": "Cliente",
+        "clientPlaceholder": "Selecciona un cliente (opcional)",
+        "dueAt": "Fecha de vencimiento",
+        "dueAtOptional": "opcional",
+        "notes": "Notas",
+        "notesPlaceholder": "Contexto que quieras recordar la próxima vez…"
+      },
+      "submit": "Crear seguimiento",
+      "submitting": "Creando…",
+      "success": "Seguimiento creado.",
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "generic": "No se pudo guardar el seguimiento. Inténtalo de nuevo."
       }
     },
     "settings": {

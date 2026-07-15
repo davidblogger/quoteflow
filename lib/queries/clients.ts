@@ -4,9 +4,10 @@ import type {
   Client,
   ClientInsert,
   ClientUpdate,
+  ClientStatus,
 } from "@/lib/types/client";
 
-export type { Client, ClientInsert, ClientUpdate } from "@/lib/types/client";
+export type { Client, ClientInsert, ClientUpdate, ClientStatus } from "@/lib/types/client";
 
 export async function listClients(profileId: string): Promise<Client[]> {
   const supabase = await getSupabaseServer();
@@ -87,6 +88,30 @@ export async function updateClient(
   if (error) {
     console.error("[QuoteFlow] update client failed", {
       id,
+      code: error.code,
+      message: error.message,
+    });
+    return { ok: false, error: error.message };
+  }
+  return { ok: true };
+}
+
+export async function updateClientStatus(
+  profileId: string,
+  id: string,
+  status: ClientStatus,
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await getSupabaseServer();
+  const { error } = await supabase
+    .from("clients")
+    .update({ status })
+    .eq("id", id)
+    .eq("profile_id", profileId);
+
+  if (error) {
+    console.error("[QuoteFlow] update client status failed", {
+      id,
+      status,
       code: error.code,
       message: error.message,
     });

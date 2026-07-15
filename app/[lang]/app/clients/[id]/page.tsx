@@ -5,6 +5,7 @@ import { getSupabaseServer } from "@/lib/supabase/server";
 import { getClientById } from "@/lib/queries/clients";
 import { ClientForm } from "../client-form";
 import { DeleteClientButton } from "./delete-button";
+import { ClientStatusSelector } from "./status-selector";
 import { ArrowRightIcon, FileTextIcon, UsersIcon } from "@/app/components/icons/Icons";
 
 export async function generateMetadata(
@@ -78,6 +79,12 @@ export default async function ClientDetailPage(props: {
             )}
           </div>
         </div>
+        <ClientStatusSelector
+          lang={lang}
+          clientId={client.id}
+          currentStatus={client.status}
+          copy={copy.detail.status}
+        />
       </header>
 
       <a

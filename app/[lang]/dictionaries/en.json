@@ -243,6 +243,13 @@
         "backCta": "Back to clients",
         "deleteCta": "Delete client",
         "deleteConfirm": "Delete this client? This cannot be undone.",
+        "status": {
+          "label": "Status",
+          "active": "Active",
+          "paused": "Paused",
+          "closed": "Closed",
+          "saved": "Status updated."
+        },
         "createQuote": {
           "title": "Start a quote for this client",
           "description": "Their contact info is already saved. We'll pre-select this client in the new-quote form.",
@@ -268,6 +275,60 @@
           "description": "This client does not exist or you don't have access to it.",
           "backCta": "Back to clients"
         }
+      }
+    },
+    "followup": {
+      "metaTitle": "Follow-up",
+      "title": "Follow-up",
+      "subtitle": "Reminders and notes tied to clients. Stay on top of every active relationship.",
+      "tabs": {
+        "overdue": "Overdue",
+        "today": "Today",
+        "upcoming": "Upcoming",
+        "completed": "Completed"
+      },
+      "empty": {
+        "title": "No follow-ups yet",
+        "description": "Schedule a reminder or log an interaction with a client. They'll show up here organized by when they're due.",
+        "cta": "Create your first follow-up"
+      },
+      "statusBadge": {
+        "pending": "Pending",
+        "done": "Done",
+        "cancelled": "Cancelled"
+      },
+      "table": {
+        "subject": "Subject",
+        "client": "Client",
+        "due": "Due",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "complete": "Mark done",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "completeConfirm": "Mark this follow-up as done?",
+        "cancelConfirm": "Cancel this follow-up? It will no longer appear in active lists.",
+        "deleteConfirm": "Delete this follow-up? This cannot be undone."
+      },
+      "newTitle": "New follow-up",
+      "form": {
+        "subject": "Subject",
+        "subjectPlaceholder": "e.g. Call Lumen about quote #45",
+        "client": "Client",
+        "clientPlaceholder": "Select a client (optional)",
+        "dueAt": "Due date",
+        "dueAtOptional": "optional",
+        "notes": "Notes",
+        "notesPlaceholder": "Any context you want to remember next time…"
+      },
+      "submit": "Create follow-up",
+      "submitting": "Creating…",
+      "success": "Follow-up created.",
+      "errors": {
+        "required": "This field is required",
+        "generic": "Could not save the follow-up. Please try again."
       }
     },
     "settings": {

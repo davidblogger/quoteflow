@@ -27,9 +27,10 @@ type TopbarProps = {
       signOut: string;
     };
   };
+  followupBadge: number;
 };
 
-export function Topbar({ lang, email, copy }: TopbarProps) {
+export function Topbar({ lang, email, copy, followupBadge }: TopbarProps) {
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-white/5 bg-[#060814]/60 px-4 backdrop-blur-xl print:hidden sm:gap-4 sm:px-6">
       <DashboardMobileMenu
@@ -38,6 +39,7 @@ export function Topbar({ lang, email, copy }: TopbarProps) {
         nav={copy.nav}
         navGroups={copy.navGroups}
         logo={<Logo lang={lang} />}
+        followupBadge={followupBadge}
       />
 
       <label className="relative flex h-10 flex-1 items-center">

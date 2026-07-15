@@ -7,8 +7,9 @@ import {
   createClient,
   updateClient,
   deleteClient,
+  updateClientStatus,
 } from "@/lib/queries/clients";
-import type { ClientFieldErrors } from "@/lib/types/client";
+import type { ClientFieldErrors, ClientStatus } from "@/lib/types/client";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -97,6 +98,27 @@ export async function updateClientAction(
   revalidatePath(`/${lang}/app/clients/${id}`);
 
   return { ok: true, message: "successUpdate" };
+}
+
+export async function updateClientStatusAction(
+  formData: FormData,
+): Promise<void> {
+  const lang = (formData.get("lang") ?? "en").toString();
+  const id = parseField(formData.get("id"));
+  const status = parseField(formData.get("status")) as ClientStatus | null;
+  if (!id || !status) redirect(`/${lang}/app/clients`);
+
+  const supabase = await getSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect(`/${lang}/login`);
+
+  await updateClientStatus(user.id, id, status);
+  revalidatePath(`/${lang}/app/clients`);
+  revalidatePath(`/${lang}/app/clients/${id}`);
+  revalidatePath(`/${lang}/app`);
+  redirect(`/${lang}/app/clients/${id}`);
 }
 
 export async function deleteClientAction(formData: FormData): Promise<void> {
