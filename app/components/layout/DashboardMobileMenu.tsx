@@ -8,7 +8,6 @@ import {
   InboxIcon,
   FileTextIcon,
   UsersIcon,
-  BellIcon,
   SettingsIcon,
   CloseIcon,
   MenuIcon,
@@ -82,9 +81,6 @@ export function DashboardMobileMenu({
     { href: `/${lang}/app/quotes`, label: nav.quotes, icon: FileTextIcon },
     { href: `/${lang}/app/clients`, label: nav.clients, icon: UsersIcon },
   ];
-  const followup: NavItem[] = [
-    { href: `/${lang}/app/followup`, label: nav.followup, icon: BellIcon },
-  ];
   const general: NavItem[] = [
     { href: `/${lang}/app/settings`, label: nav.settings, icon: SettingsIcon },
   ];
@@ -139,12 +135,6 @@ export function DashboardMobileMenu({
                 <NavGroup
                   title={navGroups.main}
                   items={main}
-                  pathname={pathname}
-                  onNavigate={() => setOpen(false)}
-                />
-                <NavGroup
-                  title={navGroups.followup}
-                  items={followup}
                   pathname={pathname}
                   onNavigate={() => setOpen(false)}
                 />

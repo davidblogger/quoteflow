@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { hasLocale, getDictionary, type Locale } from "../dictionaries";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import { Button } from "@/app/components/ui/Button";
-import { PlusIcon, FilterIcon } from "@/app/components/icons/Icons";
+import { PlusIcon } from "@/app/components/icons/Icons";
 
 export async function generateMetadata(
   props: { params: Promise<{ lang: string }> },
@@ -47,11 +47,7 @@ export default async function AppOverview(
           <p className="text-sm text-white/55">{copy.title}</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="secondary" size="md">
-            <FilterIcon className="size-4" />
-            {copy.filterCta}
-          </Button>
-          <Button size="md">
+          <Button size="md" href={`/${lang}/quotes/new`}>
             <PlusIcon className="size-4" />
             {copy.newQuoteCta}
           </Button>
@@ -81,7 +77,12 @@ export default async function AppOverview(
         >
           <header className="mb-4 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-white">{copy.tableTitle}</h2>
-            <span className="text-xs text-white/40">{copy.viewAll}</span>
+            <a
+              href={`/${lang}/app/requests`}
+              className="text-xs text-white/40 transition-colors hover:text-white"
+            >
+              {copy.viewAll} →
+            </a>
           </header>
           <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/10 px-4 py-12 text-center">
             <p className="text-sm text-white/65">{copy.emptyRequests}</p>
