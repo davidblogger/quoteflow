@@ -61,12 +61,6 @@ export default async function FollowupPage(props: {
   // each one inside the map.
   const clientsById = new Map(clients.map((c) => [c.id, c]));
 
-  const dateFormatter = new Intl.DateTimeFormat(lang, {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
   const visible = followups.filter(
     (f) => bucketOf(f) === activeTab,
   );
@@ -146,7 +140,6 @@ export default async function FollowupPage(props: {
           followups={visible}
           clientsById={clientsById}
           copy={copy}
-          dateFormatter={dateFormatter}
           lang={lang}
         />
       )}
@@ -158,13 +151,11 @@ function FollowupTable({
   followups,
   clientsById,
   copy,
-  dateFormatter,
   lang,
 }: {
   followups: Followup[];
   clientsById: Map<string, { id: string; name: string; company: string | null }>;
   copy: Awaited<ReturnType<typeof getDictionary>>["app"]["followup"];
-  dateFormatter: Intl.DateTimeFormat;
   lang: string;
 }) {
   return (
@@ -195,7 +186,6 @@ function FollowupTable({
                 }
                 lang={lang}
                 copy={copy}
-                dateFormatter={dateFormatter}
                 reopenLabel="Reopen"
                 deleteLabel="Delete"
               />

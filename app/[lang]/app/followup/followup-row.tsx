@@ -29,7 +29,6 @@ type FollowupRowProps = {
       deleteConfirm: string;
     };
   };
-  dateFormatter: Intl.DateTimeFormat;
   reopenLabel: string;
   deleteLabel: string;
 };
@@ -39,10 +38,14 @@ export function FollowupRow({
   clientName,
   lang,
   copy,
-  dateFormatter,
   reopenLabel,
   deleteLabel,
 }: FollowupRowProps) {
+  const dateFormatter = new Intl.DateTimeFormat(lang, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
   return (
     <tr className="text-white/85">
       <td className="px-4 py-3 align-top">
