@@ -129,11 +129,6 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
     });
   }
 
-  function handleNotificationClick(notification: Notification) {
-    markOneRead(notification.id);
-    window.location.href = `/${lang}/app/requests`;
-  }
-
   const hasUnread = notifications.some((n) => !n.read_at);
 
   return (
@@ -184,11 +179,11 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
             {!isLoading && notifications.length > 0 && (
               <div className="divide-y divide-white/5">
                 {notifications.map((notification) => (
-                  <button
+                  <a
                     key={notification.id}
-                    type="button"
-                    onClick={() => handleNotificationClick(notification)}
-                    className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-white/5"
+                    href={`/${lang}/app/requests`}
+                    onClick={() => markOneRead(notification.id)}
+                    className="flex items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-white/5"
                   >
                     <span className="mt-0.5 shrink-0">{notificationIcon(notification.type)}</span>
                     <div className="min-w-0 flex-1">
@@ -200,7 +195,7 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
                     <span className="shrink-0 text-[10px] text-white/40">
                       {relativeTime(notification.created_at, copy.ago, copy.justNow)}
                     </span>
-                  </button>
+                  </a>
                 ))}
               </div>
             )}
