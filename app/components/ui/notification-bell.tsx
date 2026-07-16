@@ -131,11 +131,7 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
 
   function handleNotificationClick(notification: Notification) {
     markOneRead(notification.id);
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === notification.id ? { ...n, read_at: new Date().toISOString() } : n))
-    );
     window.location.href = `/${lang}/app/requests`;
-    setIsOpen(false);
   }
 
   const hasUnread = notifications.some((n) => !n.read_at);
