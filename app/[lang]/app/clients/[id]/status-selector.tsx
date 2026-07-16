@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
 import { updateClientStatusAction } from "../actions";
 import type { ClientStatus } from "@/lib/types/client";
-import { CheckCircleIcon } from "@/app/components/icons/Icons";
+import { toast } from "sonner";
 
 type ClientStatusSelectorProps = {
   lang: string;
@@ -66,26 +67,31 @@ export function ClientStatusSelector({
         </svg>
       </div>
 
-      <AutoSubmitHint copy={copy} />
+      <SavedToastOnComplete copy={copy} />
     </form>
   );
 }
 
 /**
- * Small UX nicety: a tiny "Saved." line that appears while the form is
- * pending (Server Action is in-flight). No toast, no alert — just a
- * short confirmation that the change went through.
+ * Watches the form's pending state. When the form finishes submitting
+ * (pending goes from true to false), fires a success toast and forgets
+ * the saved value. The status is reset so subsequent renders don't
+ * double-fire.
  */
-function AutoSubmitHint({ copy }: { copy: { saved: string } }) {
+function SavedToastOnComplete({
+  copy,
+}: {
+  copy: { saved: string };
+}) {
   const { pending } = useFormStatus();
-  if (!pending) return null;
-  return (
-    <p
-      role="status"
-      className="flex items-center gap-1 text-[11px] text-success"
-    >
-      <CheckCircleIcon className="size-3" />
-      {copy.saved}
-    </p>
-  );
+  const wasPending = useRef(false);
+
+  useEffect(() => {
+    if (wasPending.current && !pending) {
+      toast.success(copy.saved);
+    }
+    wasPending.current = pending;
+  }, [pending, copy.saved]);
+
+  return null;
 }

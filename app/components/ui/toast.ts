@@ -4,44 +4,50 @@ import { useEffect, useRef } from "react";
 import { toast as sonnerToast } from "sonner";
 
 /**
- * Maps a form action's `message` field to a Sonner toast.
- * `success` and `genericError` map to the obvious toast types.
- * `invalid` (validation) does NOT toast — those show inline field errors
- * and the form itself communicates the failure. The caller can pass a
- * separate `validationToast` string if they want a top-level note
- * for validation errors too (we don't today).
+ * Fire a Sonner toast in response to a form action result.
+ *
+ * Rules:
+ *  - `message === "success"` → success toast (if `options.success` set)
+ *  - `message === "error" | "genericError"` → error toast (if set)
+ *  - anything else (e.g. "invalid", "idle") → no toast
+ *
+ * For the error case the caller can also pass `formError` (a more
+ * specific bucket from the action) — it gets paired with its own
+ * copy if defined, otherwise falls back to `options.error`.
+ *
+ * Toast fires only when the message (or formError) actually changes,
+ * so React strict mode + re-renders don't spam toasts.
  */
-type MessageKind = "success" | "error" | "invalid" | string;
-
-type Options = {
-  success?: string;
-  error?: string;
-  genericError?: string;
-};
-
 export function useActionToast(
-  message: MessageKind,
-  options: Options,
+  message: string,
+  options: {
+    success?: string;
+    error?: string;
+    formError?: string | null;
+    formErrorCopy?: Partial<Record<string, string>>;
+  },
 ) {
-  // Only fire the toast when the message actually changes. Without
-  // this guard React strict mode (and any future re-render) would
-  // re-fire the toast on every render.
-  const lastMessage = useRef<MessageKind | null>(null);
+  const lastKey = useRef<string | null>(null);
   useEffect(() => {
-    if (message === lastMessage.current) return;
-    lastMessage.current = message;
+    const key = `${message}::${options.formError ?? ""}`;
+    if (key === lastKey.current) return;
+    lastKey.current = key;
+
     if (message === "success" && options.success) {
       sonnerToast.success(options.success);
       return;
     }
-    if (
-      (message === "error" || message === "genericError") &&
-      options.error
-    ) {
-      sonnerToast.error(options.error);
-      return;
+    if (message === "error" || message === "genericError") {
+      if (options.formError && options.formErrorCopy) {
+        const specific = options.formErrorCopy[options.formError];
+        if (specific) {
+          sonnerToast.error(specific);
+          return;
+        }
+      }
+      if (options.error) sonnerToast.error(options.error);
     }
-  }, [message, options]);
+  }, [message, options.formError, options.success, options.error, options.formErrorCopy]);
 }
 
 /**

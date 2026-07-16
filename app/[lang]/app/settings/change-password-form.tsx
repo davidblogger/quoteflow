@@ -9,6 +9,7 @@ import {
   EyeIcon,
   EyeOffIcon,
 } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type ChangePasswordFormProps = {
   lang: string;
@@ -45,6 +46,17 @@ type FieldKey = "current" | "next" | "confirm";
 
 export function ChangePasswordForm({ lang, copy }: ChangePasswordFormProps) {
   const [state, formAction] = useActionState(changePasswordAction, initialState);
+
+  useActionToast(state.message, {
+    success: copy.success,
+    error: copy.errors.generic,
+    formError: state.formError ?? null,
+    formErrorCopy: {
+      currentIncorrect: copy.errors.currentIncorrect,
+      sameAsCurrent: copy.errors.sameAsCurrent,
+    },
+  });
+
   const [visible, setVisible] = useState<Record<FieldKey, boolean>>({
     current: false,
     next: false,
@@ -131,28 +143,19 @@ export function ChangePasswordForm({ lang, copy }: ChangePasswordFormProps) {
         />
 
         {state.formError === "currentIncorrect" && (
-          <p
-            role="alert"
-            className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-          >
+          <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
             <AlertCircleIcon className="size-4 shrink-0" />
             {copy.errors.currentIncorrect}
           </p>
         )}
         {state.formError === "sameAsCurrent" && (
-          <p
-            role="alert"
-            className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-          >
+          <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
             <AlertCircleIcon className="size-4 shrink-0" />
             {copy.errors.sameAsCurrent}
           </p>
         )}
         {state.formError === "generic" && (
-          <p
-            role="alert"
-            className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-          >
+          <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
             <AlertCircleIcon className="size-4 shrink-0" />
             {copy.errors.generic}
           </p>

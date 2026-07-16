@@ -8,6 +8,7 @@ import {
 } from "./actions";
 import type { QuoteItem } from "@/lib/types/quote-item";
 import { AlertCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type EditItemFormProps = {
   item: QuoteItem;
@@ -45,6 +46,8 @@ export function EditItemForm({
 }: EditItemFormProps) {
   const [state, formAction] = useActionState(updateQuoteItemAction, initialState);
   const fe = state.fieldErrors ?? {};
+
+  useActionToast(state.message, { error: copy.errors.generic });
 
   return (
     <form
@@ -113,11 +116,8 @@ export function EditItemForm({
       </div>
 
       {state.message === "error" && (
-        <p
-          role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-danger"
-        >
-          <AlertCircleIcon className="size-3.5 shrink-0" />
+        <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
+          <AlertCircleIcon className="size-4" />
           {copy.errors.generic}
         </p>
       )}

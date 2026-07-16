@@ -8,6 +8,7 @@ import {
 } from "./actions";
 import type { Profile } from "@/lib/supabase/types";
 import { AlertCircleIcon, CheckCircleIcon, SettingsIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type SettingsFormProps = {
   profile: Profile;
@@ -46,6 +47,11 @@ const initialState: SettingsFormState = { ok: false, message: "idle" };
 export function SettingsForm({ profile, lang, copy }: SettingsFormProps) {
   const [state, formAction] = useActionState(updateProfileAction, initialState);
   const fe = state.fieldErrors ?? {};
+
+  useActionToast(state.message, {
+    success: copy.saveSuccess,
+    error: copy.errors.generic,
+  });
 
   return (
     <form action={formAction} className="flex flex-col gap-6" noValidate>
@@ -164,21 +170,9 @@ export function SettingsForm({ profile, lang, copy }: SettingsFormProps) {
       </section>
 
       {state.message === "error" && (
-        <p
-          role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-        >
+        <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
           <AlertCircleIcon className="size-4" />
           {copy.errors.generic}
-        </p>
-      )}
-      {state.message === "success" && (
-        <p
-          role="status"
-          className="flex items-center gap-2 rounded-xl border border-success/30 bg-success/10 px-4 py-3 text-sm text-success"
-        >
-          <CheckCircleIcon className="size-4" />
-          {copy.saveSuccess}
         </p>
       )}
 

@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { updateQuoteAction, type EditQuoteFormState } from "./actions";
 import type { Quote } from "@/lib/types/quote";
 import { AlertCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type EditQuoteFormProps = {
   quote: Quote;
@@ -44,6 +45,8 @@ export function EditQuoteForm({
 }: EditQuoteFormProps) {
   const [state, formAction] = useActionState(updateQuoteAction, initialState);
   const fe = state.fieldErrors ?? {};
+
+  useActionToast(state.message, { error: copy.errors.generic });
 
   const validUntilValue = quote.valid_until
     ? quote.valid_until.slice(0, 10)
@@ -113,10 +116,7 @@ export function EditQuoteForm({
       </div>
 
       {state.message === "error" && (
-        <p
-          role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-        >
+        <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
           <AlertCircleIcon className="size-4" />
           {copy.errors.generic}
         </p>

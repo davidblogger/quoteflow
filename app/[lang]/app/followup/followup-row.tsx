@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { FollowupStatusBadge } from "./status-badge";
 import {
   completeFollowupAction,
@@ -7,6 +8,7 @@ import {
   reopenFollowupAction,
   deleteFollowupAction,
 } from "./actions";
+import { confirmToast } from "@/app/components/ui/toast";
 import type { Followup, FollowupStatus } from "@/lib/types/followup";
 
 type FollowupRowProps = {
@@ -139,6 +141,7 @@ function ActionForm({
   confirm,
   tone,
 }: ActionFormProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   const buttonClass =
     tone === "success"
       ? "text-emerald-300 hover:bg-emerald-400/10"
@@ -147,14 +150,24 @@ function ActionForm({
         : "text-white/45 hover:bg-white/5 hover:text-white";
 
   return (
-    <form action={action} className="contents">
+    <form ref={formRef} action={action} className="contents">
       <input type="hidden" name="lang" value={lang} />
       <input type="hidden" name="followupId" value={followupId} />
       {clientId && <input type="hidden" name="clientId" value={clientId} />}
       <button
-        type="submit"
-        onClick={(e) => {
-          if (confirm && !window.confirm(confirm)) e.preventDefault();
+        type="button"
+        onClick={() => {
+          if (confirm) {
+            confirmToast({
+              message: confirm,
+              confirmLabel: "Confirm",
+              cancelLabel: "Cancel",
+              tone: tone === "danger" ? "danger" : "default",
+              onConfirm: () => formRef.current?.requestSubmit(),
+            });
+          } else {
+            formRef.current?.requestSubmit();
+          }
         }}
         aria-label={label}
         title={label}

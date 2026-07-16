@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { createFollowupAction, type FollowupFormState } from "./actions";
 import { PlusIcon, AlertCircleIcon, CheckCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type NewFollowupFormProps = {
   lang: string;
@@ -41,6 +42,8 @@ export function NewFollowupForm({
 }: NewFollowupFormProps) {
   const [open, setOpen] = useState(false);
   const [state, formAction] = useActionState(createFollowupAction, initialState);
+
+  useActionToast(state.message, { error: copy.errors.generic });
   const fe = state.fieldErrors ?? {};
 
   if (!open) {
@@ -191,10 +194,7 @@ export function NewFollowupForm({
       </div>
 
       {state.formError === "generic" && (
-        <p
-          role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-        >
+        <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
           <AlertCircleIcon className="size-4" />
           {copy.errors.generic}
         </p>

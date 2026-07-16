@@ -8,7 +8,9 @@ import {
   type ClientFormState,
 } from "./actions";
 import type { ClientInsert } from "@/lib/types/client";
+import { Button } from "@/app/components/ui/Button";
 import { AlertCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type ClientFormProps = {
   mode: "create" | "edit";
@@ -53,6 +55,12 @@ export function ClientForm({
 }: ClientFormProps) {
   const action = mode === "create" ? createClientAction : updateClientAction;
   const [state, formAction] = useActionState(action, initialState);
+
+  useActionToast(state.message, {
+    success:
+      mode === "create" ? copy.successCreate : copy.successUpdate,
+    error: copy.errors.generic,
+  });
 
   const fe = state.fieldErrors ?? {};
   const showSuccess =
@@ -116,10 +124,7 @@ export function ClientForm({
       />
 
       {state.message === "error" && (
-        <p
-          role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-        >
+        <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
           <AlertCircleIcon className="size-4" />
           {copy.errors.generic}
         </p>

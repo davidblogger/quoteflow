@@ -159,6 +159,8 @@ export default async function ClientDetailPage(props: {
               clientId={client.id}
               label={copy.detail.deleteCta}
               confirmMessage={copy.detail.deleteConfirm}
+              confirmLabel={copy.detail.deleteCta}
+              cancelLabel="Cancel"
             />
           </div>
         </section>

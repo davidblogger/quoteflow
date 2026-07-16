@@ -10,6 +10,7 @@ import {
   type QuoteStatus,
 } from "@/lib/types/quote";
 import { CheckCircleIcon, AlertCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type StatusChangerProps = {
   quoteId: string;
@@ -35,6 +36,11 @@ export function QuoteStatusChanger({
   labels,
 }: StatusChangerProps) {
   const [state, formAction] = useActionState(updateQuoteStatusAction, initialState);
+
+  useActionToast(state.message, {
+    success: copy.success,
+    error: copy.error,
+  });
 
   return (
     <form action={formAction} className="flex flex-col gap-3">
@@ -75,25 +81,6 @@ export function QuoteStatusChanger({
       <input type="hidden" name="lang" value={lang} />
 
       <SubmitButton idleLabel={copy.save} pendingLabel={copy.saving} />
-
-      {state.message === "success" && (
-        <p
-          role="status"
-          className="flex items-center gap-2 rounded-xl border border-success/30 bg-success/10 px-3 py-2 text-xs text-success"
-        >
-          <CheckCircleIcon className="size-3.5 shrink-0" />
-          {copy.success}
-        </p>
-      )}
-      {state.message === "error" && (
-        <p
-          role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-3 py-2 text-xs text-danger"
-        >
-          <AlertCircleIcon className="size-3.5 shrink-0" />
-          {copy.error}
-        </p>
-      )}
     </form>
   );
 }

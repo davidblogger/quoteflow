@@ -7,6 +7,7 @@ import {
   type QuoteFormState,
 } from "../actions";
 import { AlertCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 export type QuoteFormClient = {
   id: string;
@@ -54,6 +55,10 @@ export function QuoteForm({
 }: QuoteFormProps) {
   const [state, formAction] = useActionState(createQuoteAction, initialState);
   const fe = state.fieldErrors ?? {};
+
+  useActionToast(state.message, {
+    error: copy.errors.generic,
+  });
 
   return (
     <form action={formAction} className="flex flex-col gap-5" noValidate>
@@ -154,10 +159,7 @@ export function QuoteForm({
       />
 
       {state.message === "error" && (
-        <p
-          role="alert"
-          className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-        >
+        <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
           <AlertCircleIcon className="size-4" />
           {copy.errors.generic}
         </p>
