@@ -27,14 +27,6 @@ type TopbarProps = {
       search: string;
       signOut: string;
     };
-    notifications: {
-      title: string;
-      empty: string;
-      markAllRead: string;
-      justNow: string;
-      ago: string;
-      viewAll: string;
-    };
   };
   followupBadge: number;
   unreadNotifications: number;
@@ -66,7 +58,6 @@ export function Topbar({ lang, email, copy, followupBadge, unreadNotifications }
       <NotificationBell
         unreadCount={unreadNotifications}
         lang={lang}
-        copy={copy.notifications}
       />
 
       <div className="flex items-center gap-3 border-l border-white/10 pl-3 sm:pl-4">
