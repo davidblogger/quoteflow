@@ -8,6 +8,7 @@ import {
 } from "../actions";
 import { Button } from "@/app/components/ui/Button";
 import { ArrowRightIcon, AlertCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type LoginFormProps = {
   copy: {
@@ -49,6 +50,15 @@ export function LoginForm({
   const [state, formAction] = useActionState(signInAction, initialState);
   const fe = state.fieldErrors ?? {};
 
+  useActionToast(state.message, {
+    success: copy.title,
+    error: copy.errors.generic,
+    formError: state.formError ?? null,
+    formErrorCopy: {
+      invalidCredentials: copy.errors.invalidCredentials,
+    },
+  });
+
   return (
     <div className="glass-strong rounded-3xl p-7 sm:p-9">
       <header className="mb-7 flex flex-col gap-2">
@@ -89,10 +99,7 @@ export function LoginForm({
         />
 
         {state.formError === "invalidCredentials" && (
-          <p
-            role="alert"
-            className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-          >
+          <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
             <AlertCircleIcon className="size-4" />
             {copy.errors.invalidCredentials}
           </p>

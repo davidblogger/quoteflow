@@ -12,6 +12,7 @@ import {
   CheckCircleIcon,
   AlertCircleIcon,
 } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type RequestFormProps = {
   copy: {
@@ -48,6 +49,15 @@ const initialState: QuoteRequestState = { ok: false, message: "invalid" };
 
 export function RequestForm({ copy, locale, homeHref }: RequestFormProps) {
   const [state, formAction] = useActionState(submitQuoteRequest, initialState);
+
+  useActionToast(state.message, {
+    success: copy.success.title,
+    error: copy.errors.generic,
+    formError: state.message === "noProfile" ? "noProfile" : null,
+    formErrorCopy: {
+      noProfile: copy.errors.noProfile,
+    },
+  });
 
   if (state.ok) {
     return <SuccessState copy={copy.success} homeHref={homeHref} />;
@@ -129,20 +139,14 @@ export function RequestForm({ copy, locale, homeHref }: RequestFormProps) {
       />
 
       {state.message === "noProfile" && (
-        <p
-          role="alert"
-          className="flex items-start gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-200"
-        >
+        <p className="flex items-start gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-200">
           <AlertCircleIcon className="mt-0.5 size-4 shrink-0" />
           <span>{copy.errors.noProfile}</span>
         </p>
       )}
 
       {state.message === "error" && (
-        <p
-          role="alert"
-          className="flex items-start gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-        >
+        <p className="flex items-start gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
           <AlertCircleIcon className="mt-0.5 size-4 shrink-0" />
           <span>{copy.errors.generic}</span>
         </p>

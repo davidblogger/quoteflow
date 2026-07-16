@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { signUpAction, type AuthFormState } from "../actions";
 import { Button } from "@/app/components/ui/Button";
 import { ArrowRightIcon, AlertCircleIcon, CheckCircleIcon } from "@/app/components/icons/Icons";
+import { useActionToast } from "@/app/components/ui/toast";
 
 type FieldKey = "company" | "email" | "password" | "confirmPassword";
 type ErrorKey = "required" | "email" | "passwordTooShort" | "passwordMismatch" | "emailTaken";
@@ -53,6 +54,12 @@ const initialState: AuthFormState = { ok: false, message: "" };
 export function SignupForm({ copy, lang, loginHref, homeHref, next }: SignupFormProps) {
   const [state, formAction] = useActionState(signUpAction, initialState);
 
+  useActionToast(state.message, {
+    success: copy.checkEmailTitle,
+    error: copy.errors.generic,
+    formError: state.formError ?? null,
+  });
+
   if (state.ok && state.message === "checkEmail" && state.checkEmail) {
     return <CheckEmailState email={state.checkEmail} copy={copy} loginHref={loginHref} />;
   }
@@ -78,7 +85,7 @@ export function SignupForm({ copy, lang, loginHref, homeHref, next }: SignupForm
         <Field id="confirmPassword" type="password" label={copy.fields.confirmPassword} placeholder={copy.fields.confirmPasswordPlaceholder} autoComplete="new-password" required error={errFor("confirmPassword")} />
 
         {state.formError === "generic" && !fe.email && (
-          <p role="alert" className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
+          <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">
             <AlertCircleIcon className="size-4" />
             {copy.errors.generic}
           </p>
