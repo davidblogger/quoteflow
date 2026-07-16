@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { getDictionary, hasLocale, locales, type Locale } from "./dictionaries";
 import { notFound } from "next/navigation";
+import { Toaster } from "@/app/components/ui/Toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -93,7 +94,10 @@ export default async function LangLayout(
       lang={lang satisfies Locale}
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="min-h-dvh font-sans" suppressHydrationWarning>{props.children}</body>
+      <body className="min-h-dvh font-sans" suppressHydrationWarning>
+        {props.children}
+        <Toaster />
+      </body>
     </html>
   );
 }
