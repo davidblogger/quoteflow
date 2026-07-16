@@ -13,6 +13,7 @@ type NotificationBellProps = {
     markAllRead: string;
     justNow: string;
     ago: string;
+    viewAll: string;
   };
 };
 
@@ -209,6 +210,15 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
                 ))}
               </div>
             )}
+          </div>
+
+          <div className="border-t border-white/5 px-4 py-3">
+            <a
+              href={`/${lang}/app/requests`}
+              className="flex items-center justify-center text-xs text-accent-2 hover:text-accent-2/80 transition-colors"
+            >
+              {copy.viewAll}
+            </a>
           </div>
         </div>
       )}

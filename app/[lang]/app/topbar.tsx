@@ -33,6 +33,7 @@ type TopbarProps = {
       markAllRead: string;
       justNow: string;
       ago: string;
+      viewAll: string;
     };
   };
   followupBadge: number;

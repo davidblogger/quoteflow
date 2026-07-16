@@ -505,7 +505,8 @@
         "empty": "Sin notificaciones aún",
         "markAllRead": "Marcar todas leídas",
         "justNow": "ahora",
-        "ago": "hace"
+        "ago": "hace",
+        "viewAll": "Ver todas"
       },
       "overview": {
         "metaTitle": "Panel",

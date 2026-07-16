@@ -505,7 +505,8 @@
         "empty": "No notifications yet",
         "markAllRead": "Mark all read",
         "justNow": "now",
-        "ago": "ago"
+        "ago": "ago",
+        "viewAll": "View all"
       },
       "overview": {
         "metaTitle": "Dashboard",
