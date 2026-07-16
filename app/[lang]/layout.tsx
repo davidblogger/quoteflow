@@ -92,7 +92,7 @@ export default async function LangLayout(
   return (
     <html
       lang={lang satisfies Locale}
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
       <body className="min-h-dvh font-sans" suppressHydrationWarning>
         {props.children}
