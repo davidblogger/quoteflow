@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { listNotifications } from "@/lib/queries/notifications";
-import { createServerClient, parseCookieHeader } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -13,16 +14,21 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Server config error" }, { status: 500 });
   }
 
-  const cookieHeader = request.headers.get("cookie") ?? "";
-  const rawCookies = parseCookieHeader(cookieHeader);
-  const cookies = rawCookies.map((c) => ({ name: c.name, value: c.value ?? "" }));
-
+  const cookieStore = await cookies();
   const supabase = createServerClient(url, key, {
     cookies: {
       getAll() {
-        return cookies;
+        return cookieStore.getAll();
       },
-      setAll() {},
+      setAll(toSet) {
+        try {
+          for (const { name, value, options } of toSet) {
+            cookieStore.set(name, value, options);
+          }
+        } catch {
+          // setAll can throw in some contexts, safe to ignore
+        }
+      },
     },
   });
 

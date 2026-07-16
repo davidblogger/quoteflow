@@ -81,7 +81,10 @@ async function markOneRead(notificationId: string): Promise<void> {
 
 async function loadNotifications(lang: string): Promise<Notification[]> {
   const res = await fetch(`/${lang}/api/notifications?limit=20&offset=0`);
-  if (!res.ok) return [];
+  if (!res.ok) {
+    console.error("[NotificationBell] load failed", res.status, await res.text());
+    return [];
+  }
   const data = await res.json();
   return data.notifications ?? [];
 }
