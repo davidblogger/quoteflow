@@ -145,13 +145,13 @@ export function NotificationPageClient({ lang, copy }: NotificationPageProps) {
                 key={notification.id}
                 type="button"
                 onClick={() => markOneRead(notification.id)}
-                className={`flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-white/[0.03] ${
+                className={`flex w-full cursor-pointer items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-white/[0.03] ${
                   !notification.read_at ? "bg-white/[0.02]" : ""
                 }`}
               >
                 <span className="mt-0.5 shrink-0">{notificationIcon(notification.type)}</span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-white">{notification.title}</p>
+                  <p className="text-sm font-medium text-white transition-colors hover:text-white/90">{notification.title}</p>
                   {notification.message && (
                     <p className="mt-0.5 text-xs text-white/50 line-clamp-2">{notification.message}</p>
                   )}
