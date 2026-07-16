@@ -1,6 +1,7 @@
 import "server-only";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import type { Notification } from "@/lib/types/notification";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 export type { Notification } from "@/lib/types/notification";
 
@@ -8,9 +9,10 @@ export async function listNotifications(
   profileId: string,
   limit = 20,
   offset = 0,
+  supabase?: SupabaseClient,
 ): Promise<Notification[]> {
-  const supabase = await getSupabaseServer();
-  const { data, error } = await supabase
+  const client = supabase ?? await getSupabaseServer();
+  const { data, error } = await client
     .from("notifications")
     .select("*")
     .eq("profile_id", profileId)
