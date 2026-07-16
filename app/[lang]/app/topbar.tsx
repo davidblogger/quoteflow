@@ -1,8 +1,9 @@
 import type { Locale } from "../config";
 import { signOutAction } from "../(auth)/actions";
-import { SearchIcon, BellIcon } from "@/app/components/icons/Icons";
+import { SearchIcon } from "@/app/components/icons/Icons";
 import { Logo } from "@/app/components/ui/Logo";
 import { DashboardMobileMenu } from "@/app/components/layout/DashboardMobileMenu";
+import { NotificationBell } from "@/app/components/ui/notification-bell";
 
 type TopbarProps = {
   lang: Locale;
@@ -26,11 +27,19 @@ type TopbarProps = {
       search: string;
       signOut: string;
     };
+    notifications: {
+      title: string;
+      empty: string;
+      markAllRead: string;
+      justNow: string;
+      ago: string;
+    };
   };
   followupBadge: number;
+  unreadNotifications: number;
 };
 
-export function Topbar({ lang, email, copy, followupBadge }: TopbarProps) {
+export function Topbar({ lang, email, copy, followupBadge, unreadNotifications }: TopbarProps) {
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-white/5 bg-[#060814]/60 px-4 backdrop-blur-xl print:hidden sm:gap-4 sm:px-6">
       <DashboardMobileMenu
@@ -53,13 +62,11 @@ export function Topbar({ lang, email, copy, followupBadge }: TopbarProps) {
         />
       </label>
 
-      <button
-        type="button"
-        aria-label="Notifications"
-        className="inline-flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/70 transition-colors hover:bg-white/[0.06] hover:text-white"
-      >
-        <BellIcon className="size-4" />
-      </button>
+      <NotificationBell
+        unreadCount={unreadNotifications}
+        lang={lang}
+        copy={copy.notifications}
+      />
 
       <div className="flex items-center gap-3 border-l border-white/10 pl-3 sm:pl-4">
         <div className="hidden flex-col text-right sm:flex">

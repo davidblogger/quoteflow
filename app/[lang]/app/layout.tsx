@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { hasLocale, getDictionary, type Locale } from "../dictionaries";
 import { getUser } from "@/lib/supabase/server";
 import { countFollowupsByUrgency } from "@/lib/queries/followups";
+import { countUnreadNotifications } from "@/lib/queries/notifications";
 import { Sidebar } from "./sidebar";
 import { Topbar } from "./topbar";
 
@@ -14,9 +15,10 @@ export default async function AppLayout(
   const user = await getUser();
   if (!user) redirect(`/${lang}/login?next=/${lang}/app`);
 
-  const [dict, followupCounts] = await Promise.all([
+  const [dict, followupCounts, unreadNotifications] = await Promise.all([
     getDictionary(lang satisfies Locale),
     countFollowupsByUrgency(user.id),
+    countUnreadNotifications(user.id),
   ]);
 
   return (
@@ -32,6 +34,7 @@ export default async function AppLayout(
           email={user.email ?? ""}
           copy={dict.app.shell}
           followupBadge={followupCounts.overdue + followupCounts.dueToday}
+          unreadNotifications={unreadNotifications}
         />
         <main className="flex-1 overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
           {props.children}

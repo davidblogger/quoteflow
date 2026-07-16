@@ -17,6 +17,7 @@ This document records the **manual SQL setup** applied to the QuoteFlow Supabase
 | `public.quotes` | Formal proposals sent to clients, each attached to one client | this app |
 | `public.quote_items` | Line items belonging to a quote | this app |
 | `public.followups` | Reminders/tasks linked to a client and/or quote | this app |
+| `public.notifications` | In-app notifications for the dashboard (new requests, quote status changes, followup reminders) | this app |
 
 The app is single-tenant by design (per the MVP philosophy). Every row belongs to the single deployment's company via `profile_id` (or the implicit `auth.users` → `profiles` 1:1).
 
@@ -361,9 +362,144 @@ create policy "followups_delete_own"
 
 > **Note:** `client_id` and `quote_id` are nullable and reference their tables with `NO ACTION`. Setting a client or quote to null is not automatic — if a referenced row is deleted, the FK prevents it unless a trigger handles it.
 
----
+### 9. `notifications` table
 
-## Why this shape
+```sql
+create table public.notifications (
+  id           uuid primary key default gen_random_uuid(),
+  profile_id   uuid not null references public.profiles(id),
+  type         text not null
+               check (type = ANY (ARRAY[
+                 'new_request','quote_sent','quote_accepted',
+                 'quote_rejected','followup_created'
+               ])),
+  title        text not null,
+  message      text,
+  link         text,
+  reference_id uuid,
+  read_at      timestamptz,
+  created_at   timestamptz not null default now()
+);
+
+create index notifications_profile_id_created_at_idx
+  on public.notifications (profile_id, created_at desc);
+
+create index notifications_profile_id_unread_idx
+  on public.notifications (profile_id, created_at desc)
+  where read_at is null;
+
+alter table public.notifications enable row level security;
+
+create policy "notifications_select_own"
+  on public.notifications for select
+  using (profile_id = auth.uid());
+
+create policy "notifications_update_own"
+  on public.notifications for update
+  using (profile_id = auth.uid());
+
+create policy "notifications_delete_own"
+  on public.notifications for delete
+  using (profile_id = auth.uid());
+```
+
+> **Notification types:** `new_request` (new inbound form submission), `quote_sent` (quote marked as sent), `quote_accepted` (quote accepted by client), `quote_rejected` (quote rejected by client), `followup_created` (new followup reminder created).
+
+### 10. Trigger — new request
+
+Creates a notification when a new request is submitted via the public form.
+
+```sql
+create or replace function public.notify_new_request()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  insert into public.notifications (profile_id, type, title, message, link, reference_id)
+  select new.profile_id, 'new_request',
+    'New quote request: ' || new.name,
+    coalesce(new.company, new.email),
+    '/app/requests/' || new.id,
+    new.id;
+  return new;
+end;
+$$;
+
+create trigger notifications_new_request
+  after insert on public.requests
+  for each row execute function public.notify_new_request();
+```
+
+### 11. Trigger — quote status change
+
+Creates a notification when a quote transitions to `sent`, `accepted`, or `rejected`.
+
+```sql
+create or replace function public.notify_quote_status()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if old.status is distinct from new.status
+     and new.status in ('sent', 'accepted', 'rejected') then
+    insert into public.notifications (profile_id, type, title, link, reference_id)
+    select new.profile_id,
+      'quote_' || new.status,
+      case new.status
+        when 'sent'     then 'Quote sent: ' || new.title
+        when 'accepted' then 'Quote accepted: ' || new.title
+        when 'rejected' then 'Quote rejected: ' || new.title
+      end,
+      '/app/quotes/' || new.id,
+      new.id;
+  end if;
+  return new;
+end;
+$$;
+
+create trigger notifications_quote_status
+  after update of status on public.quotes
+  for each row execute function public.notify_quote_status();
+```
+
+### 12. Trigger — followup created
+
+Creates a notification when a new followup is created.
+
+```sql
+create or replace function public.notify_followup_created()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  insert into public.notifications (profile_id, type, title, message, link, reference_id)
+  select new.profile_id, 'followup_created',
+    'Follow-up: ' || new.subject,
+    coalesce(new.notes, ''),
+    '/app/followup',
+    new.id;
+  return new;
+end;
+$$;
+
+create trigger notifications_followup_created
+  after insert on public.followups
+  for each row execute function public.notify_followup_created();
+```
+
+### 13. Cleanup — delete read notifications older than 30 days
+
+```sql
+create or replace function public.cleanup_old_notifications()
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  delete from public.notifications
+  where read_at is not null
+    and read_at < now() - interval '30 days';
+end;
+$$;
+```
+
+To schedule this automatically, enable `pg_cron` in Supabase and run:
+```sql
+select cron.schedule('cleanup-notifications', '0 0 * * *', 'select public.cleanup_old_notifications()');
+```
+
+Alternatively, call `select public.cleanup_old_notifications()` manually or from a server action on app load.
 
 - **`security definer` + `set search_path = public`** prevents search-path hijacking.
 - **`stable`** marks the function as deterministic within a single statement so Postgres can cache its plan.
@@ -381,29 +517,34 @@ After running the full setup:
 ```sql
 -- 1. Functions
 select proname from pg_proc
-where proname in ('set_updated_at', 'handle_new_user', 'get_only_profile_id');
--- expect: 3 rows
+where proname in ('set_updated_at', 'handle_new_user', 'get_only_profile_id',
+                  'notify_new_request', 'notify_quote_status',
+                  'notify_followup_created', 'cleanup_old_notifications');
+-- expect: 7 rows
 
 -- 2. Tables exist
 select table_name from information_schema.tables
 where table_schema = 'public'
-  and table_name in ('profiles', 'requests', 'clients', 'quotes', 'quote_items', 'followups');
--- expect: 6 rows
+  and table_name in ('profiles', 'requests', 'clients', 'quotes', 'quote_items', 'followups', 'notifications');
+-- expect: 7 rows
 
--- 3. Triggers (one per table that auto-updates updated_at + auth trigger)
+-- 3. Triggers (one per table that auto-updates updated_at + auth trigger + notification triggers)
 select tgname, tgrelid::regclass from pg_trigger
 where tgname in ('on_auth_user_created', 'profiles_set_updated_at',
                  'requests_set_updated_at', 'clients_set_updated_at',
-                 'quotes_set_updated_at', 'followups_set_updated_at');
--- expect: 6 rows
+                 'quotes_set_updated_at', 'followups_set_updated_at',
+                 'notifications_new_request', 'notifications_quote_status',
+                 'notifications_followup_created');
+-- expect: 9 rows
 
 -- 4. Policies (3 per table: select, insert/update, delete)
 select polname, polrelid::regclass from pg_policy
 where schemaname = 'public'
   and polrelid::regclass in ('public.profiles', 'public.requests',
                               'public.clients', 'public.quotes',
-                              'public.quote_items', 'public.followups');
--- expect: 18 rows (6 tables × 3 policies each)
+                              'public.quote_items', 'public.followups',
+                              'public.notifications');
+-- expect: 22 rows
 
 -- 5. Foreign keys
 select conname, confrelid::regclass, confdrelid::regclass
@@ -411,11 +552,18 @@ from pg_constraint
 where contype = 'f'
   and conrelid in ('public.clients'::regclass, 'public.quotes'::regclass,
                    'public.quote_items'::regclass, 'public.followups'::regclass,
-                   'public.requests'::regclass);
+                   'public.requests'::regclass, 'public.notifications'::regclass);
 -- expect: clients→profiles, quotes→profiles, quotes→clients,
---          quote_items→quotes, followups→profiles, followups→clients, followups→quotes
+--          quote_items→quotes, followups→profiles, followups→clients, followups→quotes,
+--          notifications→profiles
 
--- 6. anon can resolve tenant
+-- 6. Notification triggers exist
+select proname from pg_proc
+where proname in ('notify_new_request', 'notify_quote_status',
+                  'notify_followup_created', 'cleanup_old_notifications');
+-- expect: 4 rows
+
+-- 7. anon can resolve tenant
 set role anon;
 select public.get_only_profile_id();
 reset role;

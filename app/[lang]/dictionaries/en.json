@@ -500,6 +500,13 @@
         "search": "Search client, request…",
         "signOut": "Sign out"
       },
+      "notifications": {
+        "title": "Notifications",
+        "empty": "No notifications yet",
+        "markAllRead": "Mark all read",
+        "justNow": "now",
+        "ago": "ago"
+      },
       "overview": {
         "metaTitle": "Dashboard",
         "greeting": "Good morning, {name}",

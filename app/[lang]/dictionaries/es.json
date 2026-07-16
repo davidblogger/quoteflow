@@ -500,6 +500,13 @@
         "search": "Buscar cliente, solicitud…",
         "signOut": "Cerrar sesión"
       },
+      "notifications": {
+        "title": "Notificaciones",
+        "empty": "Sin notificaciones aún",
+        "markAllRead": "Marcar todas leídas",
+        "justNow": "ahora",
+        "ago": "hace"
+      },
       "overview": {
         "metaTitle": "Panel",
         "greeting": "Buen día, {name}",
