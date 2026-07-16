@@ -182,7 +182,6 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
                   <a
                     key={notification.id}
                     href={`/${lang}/app/requests`}
-                    onClick={() => markOneRead(notification.id)}
                     className="flex items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-white/5"
                   >
                     <span className="mt-0.5 shrink-0">{notificationIcon(notification.type)}</span>
