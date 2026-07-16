@@ -134,9 +134,7 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
     setNotifications((prev) =>
       prev.map((n) => (n.id === notification.id ? { ...n, read_at: new Date().toISOString() } : n))
     );
-    if (notification.link) {
-      window.location.href = `/${lang}${notification.link}`;
-    }
+    window.location.href = `/${lang}/app/requests`;
     setIsOpen(false);
   }
 
