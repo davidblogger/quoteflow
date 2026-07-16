@@ -158,7 +158,7 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-2xl border border-white/10 bg-[#0a0e1a] shadow-2xl">
+        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-2xl glass-strong shadow-2xl">
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
             <h3 className="text-sm font-semibold text-white">{copy.title}</h3>
             {hasUnread && (
