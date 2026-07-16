@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { BellIcon, InboxIcon, FileTextIcon, CheckCircleIcon, AlertCircleIcon } from "@/app/components/icons/Icons";
 import type { Notification, NotificationType } from "@/lib/types/notification";
-import { useRouter } from "next/navigation";
 
 type NotificationBellProps = {
   unreadCount: number;
@@ -82,7 +81,7 @@ async function markOneRead(notificationId: string): Promise<void> {
 async function loadNotifications(lang: string): Promise<Notification[]> {
   const res = await fetch(`/${lang}/api/notifications?limit=20&offset=0`);
   if (!res.ok) {
-    console.error("[NotificationBell] load failed", res.status, await res.text());
+    console.error("[NotificationBell] load failed", res.status);
     return [];
   }
   const data = await res.json();
@@ -95,7 +94,6 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
   const [isLoading, setIsLoading] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   useEffect(() => {
     if (isOpen && !hasLoaded) {
@@ -127,7 +125,6 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
       setNotifications((prev) =>
         prev.map((n) => ({ ...n, read_at: new Date().toISOString() }))
       );
-      router.refresh();
     });
   }
 
@@ -137,7 +134,7 @@ export function NotificationBell({ unreadCount, lang, copy }: NotificationBellPr
       prev.map((n) => (n.id === notification.id ? { ...n, read_at: new Date().toISOString() } : n))
     );
     if (notification.link) {
-      router.push(`/${lang}${notification.link}`);
+      window.location.href = `/${lang}${notification.link}`;
     }
     setIsOpen(false);
   }
