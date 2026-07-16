@@ -3,7 +3,9 @@ export type NotificationType =
   | "quote_sent"
   | "quote_accepted"
   | "quote_rejected"
-  | "followup_created";
+  | "followup_created"
+  | "followup_completed"
+  | "client_created";
 
 export const NOTIFICATION_TYPES: readonly NotificationType[] = [
   "new_request",
@@ -11,6 +13,8 @@ export const NOTIFICATION_TYPES: readonly NotificationType[] = [
   "quote_accepted",
   "quote_rejected",
   "followup_created",
+  "followup_completed",
+  "client_created",
 ] as const;
 
 export type Notification = {

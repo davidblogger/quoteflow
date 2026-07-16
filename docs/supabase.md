@@ -403,7 +403,7 @@ create policy "notifications_delete_own"
   using (profile_id = auth.uid());
 ```
 
-> **Notification types:** `new_request` (new inbound form submission), `quote_sent` (quote marked as sent), `quote_accepted` (quote accepted by client), `quote_rejected` (quote rejected by client), `followup_created` (new followup reminder created).
+> **Notification types:** `new_request` (new inbound form submission), `quote_sent` (quote marked as sent), `quote_accepted` (quote accepted by client), `quote_rejected` (quote rejected by client), `followup_created` (new followup reminder created), `followup_completed` (followup marked as done), `client_created` (new client created).
 
 ### 10. Trigger — new request
 
@@ -481,7 +481,55 @@ create trigger notifications_followup_created
   for each row execute function public.notify_followup_created();
 ```
 
-### 13. Cleanup — delete read notifications older than 30 days
+### 13. Trigger — followup completed
+
+Creates a notification when a followup is marked as done.
+
+```sql
+create or replace function public.notify_followup_completed()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if old.status is distinct from new.status and new.status = 'done' then
+    insert into public.notifications (profile_id, type, title, message, link, reference_id)
+    select new.profile_id, 'followup_completed',
+      'Follow-up completed: ' || new.subject,
+      coalesce(new.notes, ''),
+      '/app/followup',
+      new.id;
+  end if;
+  return new;
+end;
+$$;
+
+create trigger notifications_followup_completed
+  after update of status on public.followups
+  for each row execute function public.notify_followup_completed();
+```
+
+### 14. Trigger — client created
+
+Creates a notification when a new client is created (manually or from request conversion).
+
+```sql
+create or replace function public.notify_client_created()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  insert into public.notifications (profile_id, type, title, message, link, reference_id)
+  select new.profile_id, 'client_created',
+    'New client: ' || new.name,
+    coalesce(new.company, new.email),
+    '/app/clients/' || new.id,
+    new.id;
+  return new;
+end;
+$$;
+
+create trigger notifications_client_created
+  after insert on public.clients
+  for each row execute function public.notify_client_created();
+```
+
+### 15. Cleanup — delete read notifications older than 30 days
 
 ```sql
 create or replace function public.cleanup_old_notifications()
