@@ -72,6 +72,8 @@ export async function proxy(request: NextRequest) {
   }
 
   const rest = pathname.slice(`/${locale}`.length);
+  console.log("[Proxy] pathname:", pathname, "rest:", rest, "isProtected:", isProtected(rest));
+
   if (!isProtected(rest)) {
     return NextResponse.next();
   }
@@ -80,7 +82,9 @@ export async function proxy(request: NextRequest) {
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  console.log("[Proxy] Supabase URL set:", !!url, "ANON key set:", !!key);
   if (!url || !key) {
+    console.log("[Proxy] Missing env vars, redirecting to login");
     return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
   }
 
@@ -105,6 +109,7 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
+    console.log("[Proxy] No user, redirecting to login, next:", pathname);
     const loginUrl = new URL(`/${locale}/login`, request.url);
     loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);
