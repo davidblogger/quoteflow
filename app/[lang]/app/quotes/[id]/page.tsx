@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import type { Metadata } from "next";
 import { hasLocale, getDictionary, type Locale } from "../../../dictionaries";
 import { getSupabaseServer } from "@/lib/supabase/server";
@@ -61,7 +62,10 @@ export default async function QuoteDetailPage(props: {
   const client = await getClientById(user.id, quote.client_id);
   const profile = await getCurrentProfile();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://quoteflow.io";
+  const headersList = await headers();
+  const host = headersList.get("host") ?? "localhost:3000";
+  const protocol = headersList.get("x-forwarded-proto") ?? "https";
+  const siteUrl = `${protocol}://${host}`;
   const pdfUrl = `${siteUrl}/${lang}/app/quotes/${quote.id}/pdf`;
 
   const shareMessage = profile && client
