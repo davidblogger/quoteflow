@@ -26,8 +26,20 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
   const [results, setResults] = useState<SearchResults>({ requests: [], clients: [], quotes: [] });
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  function updateDropdownPosition() {
+    if (inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect();
+      setDropdownPos({
+        top: rect.bottom + 8,
+        left: rect.left,
+        width: rect.width,
+      });
+    }
+  }
 
   useEffect(() => {
     if (query.length < 2) {
@@ -38,6 +50,7 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
 
     const timer = setTimeout(async () => {
       setIsLoading(true);
+      updateDropdownPosition();
       const { getSupabaseBrowser } = await import("@/lib/supabase/client");
       const supabase = getSupabaseBrowser();
       const {
@@ -141,7 +154,14 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute left-0 top-full z-[100] mt-2 w-full min-w-80 overflow-hidden rounded-2xl border border-white/10 bg-[#060814]/95 backdrop-blur-xl shadow-2xl"
+          style={{
+            position: "fixed",
+            top: dropdownPos.top,
+            left: dropdownPos.left,
+            width: dropdownPos.width,
+            zIndex: 9999,
+          }}
+          className="overflow-hidden rounded-2xl border border-white/10 bg-[#060814]/95 backdrop-blur-xl shadow-2xl"
         >
           {isLoading ? (
             <div className="flex items-center justify-center px-4 py-6 text-sm text-white/40">
