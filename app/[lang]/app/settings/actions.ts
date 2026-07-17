@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getSupabaseServer } from "@/lib/supabase/server";
-import { updateProfile } from "@/lib/queries/profile";
+import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
+import { updateProfile, listWorkspaceUsers, updateUserRole, deleteWorkspaceUser, getCurrentProfile } from "@/lib/queries/profile";
+import type { UserRole, ProfileWithUser } from "@/lib/supabase/types";
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -144,4 +145,157 @@ export async function updateProfileAction(
   revalidatePath(`/${formData.get("lang")?.toString() ?? "en"}/app`);
 
   return { ok: true, message: "success" };
+}
+
+// ─── Admin User Management ─────────────────────────────────────────────────────
+
+export type CreateUserFormState = {
+  ok: boolean;
+  message: "idle" | "success" | "invalid" | "error" | "exists";
+  fieldErrors?: Partial<Record<"email" | "name" | "role", string>>;
+};
+
+export async function createUserByAdminAction(
+  _prev: CreateUserFormState,
+  formData: FormData,
+): Promise<CreateUserFormState> {
+  const lang = (formData.get("lang") ?? "en").toString();
+  const email = (formData.get("email") ?? "").toString().trim().toLowerCase();
+  const name = (formData.get("name") ?? "").toString().trim();
+  const role = (formData.get("role") ?? "member").toString() as UserRole;
+
+  const fieldErrors: CreateUserFormState["fieldErrors"] = {};
+  if (!email) fieldErrors.email = "required";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) fieldErrors.email = "invalid";
+  if (!name) fieldErrors.name = "required";
+  if (role !== "admin" && role !== "member") fieldErrors.role = "invalid";
+
+  if (Object.keys(fieldErrors).length > 0) {
+    return { ok: false, message: "invalid", fieldErrors };
+  }
+
+  const profile = await getCurrentProfile();
+  if (!profile || profile.role !== "admin") {
+    return { ok: false, message: "error" };
+  }
+
+  const supabaseAdmin = await getSupabaseAdmin();
+
+  // Check if user already exists in auth.users
+  const { data: existingAuth } = await supabaseAdmin.auth.admin.listUsers();
+  const userExists = existingAuth?.users.some((u) => u.email?.toLowerCase() === email);
+  if (userExists) {
+    return { ok: false, message: "exists" };
+  }
+
+  // Create user with generated password
+  const temporaryPassword = generateSecurePassword();
+
+  const { data: newUser, error: createErr } = await supabaseAdmin.auth.admin.createUser({
+    email,
+    password: temporaryPassword,
+    email_confirm: true,
+    user_metadata: { name, company_name: profile.company_name },
+  });
+
+  if (createErr || !newUser.user) {
+    console.error("[QuoteFlow] create user failed", createErr);
+    return { ok: false, message: "error" };
+  }
+
+  // Create profile with role and invited_by
+  const { error: profileErr } = await supabaseAdmin
+    .from("profiles")
+    .insert({
+      id: newUser.user.id,
+      email,
+      company_name: name,
+      role,
+      invited_by: profile.id,
+      currency: "USD",
+      tax_rate: 0,
+    });
+
+  if (profileErr) {
+    console.error("[QuoteFlow] create profile failed", profileErr);
+    // Try to delete the auth user if profile creation failed
+    await supabaseAdmin.auth.admin.deleteUser(newUser.user.id);
+    return { ok: false, message: "error" };
+  }
+
+  revalidatePath(`/${lang}/app/settings/users`);
+
+  return {
+    ok: true,
+    message: "success",
+  };
+}
+
+export type UpdateRoleFormState = {
+  ok: boolean;
+  message: "idle" | "success" | "error";
+  userId?: string;
+};
+
+export async function updateUserRoleAction(
+  _prev: UpdateRoleFormState,
+  formData: FormData,
+): Promise<UpdateRoleFormState> {
+  const lang = (formData.get("lang") ?? "en").toString();
+  const targetProfileId = (formData.get("profileId") ?? "").toString();
+  const newRole = (formData.get("role") ?? "").toString() as UserRole;
+
+  if (!targetProfileId || (newRole !== "admin" && newRole !== "member")) {
+    return { ok: false, message: "error" };
+  }
+
+  const profile = await getCurrentProfile();
+  if (!profile || profile.role !== "admin") {
+    return { ok: false, message: "error" };
+  }
+
+  const result = await updateUserRole(profile.id, targetProfileId, newRole);
+
+  if (!result.ok) return { ok: false, message: "error" };
+
+  revalidatePath(`/${lang}/app/settings/users`);
+
+  return { ok: true, message: "success" };
+}
+
+export type DeleteUserFormState = {
+  ok: boolean;
+  message: "idle" | "success" | "error";
+};
+
+export async function deleteUserAction(
+  _prev: DeleteUserFormState,
+  formData: FormData,
+): Promise<DeleteUserFormState> {
+  const lang = (formData.get("lang") ?? "en").toString();
+  const targetProfileId = (formData.get("profileId") ?? "").toString();
+
+  if (!targetProfileId) return { ok: false, message: "error" };
+
+  const profile = await getCurrentProfile();
+  if (!profile || profile.role !== "admin") {
+    return { ok: false, message: "error" };
+  }
+
+  const result = await deleteWorkspaceUser(profile.id, targetProfileId);
+
+  if (!result.ok) return { ok: false, message: "error" };
+
+  revalidatePath(`/${lang}/app/settings/users`);
+
+  return { ok: true, message: "success" };
+}
+
+function generateSecurePassword(): string {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$?";
+  let password = "";
+  for (let i = 0; i < 16; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
 }

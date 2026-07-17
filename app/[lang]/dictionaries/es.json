@@ -337,7 +337,8 @@
       "subtitle": "Información de tu empresa y los valores por defecto que se rellenan en cada nueva cotización.",
       "sections": {
         "company": "Información de la empresa",
-        "defaults": "Valores por defecto"
+        "defaults": "Valores por defecto",
+        "users": "Equipo"
       },
       "fields": {
         "companyName": "Nombre de la empresa",
@@ -358,6 +359,30 @@
         "required": "Este campo es obligatorio",
         "invalidTaxRate": "Introduce un número entre 0 y 100",
         "generic": "No se pudieron guardar los ajustes. Inténtalo de nuevo."
+      },
+      "users": {
+        "title": "Miembros del equipo",
+        "subtitle": "Gestiona quién tiene acceso a tu espacio de trabajo.",
+        "invite": "Invitar usuario",
+        "name": "Nombre",
+        "email": "Email",
+        "role": "Rol",
+        "joined": "Registrado",
+        "lastLogin": "Último acceso",
+        "admin": "Administrador",
+        "member": "Miembro",
+        "delete": "Eliminar",
+        "changeRole": "Cambiar rol",
+        "deleteConfirm": "¿Eliminar a este usuario del espacio de trabajo? Esta acción no se puede deshacer.",
+        "userInvited": "Usuario creado. Debe revisar su email para establecer una contraseña.",
+        "roleUpdated": "Rol actualizado.",
+        "userDeleted": "Usuario eliminado.",
+        "errors": {
+          "required": "Este campo es obligatorio",
+          "invalidEmail": "Introduce un email válido",
+          "generic": "Algo salió mal. Inténtalo de nuevo.",
+          "exists": "Ya existe un usuario con este email."
+        }
       }
     },
     "password": {

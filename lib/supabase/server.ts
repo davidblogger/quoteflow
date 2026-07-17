@@ -33,6 +33,29 @@ export async function getSupabaseServer(): Promise<SupabaseClient> {
   });
 }
 
+export async function getSupabaseAdmin(): Promise<SupabaseClient> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error(
+      "Missing Supabase service role key (SUPABASE_SERVICE_ROLE_KEY).",
+    );
+  }
+
+  const cookieStore = await cookies();
+
+  return createServerClient(url, key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll() {
+        // Admin client doesn't need cookie sync — service role is not tied to a user session
+      },
+    },
+  });
+}
+
 export async function getUser(): Promise<User | null> {
   const supabase = await getSupabaseServer();
   const { data } = await supabase.auth.getUser();

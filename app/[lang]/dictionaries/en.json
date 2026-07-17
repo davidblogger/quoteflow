@@ -337,7 +337,8 @@
       "subtitle": "Your company info and the defaults that pre-fill every new quote.",
       "sections": {
         "company": "Company info",
-        "defaults": "Defaults"
+        "defaults": "Defaults",
+        "users": "Team"
       },
       "fields": {
         "companyName": "Company name",
@@ -358,6 +359,30 @@
         "required": "This field is required",
         "invalidTaxRate": "Enter a number between 0 and 100",
         "generic": "Could not save your settings. Please try again."
+      },
+      "users": {
+        "title": "Team members",
+        "subtitle": "Manage who has access to your workspace.",
+        "invite": "Invite user",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "joined": "Joined",
+        "lastLogin": "Last login",
+        "admin": "Admin",
+        "member": "Member",
+        "delete": "Delete",
+        "changeRole": "Change role",
+        "deleteConfirm": "Remove this user from the workspace? This cannot be undone.",
+        "userInvited": "User created. They should check their email to set a password.",
+        "roleUpdated": "Role updated.",
+        "userDeleted": "User removed.",
+        "errors": {
+          "required": "This field is required",
+          "invalidEmail": "Enter a valid email address",
+          "generic": "Something went wrong. Please try again.",
+          "exists": "A user with this email already exists."
+        }
       }
     },
     "password": {
