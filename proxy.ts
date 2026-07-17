@@ -38,11 +38,6 @@ function extractLocale(pathname: string): Locale {
 }
 
 function isProtected(restOfPath: string): boolean {
-  // PDF routes are public — no auth required
-  // restOfPath is like /app/quotes/[id]/pdf
-  if (/^\/app\/quotes\/[^/]+\/pdf$/.test(restOfPath)) {
-    return false;
-  }
   return (
     restOfPath === PROTECTED_PREFIX ||
     restOfPath.startsWith(`${PROTECTED_PREFIX}/`)
@@ -72,7 +67,6 @@ export async function proxy(request: NextRequest) {
   }
 
   const rest = pathname.slice(`/${locale}`.length);
-  console.log("[Proxy] pathname:", pathname, "rest:", rest, "isProtected:", isProtected(rest));
 
   if (!isProtected(rest)) {
     return NextResponse.next();
@@ -82,9 +76,7 @@ export async function proxy(request: NextRequest) {
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  console.log("[Proxy] Supabase URL set:", !!url, "ANON key set:", !!key);
   if (!url || !key) {
-    console.log("[Proxy] Missing env vars, redirecting to login");
     return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
   }
 
@@ -109,7 +101,6 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    console.log("[Proxy] No user, redirecting to login, next:", pathname);
     const loginUrl = new URL(`/${locale}/login`, request.url);
     loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);
@@ -119,5 +110,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|favicon.ico|.*\\..*).*)"],
+  matcher: [
+    "/((?!_next|api|favicon.ico|.*\\..*|.*/pdf).*)",
+  ],
 };
