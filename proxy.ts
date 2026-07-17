@@ -38,6 +38,10 @@ function extractLocale(pathname: string): Locale {
 }
 
 function isProtected(restOfPath: string): boolean {
+  // PDF routes are public — no auth required
+  if (/\/quotes\/[^/]+\/pdf$/.test(restOfPath)) {
+    return false;
+  }
   return (
     restOfPath === PROTECTED_PREFIX ||
     restOfPath.startsWith(`${PROTECTED_PREFIX}/`)
