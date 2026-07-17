@@ -1,9 +1,9 @@
 import type { Locale } from "../config";
 import { signOutAction } from "../(auth)/actions";
-import { SearchIcon } from "@/app/components/icons/Icons";
 import { Logo } from "@/app/components/ui/Logo";
 import { DashboardMobileMenu } from "@/app/components/layout/DashboardMobileMenu";
 import { NotificationBell } from "@/app/components/ui/notification-bell";
+import { SearchBar } from "@/app/components/ui/SearchBar";
 
 type TopbarProps = {
   lang: Locale;
@@ -44,16 +44,10 @@ export function Topbar({ lang, email, copy, followupBadge, unreadNotifications }
         followupBadge={followupBadge}
       />
 
-      <label className="relative flex h-10 flex-1 items-center">
-        <span className="pointer-events-none absolute left-3.5 flex items-center text-white/40">
-          <SearchIcon className="size-4" />
-        </span>
-        <input
-          type="search"
-          placeholder={copy.topbar.search}
-          className="h-10 w-full rounded-xl border border-white/10 bg-white/[0.03] pl-10 pr-4 text-sm text-white placeholder:text-white/40 transition-colors focus:outline-none focus:bg-white/[0.06] focus:border-white/20"
-        />
-      </label>
+      <SearchBar
+        lang={lang}
+        placeholder={copy.topbar.search}
+      />
 
       <NotificationBell
         unreadCount={unreadNotifications}
