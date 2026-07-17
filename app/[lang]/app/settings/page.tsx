@@ -53,6 +53,24 @@ export default async function SettingsPage(props: {
         <p className="text-sm text-white/55">{copy.subtitle}</p>
       </header>
 
+      {profile.role === "admin" && (
+        <a
+          href={`/${lang}/app/settings/users`}
+          className="glass flex items-center justify-between rounded-2xl p-5 transition-colors hover:bg-white/[0.04]"
+        >
+          <div className="flex items-center gap-4">
+            <span className="inline-flex size-10 items-center justify-center rounded-xl bg-white/[0.04] text-white/70 ring-1 ring-white/10">
+              <UsersIcon className="size-5" />
+            </span>
+            <div>
+              <p className="text-sm font-medium text-white">{copy.sections.users}</p>
+              <p className="text-xs text-white/50">{copy.users.subtitle}</p>
+            </div>
+          </div>
+          <span className="text-xs text-white/40">→</span>
+        </a>
+      )}
+
       <SettingsForm profile={profile} lang={lang} copy={copy} />
       <ChangePasswordForm lang={lang} copy={dict.app.password} />
     </div>
