@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { SearchIcon } from "@/app/components/icons/Icons";
 import type { QuoteRequest } from "@/lib/queries/requests";
 import type { Client } from "@/lib/types/client";
@@ -26,20 +27,8 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
   const [results, setResults] = useState<SearchResults>({ requests: [], clients: [], quotes: [] });
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+  const [dropdownStyle, setDropdownStyle] = useState<{ top: number; left: number; width: number } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  function updateDropdownPosition() {
-    if (inputRef.current) {
-      const rect = inputRef.current.getBoundingClientRect();
-      setDropdownPos({
-        top: rect.bottom + 8,
-        left: rect.left,
-        width: rect.width,
-      });
-    }
-  }
 
   useEffect(() => {
     if (query.length < 2) {
@@ -50,7 +39,16 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
 
     const timer = setTimeout(async () => {
       setIsLoading(true);
-      updateDropdownPosition();
+
+      if (inputRef.current) {
+        const rect = inputRef.current.getBoundingClientRect();
+        setDropdownStyle({
+          top: rect.bottom + 8,
+          left: rect.left,
+          width: rect.width,
+        });
+      }
+
       const { getSupabaseBrowser } = await import("@/lib/supabase/client");
       const supabase = getSupabaseBrowser();
       const {
@@ -117,8 +115,6 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
         inputRef.current &&
         !inputRef.current.contains(event.target as Node)
       ) {
@@ -137,6 +133,95 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
     setQuery("");
   }
 
+  const dropdown = (
+    <div
+      style={{
+        position: "fixed",
+        top: dropdownStyle?.top ?? 0,
+        left: dropdownStyle?.left ?? 0,
+        width: dropdownStyle?.width ?? "auto",
+        zIndex: 9999,
+      }}
+      className="overflow-hidden rounded-2xl border border-white/10 bg-[#060814]/95 backdrop-blur-xl shadow-2xl"
+    >
+      {isLoading ? (
+        <div className="flex items-center justify-center px-4 py-6 text-sm text-white/40">
+          Searching...
+        </div>
+      ) : !hasResults ? (
+        <div className="px-4 py-6 text-center text-sm text-white/40">
+          No results for &ldquo;{query}&rdquo;
+        </div>
+      ) : (
+        <div className="max-h-96 overflow-y-auto py-2">
+          {results.requests.length > 0 && (
+            <div>
+              <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
+                Requests
+              </div>
+              {results.requests.map((r) => (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => handleResultClick(`/${lang}/app/requests/${r.id}`)}
+                  className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
+                >
+                  <span className="text-sm font-medium text-white">{r.name}</span>
+                  <span className="text-xs text-white/50">
+                    {r.company ?? r.email}
+                    {r.service && ` · ${r.service}`}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {results.clients.length > 0 && (
+            <div>
+              <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
+                Clients
+              </div>
+              {results.clients.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => handleResultClick(`/${lang}/app/clients/${c.id}`)}
+                  className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
+                >
+                  <span className="text-sm font-medium text-white">{c.name}</span>
+                  <span className="text-xs text-white/50">
+                    {c.company ?? c.email ?? ""}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {results.quotes.length > 0 && (
+            <div>
+              <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
+                Quotes
+              </div>
+              {results.quotes.map((q) => (
+                <button
+                  key={q.id}
+                  type="button"
+                  onClick={() => handleResultClick(`/${lang}/app/quotes/${q.id}`)}
+                  className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
+                >
+                  <span className="text-sm font-medium text-white">{q.title}</span>
+                  {q.client_name && (
+                    <span className="text-xs text-white/50">{q.client_name}</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className="relative flex h-10 flex-1 items-center">
       <span className="pointer-events-none absolute left-3.5 flex items-center text-white/40">
@@ -151,95 +236,7 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
         className="h-10 w-full rounded-xl border border-white/10 bg-white/[0.03] pl-10 pr-4 text-sm text-white placeholder:text-white/40 transition-colors focus:outline-none focus:bg-white/[0.06] focus:border-white/20"
       />
 
-      {isOpen && (
-        <div
-          ref={dropdownRef}
-          style={{
-            position: "fixed",
-            top: dropdownPos.top,
-            left: dropdownPos.left,
-            width: dropdownPos.width,
-            zIndex: 9999,
-          }}
-          className="overflow-hidden rounded-2xl border border-white/10 bg-[#060814]/95 backdrop-blur-xl shadow-2xl"
-        >
-          {isLoading ? (
-            <div className="flex items-center justify-center px-4 py-6 text-sm text-white/40">
-              Searching...
-            </div>
-          ) : !hasResults ? (
-            <div className="px-4 py-6 text-center text-sm text-white/40">
-              No results for &ldquo;{query}&rdquo;
-            </div>
-          ) : (
-            <div className="max-h-96 overflow-y-auto py-2">
-              {results.requests.length > 0 && (
-                <div>
-                  <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
-                    Requests
-                  </div>
-                  {results.requests.map((r) => (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onClick={() => handleResultClick(`/${lang}/app/requests/${r.id}`)}
-                      className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
-                    >
-                      <span className="text-sm font-medium text-white">{r.name}</span>
-                      <span className="text-xs text-white/50">
-                        {r.company ?? r.email}
-                        {r.service && ` · ${r.service}`}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {results.clients.length > 0 && (
-                <div>
-                  <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
-                    Clients
-                  </div>
-                  {results.clients.map((c) => (
-                    <button
-                      key={c.id}
-                      type="button"
-                      onClick={() => handleResultClick(`/${lang}/app/clients/${c.id}`)}
-                      className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
-                    >
-                      <span className="text-sm font-medium text-white">{c.name}</span>
-                      <span className="text-xs text-white/50">
-                        {c.company ?? c.email ?? ""}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {results.quotes.length > 0 && (
-                <div>
-                  <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
-                    Quotes
-                  </div>
-                  {results.quotes.map((q) => (
-                    <button
-                      key={q.id}
-                      type="button"
-                      onClick={() => handleResultClick(`/${lang}/app/quotes/${q.id}`)}
-                      className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
-                    >
-                      <span className="text-sm font-medium text-white">{q.title}</span>
-                      {q.client_name && (
-                        <span className="text-xs text-white/50">{q.client_name}</span>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+      {isOpen && typeof window !== "undefined" && createPortal(dropdown, document.body)}
     </div>
   );
 }
