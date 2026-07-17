@@ -22,13 +22,50 @@ type SearchBarProps = {
   placeholder: string;
 };
 
+type FlatResult = {
+  type: "request" | "client" | "quote";
+  id: string;
+  label: string;
+  sublabel: string;
+  href: string;
+};
+
 export function SearchBar({ lang, placeholder }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResults>({ requests: [], clients: [], quotes: [] });
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dropdownStyle, setDropdownStyle] = useState<{ top: number; left: number; width: number } | null>(null);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const flatResults: FlatResult[] = [
+    ...results.requests.map((r) => ({
+      type: "request" as const,
+      id: r.id,
+      label: r.name,
+      sublabel: [r.company, r.email, r.service].filter(Boolean).join(" · "),
+      href: `/${lang}/app/requests/${r.id}`,
+    })),
+    ...results.clients.map((c) => ({
+      type: "client" as const,
+      id: c.id,
+      label: c.name,
+      sublabel: [c.company, c.email].filter(Boolean).join(" · "),
+      href: `/${lang}/app/clients/${c.id}`,
+    })),
+    ...results.quotes.map((q) => ({
+      type: "quote" as const,
+      id: q.id,
+      label: q.title,
+      sublabel: q.client_name ?? "",
+      href: `/${lang}/app/quotes/${q.id}`,
+    })),
+  ];
+
+  useEffect(() => {
+    setActiveIndex(-1);
+  }, [results]);
 
   useEffect(() => {
     if (query.length < 2) {
@@ -112,20 +149,33 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
     return () => clearTimeout(timer);
   }, [query]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!isOpen) return;
 
-  const hasResults = results.requests.length > 0 || results.clients.length > 0 || results.quotes.length > 0;
+    if (e.key === "Escape") {
+      setIsOpen(false);
+      setQuery("");
+      inputRef.current?.blur();
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev < flatResults.length - 1 ? prev + 1 : prev));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      e.preventDefault();
+      const result = flatResults[activeIndex];
+      if (result) {
+        window.location.href = result.href;
+        setIsOpen(false);
+        setQuery("");
+      }
+    } else if (e.key === "Enter" && activeIndex === -1 && flatResults.length > 0) {
+      window.location.href = flatResults[0].href;
+      setIsOpen(false);
+      setQuery("");
+    }
+  }
 
   function handleResultClick(href: string) {
     window.location.href = href;
@@ -133,8 +183,17 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
     setQuery("");
   }
 
+  function handleInputFocus() {
+    if (query.length >= 2 && flatResults.length > 0) {
+      setIsOpen(true);
+    }
+  }
+
+  const hasResults = flatResults.length > 0;
+
   const dropdown = (
     <div
+      role="listbox"
       style={{
         position: "fixed",
         top: dropdownStyle?.top ?? 0,
@@ -159,20 +218,31 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
               <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
                 Requests
               </div>
-              {results.requests.map((r) => (
-                <button
-                  key={r.id}
-                  type="button"
-                  onClick={() => handleResultClick(`/${lang}/app/requests/${r.id}`)}
-                  className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
-                >
-                  <span className="text-sm font-medium text-white">{r.name}</span>
-                  <span className="text-xs text-white/50">
-                    {r.company ?? r.email}
-                    {r.service && ` · ${r.service}`}
-                  </span>
-                </button>
-              ))}
+              {results.requests.map((r, i) => {
+                const globalIndex = i;
+                return (
+                  <a
+                    key={r.id}
+                    href={`/${lang}/app/requests/${r.id}`}
+                    role="option"
+                    aria-selected={activeIndex === globalIndex}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleResultClick(`/${lang}/app/requests/${r.id}`);
+                    }}
+                    className={`flex w-full cursor-pointer flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors ${
+                      activeIndex === globalIndex ? "bg-white/[0.08]" : "hover:bg-white/[0.05]"
+                    }`}
+                  >
+                    <span className="text-sm font-medium text-white">{r.name}</span>
+                    <span className="text-xs text-white/50">
+                      {r.company ?? r.email}
+                      {r.service && ` · ${r.service}`}
+                    </span>
+                  </a>
+                );
+              })}
             </div>
           )}
 
@@ -181,19 +251,30 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
               <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
                 Clients
               </div>
-              {results.clients.map((c) => (
-                <button
-                  key={c.id}
-                  type="button"
-                  onClick={() => handleResultClick(`/${lang}/app/clients/${c.id}`)}
-                  className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
-                >
-                  <span className="text-sm font-medium text-white">{c.name}</span>
-                  <span className="text-xs text-white/50">
-                    {c.company ?? c.email ?? ""}
-                  </span>
-                </button>
-              ))}
+              {results.clients.map((c, i) => {
+                const globalIndex = results.requests.length + i;
+                return (
+                  <a
+                    key={c.id}
+                    href={`/${lang}/app/clients/${c.id}`}
+                    role="option"
+                    aria-selected={activeIndex === globalIndex}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleResultClick(`/${lang}/app/clients/${c.id}`);
+                    }}
+                    className={`flex w-full cursor-pointer flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors ${
+                      activeIndex === globalIndex ? "bg-white/[0.08]" : "hover:bg-white/[0.05]"
+                    }`}
+                  >
+                    <span className="text-sm font-medium text-white">{c.name}</span>
+                    <span className="text-xs text-white/50">
+                      {[c.company, c.email].filter(Boolean).join(" · ")}
+                    </span>
+                  </a>
+                );
+              })}
             </div>
           )}
 
@@ -202,19 +283,30 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
               <div className="px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/40">
                 Quotes
               </div>
-              {results.quotes.map((q) => (
-                <button
-                  key={q.id}
-                  type="button"
-                  onClick={() => handleResultClick(`/${lang}/app/quotes/${q.id}`)}
-                  className="flex w-full flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/[0.05]"
-                >
-                  <span className="text-sm font-medium text-white">{q.title}</span>
-                  {q.client_name && (
-                    <span className="text-xs text-white/50">{q.client_name}</span>
-                  )}
-                </button>
-              ))}
+              {results.quotes.map((q, i) => {
+                const globalIndex = results.requests.length + results.clients.length + i;
+                return (
+                  <a
+                    key={q.id}
+                    href={`/${lang}/app/quotes/${q.id}`}
+                    role="option"
+                    aria-selected={activeIndex === globalIndex}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleResultClick(`/${lang}/app/quotes/${q.id}`);
+                    }}
+                    className={`flex w-full cursor-pointer flex-col items-start gap-0.5 px-4 py-2.5 text-left transition-colors ${
+                      activeIndex === globalIndex ? "bg-white/[0.08]" : "hover:bg-white/[0.05]"
+                    }`}
+                  >
+                    <span className="text-sm font-medium text-white">{q.title}</span>
+                    {q.client_name && (
+                      <span className="text-xs text-white/50">{q.client_name}</span>
+                    )}
+                  </a>
+                );
+              })}
             </div>
           )}
         </div>
@@ -232,7 +324,13 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onFocus={handleInputFocus}
+        onKeyDown={handleKeyDown}
         placeholder={placeholder}
+        aria-autocomplete="list"
+        aria-controls="search-dropdown"
+        aria-expanded={isOpen}
+        autoComplete="off"
         className="h-10 w-full rounded-xl border border-white/10 bg-white/[0.03] pl-10 pr-4 text-sm text-white placeholder:text-white/40 transition-colors focus:outline-none focus:bg-white/[0.06] focus:border-white/20"
       />
 
