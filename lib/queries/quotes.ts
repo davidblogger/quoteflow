@@ -1,5 +1,5 @@
 import "server-only";
-import { getSupabaseServer } from "@/lib/supabase/server";
+import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
 import type {
   Quote,
   QuoteInsert,
@@ -46,12 +46,13 @@ export async function getQuoteById(
 /**
  * Single-tenant: get quote by ID without profile filter.
  * All quotes belong to the same workspace, so we just need the quote ID.
+ * Uses admin client to bypass RLS for public PDF access.
  */
 export async function getQuoteByIdUnfiltered(
   id: string,
 ): Promise<Quote | null> {
-  const supabase = await getSupabaseServer();
-  const { data, error } = await supabase
+  const supabaseAdmin = await getSupabaseAdmin();
+  const { data, error } = await supabaseAdmin
     .from("quotes")
     .select("*")
     .eq("id", id)

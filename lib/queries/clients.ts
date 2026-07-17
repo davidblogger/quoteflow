@@ -1,5 +1,5 @@
 import "server-only";
-import { getSupabaseServer } from "@/lib/supabase/server";
+import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
 import type {
   Client,
   ClientInsert,
@@ -39,12 +39,13 @@ export async function getClientById(
 
 /**
  * Single-tenant: get client by ID without profile filter.
+ * Uses admin client to bypass RLS for public PDF access.
  */
 export async function getClientByIdUnfiltered(
   id: string,
 ): Promise<Client | null> {
-  const supabase = await getSupabaseServer();
-  const { data, error } = await supabase
+  const supabaseAdmin = await getSupabaseAdmin();
+  const { data, error } = await supabaseAdmin
     .from("clients")
     .select("*")
     .eq("id", id)

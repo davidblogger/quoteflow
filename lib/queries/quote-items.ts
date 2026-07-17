@@ -1,5 +1,5 @@
 import "server-only";
-import { getSupabaseServer } from "@/lib/supabase/server";
+import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
 import type {
   QuoteItem,
   QuoteItemInsert,
@@ -21,10 +21,11 @@ export async function listItems(quoteId: string): Promise<QuoteItem[]> {
 
 /**
  * Single-tenant: list items without RLS filter.
+ * Uses admin client to bypass RLS for public PDF access.
  */
 export async function listItemsUnfiltered(quoteId: string): Promise<QuoteItem[]> {
-  const supabase = await getSupabaseServer();
-  const { data, error } = await supabase
+  const supabaseAdmin = await getSupabaseAdmin();
+  const { data, error } = await supabaseAdmin
     .from("quote_items")
     .select("*")
     .eq("quote_id", quoteId)
