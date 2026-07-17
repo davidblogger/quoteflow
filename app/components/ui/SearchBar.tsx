@@ -141,7 +141,7 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute left-0 top-full z-50 mt-2 w-full min-w-80 overflow-hidden rounded-2xl glass-strong shadow-2xl"
+          className="absolute left-0 top-full z-[100] mt-2 w-full min-w-80 overflow-hidden rounded-2xl border border-white/10 bg-[#060814]/95 backdrop-blur-xl shadow-2xl"
         >
           {isLoading ? (
             <div className="flex items-center justify-center px-4 py-6 text-sm text-white/40">
