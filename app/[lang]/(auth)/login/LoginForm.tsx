@@ -1,13 +1,13 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import {
   signInAction,
   type AuthFormState,
 } from "../actions";
 import { Button } from "@/app/components/ui/Button";
-import { ArrowRightIcon, AlertCircleIcon } from "@/app/components/icons/Icons";
+import { ArrowRightIcon, AlertCircleIcon, EyeIcon, EyeOffIcon } from "@/app/components/icons/Icons";
 import { useActionToast } from "@/app/components/ui/toast";
 
 type LoginFormProps = {
@@ -48,6 +48,7 @@ export function LoginForm({
   next,
 }: LoginFormProps) {
   const [state, formAction] = useActionState(signInAction, initialState);
+  const [passwordRevealed, setPasswordRevealed] = useState(false);
   const fe = state.fieldErrors ?? {};
 
   useActionToast(state.message, {
@@ -86,17 +87,51 @@ export function LoginForm({
           }
         />
 
-        <Field
-          id="password"
-          type="password"
-          label={copy.fields.password}
-          placeholder={copy.fields.passwordPlaceholder}
-          autoComplete="current-password"
-          required
-          error={
-            fe.password ? copy.errors.required : undefined
-          }
-        />
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="password"
+            className="text-xs font-medium uppercase tracking-wider text-white/55"
+          >
+            {copy.fields.password}
+            <span className="ml-1 text-accent-2">*</span>
+          </label>
+          <div className="relative">
+            <input
+              id="password"
+              name="password"
+              type={passwordRevealed ? "text" : "password"}
+              autoComplete="current-password"
+              placeholder={copy.fields.passwordPlaceholder}
+              required
+              aria-invalid={Boolean(fe.password)}
+              aria-describedby={fe.password ? "password-error" : undefined}
+              className={`h-11 w-full rounded-xl border bg-white/[0.03] pr-11 pl-4 text-sm text-white placeholder:text-white/35 transition-colors focus:outline-none focus:bg-white/[0.05] ${
+                fe.password
+                  ? "border-danger/50 focus:border-danger"
+                  : "border-white/10 focus:border-white/25"
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setPasswordRevealed((v) => !v)}
+              aria-label={passwordRevealed ? "Hide password" : "Show password"}
+              aria-pressed={passwordRevealed}
+              className="absolute right-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white/45 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            >
+              {passwordRevealed ? (
+                <EyeOffIcon className="size-4" />
+              ) : (
+                <EyeIcon className="size-4" />
+              )}
+            </button>
+          </div>
+          {fe.password && (
+            <span id="password-error" className="flex items-center gap-1 text-xs text-danger">
+              <AlertCircleIcon className="size-3" />
+              {copy.errors.required}
+            </span>
+          )}
+        </div>
 
         {state.formError === "invalidCredentials" && (
           <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">

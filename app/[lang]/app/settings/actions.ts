@@ -152,7 +152,7 @@ export async function updateProfileAction(
 export type CreateUserFormState = {
   ok: boolean;
   message: "idle" | "success" | "invalid" | "error" | "exists";
-  fieldErrors?: Partial<Record<"email" | "name" | "role", string>>;
+  fieldErrors?: Partial<Record<"email" | "name" | "password" | "role", string>>;
 };
 
 export async function createUserByAdminAction(
@@ -162,12 +162,15 @@ export async function createUserByAdminAction(
   const lang = (formData.get("lang") ?? "en").toString();
   const email = (formData.get("email") ?? "").toString().trim().toLowerCase();
   const name = (formData.get("name") ?? "").toString().trim();
+  const password = (formData.get("password") ?? "").toString();
   const role = (formData.get("role") ?? "member").toString() as UserRole;
 
   const fieldErrors: CreateUserFormState["fieldErrors"] = {};
   if (!email) fieldErrors.email = "required";
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) fieldErrors.email = "invalid";
   if (!name) fieldErrors.name = "required";
+  if (!password) fieldErrors.password = "required";
+  else if (password.length < 8) fieldErrors.password = "tooShort";
   if (role !== "admin" && role !== "member") fieldErrors.role = "invalid";
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -175,31 +178,53 @@ export async function createUserByAdminAction(
   }
 
   const profile = await getCurrentProfile();
-  if (!profile || profile.role !== "admin") {
+  if (!profile) {
+    console.error("[QuoteFlow] createUserByAdminAction: no profile found");
+    return { ok: false, message: "error" };
+  }
+  if (profile.role !== "admin") {
+    console.error("[QuoteFlow] createUserByAdminAction: user is not admin, role:", profile.role);
     return { ok: false, message: "error" };
   }
 
-  const supabaseAdmin = await getSupabaseAdmin();
-
-  // Check if user already exists in auth.users
-  const { data: existingAuth } = await supabaseAdmin.auth.admin.listUsers();
-  const userExists = existingAuth?.users.some((u) => u.email?.toLowerCase() === email);
-  if (userExists) {
-    return { ok: false, message: "exists" };
+  let supabaseAdmin;
+  try {
+    supabaseAdmin = await getSupabaseAdmin();
+  } catch (err) {
+    console.error("[QuoteFlow] createUserByAdminAction: getSupabaseAdmin failed:", err);
+    return { ok: false, message: "error" };
   }
 
-  // Create user with generated password
-  const temporaryPassword = generateSecurePassword();
+  let newUserId: string;
 
-  const { data: newUser, error: createErr } = await supabaseAdmin.auth.admin.createUser({
-    email,
-    password: temporaryPassword,
-    email_confirm: true,
-    user_metadata: { name, company_name: profile.company_name },
-  });
+  try {
+    const { data: newUser, error: createErr } = await supabaseAdmin.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: false,
+      user_metadata: { name, company_name: profile.company_name },
+    });
 
-  if (createErr || !newUser.user) {
-    console.error("[QuoteFlow] create user failed", createErr);
+    if (createErr) {
+      console.error("[QuoteFlow] create user failed:", createErr);
+      if (
+        createErr.message?.includes("already been registered") ||
+        createErr.message?.includes("already exists") ||
+        createErr.status === 422
+      ) {
+        return { ok: false, message: "exists" };
+      }
+      return { ok: false, message: "error" };
+    }
+
+    if (!newUser?.user) {
+      console.error("[QuoteFlow] create user returned no user object");
+      return { ok: false, message: "error" };
+    }
+
+    newUserId = newUser.user.id;
+  } catch (err) {
+    console.error("[QuoteFlow] create user threw exception:", err);
     return { ok: false, message: "error" };
   }
 
@@ -207,7 +232,7 @@ export async function createUserByAdminAction(
   const { error: profileErr } = await supabaseAdmin
     .from("profiles")
     .insert({
-      id: newUser.user.id,
+      id: newUserId,
       email,
       company_name: name,
       role,
@@ -219,7 +244,7 @@ export async function createUserByAdminAction(
   if (profileErr) {
     console.error("[QuoteFlow] create profile failed", profileErr);
     // Try to delete the auth user if profile creation failed
-    await supabaseAdmin.auth.admin.deleteUser(newUser.user.id);
+    await supabaseAdmin.auth.admin.deleteUser(newUserId);
     return { ok: false, message: "error" };
   }
 
@@ -289,13 +314,4 @@ export async function deleteUserAction(
   revalidatePath(`/${lang}/app/settings/users`);
 
   return { ok: true, message: "success" };
-}
-
-function generateSecurePassword(): string {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$?";
-  let password = "";
-  for (let i = 0; i < 16; i++) {
-    password += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return password;
 }

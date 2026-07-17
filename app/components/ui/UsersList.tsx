@@ -10,7 +10,7 @@ import {
 import type { ProfileWithUser } from "@/lib/supabase/types";
 import type { UserRole } from "@/lib/supabase/types";
 import { Button } from "@/app/components/ui/Button";
-import { PlusIcon, AlertCircleIcon, ChevronDownIcon } from "@/app/components/icons/Icons";
+import { PlusIcon, AlertCircleIcon, ChevronDownIcon, EyeIcon, EyeOffIcon } from "@/app/components/icons/Icons";
 
 type UsersListProps = {
   users: ProfileWithUser[];
@@ -22,6 +22,7 @@ type UsersListProps = {
     invite: string;
     name: string;
     email: string;
+    password: string;
     role: string;
     joined: string;
     lastLogin: string;
@@ -30,24 +31,25 @@ type UsersListProps = {
     delete: string;
     changeRole: string;
     deleteConfirm: string;
-    userInvited: string;
+    userCreated: string;
     roleUpdated: string;
     userDeleted: string;
     errors: {
       required: string;
       invalidEmail: string;
+      tooShort: string;
       generic: string;
       exists: string;
     };
   };
 };
 
-function InviteButton() {
+function CreateButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="md" disabled={pending}>
       <PlusIcon className="size-4" />
-      {pending ? "..." : "Invitar"}
+      {pending ? "..." : "Crear"}
     </Button>
   );
 }
@@ -67,12 +69,13 @@ function RoleBadge({ role, labels }: { role: UserRole; labels: { admin: string; 
 }
 
 export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) {
-  const [showInviteModal, setShowInviteModal] = useState(false);
-  const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteName, setInviteName] = useState("");
-  const [inviteRole, setInviteRole] = useState<UserRole>("member");
-  const [inviteError, setInviteError] = useState<string | null>(null);
-  const [inviteSuccess, setInviteSuccess] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [createEmail, setCreateEmail] = useState("");
+  const [createName, setCreateName] = useState("");
+  const [createPassword, setCreatePassword] = useState("");
+  const [createRole, setCreateRole] = useState<UserRole>("member");
+  const [passwordRevealed, setPasswordRevealed] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
   const [openRoleMenu, setOpenRoleMenu] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -88,21 +91,23 @@ export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) 
     setToast({ message, type });
   }
 
-  async function handleInvite(formData: FormData) {
-    setInviteError(null);
+  async function handleCreate(formData: FormData) {
+    setCreateError(null);
     const result = await createUserByAdminAction(_prev, formData);
     if (result.ok) {
-      setInviteSuccess(true);
-      setShowInviteModal(false);
-      setInviteEmail("");
-      setInviteName("");
-      setInviteRole("member");
-      showToast(copy.userInvited, "success");
+      setShowCreateModal(false);
+      setCreateEmail("");
+      setCreateName("");
+      setCreatePassword("");
+      setCreateRole("member");
+      showToast(copy.userCreated, "success");
       window.location.reload();
     } else if (result.message === "exists") {
-      setInviteError(copy.errors.exists);
+      setCreateError(copy.errors.exists);
+    } else if (result.fieldErrors?.password === "tooShort") {
+      setCreateError(copy.errors.tooShort);
     } else {
-      setInviteError(copy.errors.generic);
+      setCreateError(copy.errors.generic);
     }
   }
 
@@ -152,32 +157,25 @@ export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) 
       )}
 
       <div className="flex justify-end">
-        <Button size="md" onClick={() => setShowInviteModal(true)}>
+        <Button size="md" onClick={() => { setShowCreateModal(true); setPasswordRevealed(false); }}>
           <PlusIcon className="size-4" />
           {copy.invite}
         </Button>
       </div>
 
-      {showInviteModal && (
+      {showCreateModal && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="glass-strong w-full max-w-md rounded-2xl p-6">
             <h2 className="mb-4 text-lg font-semibold text-white">{copy.invite}</h2>
             <form
-              action={handleInvite}
-              onSubmit={() => {
-                const formData = new FormData();
-                formData.set("lang", lang);
-                formData.set("email", inviteEmail);
-                formData.set("name", inviteName);
-                formData.set("role", inviteRole);
-                handleInvite(formData);
-              }}
+              action={handleCreate}
               className="flex flex-col gap-4"
             >
               <input type="hidden" name="lang" value={lang} />
-              <input type="hidden" name="email" value={inviteEmail} />
-              <input type="hidden" name="name" value={inviteName} />
-              <input type="hidden" name="role" value={inviteRole} />
+              <input type="hidden" name="email" value={createEmail} />
+              <input type="hidden" name="name" value={createName} />
+              <input type="hidden" name="password" value={createPassword} />
+              <input type="hidden" name="role" value={createRole} />
 
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm text-white/70">
@@ -185,8 +183,8 @@ export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) 
                   <input
                     type="text"
                     name="name_display"
-                    value={inviteName}
-                    onChange={(e) => setInviteName(e.target.value)}
+                    value={createName}
+                    onChange={(e) => setCreateName(e.target.value)}
                     placeholder={copy.name}
                     className="mt-1 block w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-white/20 focus:outline-none"
                   />
@@ -199,8 +197,8 @@ export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) 
                   <input
                     type="email"
                     name="email_display"
-                    value={inviteEmail}
-                    onChange={(e) => setInviteEmail(e.target.value)}
+                    value={createEmail}
+                    onChange={(e) => setCreateEmail(e.target.value)}
                     placeholder="user@example.com"
                     className="mt-1 block w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-white/20 focus:outline-none"
                   />
@@ -209,10 +207,35 @@ export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) 
 
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm text-white/70">
+                  {copy.password} (min 8)
+                  <div className="relative">
+                    <input
+                      type={passwordRevealed ? "text" : "password"}
+                      name="password_display"
+                      value={createPassword}
+                      onChange={(e) => setCreatePassword(e.target.value)}
+                      placeholder="********"
+                      className="mt-1 block w-full rounded-xl border border-white/10 bg-white/[0.03] pr-11 pl-4 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-white/20 focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setPasswordRevealed((v) => !v)}
+                      aria-label={passwordRevealed ? "Hide password" : "Show password"}
+                      aria-pressed={passwordRevealed}
+                      className="absolute right-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white/45 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                    >
+                      {passwordRevealed ? <EyeOffIcon className="size-4" /> : <EyeIcon className="size-4" />}
+                    </button>
+                  </div>
+                </label>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm text-white/70">
                   {copy.role}
                   <select
-                    value={inviteRole}
-                    onChange={(e) => setInviteRole(e.target.value as UserRole)}
+                    value={createRole}
+                    onChange={(e) => setCreateRole(e.target.value as UserRole)}
                     className="mt-1 block w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white focus:border-white/20 focus:outline-none"
                   >
                     <option value="member">{copy.member}</option>
@@ -221,8 +244,8 @@ export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) 
                 </label>
               </div>
 
-              {inviteError && (
-                <p className="text-sm text-error">{inviteError}</p>
+              {createError && (
+                <p className="text-sm text-error">{createError}</p>
               )}
 
               <div className="flex justify-end gap-3">
@@ -231,13 +254,14 @@ export function UsersList({ users, currentUserId, lang, copy }: UsersListProps) 
                   variant="secondary"
                   size="md"
                   onClick={() => {
-                    setShowInviteModal(false);
-                    setInviteError(null);
+                    setShowCreateModal(false);
+                    setCreateError(null);
+                    setPasswordRevealed(false);
                   }}
                 >
                   Cancel
                 </Button>
-                <InviteButton />
+                <CreateButton />
               </div>
             </form>
           </div>

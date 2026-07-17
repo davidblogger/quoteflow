@@ -1,10 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { signUpAction, type AuthFormState } from "../actions";
 import { Button } from "@/app/components/ui/Button";
-import { ArrowRightIcon, AlertCircleIcon, CheckCircleIcon } from "@/app/components/icons/Icons";
+import { ArrowRightIcon, AlertCircleIcon, CheckCircleIcon, EyeIcon, EyeOffIcon } from "@/app/components/icons/Icons";
 import { useActionToast } from "@/app/components/ui/toast";
 
 type FieldKey = "company" | "email" | "password" | "confirmPassword";
@@ -53,6 +53,8 @@ const initialState: AuthFormState = { ok: false, message: "" };
 
 export function SignupForm({ copy, lang, loginHref, homeHref, next }: SignupFormProps) {
   const [state, formAction] = useActionState(signUpAction, initialState);
+  const [passwordRevealed, setPasswordRevealed] = useState(false);
+  const [confirmPasswordRevealed, setConfirmPasswordRevealed] = useState(false);
 
   useActionToast(state.message, {
     success: copy.checkEmailTitle,
@@ -81,8 +83,80 @@ export function SignupForm({ copy, lang, loginHref, homeHref, next }: SignupForm
       <form action={formAction} className="flex flex-col gap-4" noValidate>
         <Field id="company" label={copy.fields.company} placeholder={copy.fields.companyPlaceholder} autoComplete="organization" required error={errFor("company")} />
         <Field id="email" type="email" inputMode="email" label={copy.fields.email} placeholder={copy.fields.emailPlaceholder} autoComplete="email" required error={errFor("email")} />
-        <Field id="password" type="password" label={copy.fields.password} placeholder={copy.fields.passwordPlaceholder} autoComplete="new-password" required error={errFor("password")} />
-        <Field id="confirmPassword" type="password" label={copy.fields.confirmPassword} placeholder={copy.fields.confirmPasswordPlaceholder} autoComplete="new-password" required error={errFor("confirmPassword")} />
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="password" className="text-xs font-medium uppercase tracking-wider text-white/55">
+            {copy.fields.password}
+            <span className="ml-1 text-accent-2">*</span>
+          </label>
+          <div className="relative">
+            <input
+              id="password"
+              name="password"
+              type={passwordRevealed ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder={copy.fields.passwordPlaceholder}
+              required
+              aria-invalid={Boolean(fe.password)}
+              aria-describedby={fe.password ? "password-error" : undefined}
+              className={`h-11 w-full rounded-xl border bg-white/[0.03] pr-11 pl-4 text-sm text-white placeholder:text-white/35 transition-colors focus:outline-none focus:bg-white/[0.05] ${
+                fe.password ? "border-danger/50 focus:border-danger" : "border-white/10 focus:border-white/25"
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setPasswordRevealed((v) => !v)}
+              aria-label={passwordRevealed ? "Hide password" : "Show password"}
+              aria-pressed={passwordRevealed}
+              className="absolute right-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white/45 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            >
+              {passwordRevealed ? <EyeOffIcon className="size-4" /> : <EyeIcon className="size-4" />}
+            </button>
+          </div>
+          {fe.password && (
+            <span id="password-error" className="flex items-center gap-1 text-xs text-danger">
+              <AlertCircleIcon className="size-3" />
+              {copy.errors[fe.password as ErrorKey]}
+            </span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="confirmPassword" className="text-xs font-medium uppercase tracking-wider text-white/55">
+            {copy.fields.confirmPassword}
+            <span className="ml-1 text-accent-2">*</span>
+          </label>
+          <div className="relative">
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type={confirmPasswordRevealed ? "text" : "password"}
+              autoComplete="new-password"
+              placeholder={copy.fields.confirmPasswordPlaceholder}
+              required
+              aria-invalid={Boolean(fe.confirmPassword)}
+              aria-describedby={fe.confirmPassword ? "confirmPassword-error" : undefined}
+              className={`h-11 w-full rounded-xl border bg-white/[0.03] pr-11 pl-4 text-sm text-white placeholder:text-white/35 transition-colors focus:outline-none focus:bg-white/[0.05] ${
+                fe.confirmPassword ? "border-danger/50 focus:border-danger" : "border-white/10 focus:border-white/25"
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setConfirmPasswordRevealed((v) => !v)}
+              aria-label={confirmPasswordRevealed ? "Hide password" : "Show password"}
+              aria-pressed={confirmPasswordRevealed}
+              className="absolute right-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white/45 transition-colors hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            >
+              {confirmPasswordRevealed ? <EyeOffIcon className="size-4" /> : <EyeIcon className="size-4" />}
+            </button>
+          </div>
+          {fe.confirmPassword && (
+            <span id="confirmPassword-error" className="flex items-center gap-1 text-xs text-danger">
+              <AlertCircleIcon className="size-3" />
+              {copy.errors[fe.confirmPassword as ErrorKey]}
+            </span>
+          )}
+        </div>
 
         {state.formError === "generic" && !fe.email && (
           <p className="flex items-center gap-2 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger">

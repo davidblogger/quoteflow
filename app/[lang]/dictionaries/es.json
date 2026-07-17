@@ -363,9 +363,10 @@
       "users": {
         "title": "Miembros del equipo",
         "subtitle": "Gestiona quién tiene acceso a tu espacio de trabajo.",
-        "invite": "Invitar usuario",
+        "invite": "Crear usuario",
         "name": "Nombre",
         "email": "Email",
+        "password": "Contraseña",
         "role": "Rol",
         "joined": "Registrado",
         "lastLogin": "Último acceso",
@@ -374,12 +375,13 @@
         "delete": "Eliminar",
         "changeRole": "Cambiar rol",
         "deleteConfirm": "¿Eliminar a este usuario del espacio de trabajo? Esta acción no se puede deshacer.",
-        "userInvited": "Usuario creado. Debe revisar su email para establecer una contraseña.",
+        "userCreated": "Usuario creado exitosamente.",
         "roleUpdated": "Rol actualizado.",
         "userDeleted": "Usuario eliminado.",
         "errors": {
           "required": "Este campo es obligatorio",
           "invalidEmail": "Introduce un email válido",
+          "tooShort": "La contraseña debe tener al menos 8 caracteres",
           "generic": "Algo salió mal. Inténtalo de nuevo.",
           "exists": "Ya existe un usuario con este email."
         }
