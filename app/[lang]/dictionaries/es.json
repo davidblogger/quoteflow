@@ -173,6 +173,13 @@
           "noNotes": null,
           "autoPrintHint": "Abriendo el diálogo de impresión…",
           "backCta": "Volver a la cotización"
+        },
+        "share": {
+          "email": "Enviar por email",
+          "whatsApp": "Compartir por WhatsApp",
+          "quoteSubject": "Cotización: {title}",
+          "noEmail": "Este cliente no tiene email",
+          "noPhone": "Este cliente no tiene teléfono"
         }
       },
       "statusChanger": {

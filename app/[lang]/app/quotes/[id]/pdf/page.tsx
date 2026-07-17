@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { hasLocale, getDictionary, type Locale } from "../../../../dictionaries";
 import { getSupabaseServer } from "@/lib/supabase/server";
-import { getQuoteById } from "@/lib/queries/quotes";
-import { getClientById } from "@/lib/queries/clients";
+import { getQuoteByIdUnfiltered } from "@/lib/queries/quotes";
+import { getClientByIdUnfiltered } from "@/lib/queries/clients";
 import { listItems } from "@/lib/queries/quote-items";
 import { getCurrentProfile } from "@/lib/queries/profile";
 import { ArrowRightIcon } from "@/app/components/icons/Icons";
@@ -23,11 +23,11 @@ export default async function QuotePdfPage(props: {
   if (!user) redirect(`/${lang}/login?next=/${lang}/app/quotes/${id}/pdf`);
 
   const [quote, profile, items, client] = await Promise.all([
-    getQuoteById(user.id, id),
+    getQuoteByIdUnfiltered(id),
     getCurrentProfile(),
     listItems(id),
-    getQuoteById(user.id, id).then(async (q) =>
-      q ? getClientById(user.id, q.client_id) : null,
+    getQuoteByIdUnfiltered(id).then(async (q) =>
+      q ? getClientByIdUnfiltered(q.client_id) : null,
     ),
   ]);
 

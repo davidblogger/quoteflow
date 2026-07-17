@@ -173,6 +173,13 @@
           "noNotes": null,
           "autoPrintHint": "Opening the print dialog…",
           "backCta": "Back to quote"
+        },
+        "share": {
+          "email": "Send by email",
+          "whatsApp": "Share via WhatsApp",
+          "quoteSubject": "Quote: {title}",
+          "noEmail": "No email address for this client",
+          "noPhone": "No phone number for this client"
         }
       },
       "statusChanger": {

@@ -37,6 +37,23 @@ export async function getClientById(
   return data as Client;
 }
 
+/**
+ * Single-tenant: get client by ID without profile filter.
+ */
+export async function getClientByIdUnfiltered(
+  id: string,
+): Promise<Client | null> {
+  const supabase = await getSupabaseServer();
+  const { data, error } = await supabase
+    .from("clients")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return data as Client;
+}
+
 export async function createClient(
   profileId: string,
   input: ClientInsert,

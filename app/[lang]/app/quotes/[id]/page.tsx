@@ -4,12 +4,23 @@ import { hasLocale, getDictionary, type Locale } from "../../../dictionaries";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import { getQuoteById } from "@/lib/queries/quotes";
 import { getClientById } from "@/lib/queries/clients";
+import { getCurrentProfile } from "@/lib/queries/profile";
 import { QuoteStatusBadge } from "../status-badge";
 import { QuoteStatusChanger } from "./status-changer";
 import { ItemsSection } from "./items-section";
 import { EditQuoteLink } from "./edit-quote-link";
 import { EditQuoteForm } from "./edit-quote-form";
-import { ArrowRightIcon, FileTextIcon } from "@/app/components/icons/Icons";
+import {
+  ArrowRightIcon,
+  FileTextIcon,
+  MailIcon,
+  WhatsAppIcon,
+} from "@/app/components/icons/Icons";
+import {
+  formatShareMessage,
+  formatWhatsAppUrl,
+  formatMailtoUrl,
+} from "@/lib/utils";
 
 export async function generateMetadata(
   props: { params: Promise<{ lang: string; id: string }> },
@@ -48,6 +59,26 @@ export default async function QuoteDetailPage(props: {
     edit && edit !== "header" && edit !== "new" ? edit : null;
 
   const client = await getClientById(user.id, quote.client_id);
+  const profile = await getCurrentProfile();
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://quoteflow.io";
+  const pdfUrl = `${siteUrl}/${lang}/app/quotes/${quote.id}/pdf`;
+
+  const shareMessage = profile && client
+    ? formatShareMessage({ quote, client, profile, pdfUrl, lang })
+    : null;
+  const emailHref =
+    client?.email && shareMessage
+      ? formatMailtoUrl(
+          client.email,
+          (copy.detail.share.quoteSubject as string).replace("{title}", quote.title),
+          shareMessage,
+        )
+      : null;
+  const whatsappHref =
+    client?.phone && shareMessage
+      ? formatWhatsAppUrl(client.phone, shareMessage)
+      : null;
 
   const createdAt = new Date(quote.created_at).toLocaleString(lang, {
     day: "2-digit",
@@ -113,6 +144,26 @@ export default async function QuoteDetailPage(props: {
               >
                 {copy.detail.pdf.downloadCta}
               </a>
+              {client?.email && emailHref && (
+                <a
+                  href={emailHref}
+                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+                >
+                  <MailIcon className="size-3.5" />
+                  {copy.detail.share.email}
+                </a>
+              )}
+              {client?.phone && whatsappHref && (
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+                >
+                  <WhatsAppIcon className="size-3.5" />
+                  {copy.detail.share.whatsApp}
+                </a>
+              )}
               <EditQuoteLink
                 href={`/${lang}/app/quotes/${quote.id}?edit=header`}
                 label={copy.detail.edit.cta}

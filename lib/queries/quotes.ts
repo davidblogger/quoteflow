@@ -43,6 +43,24 @@ export async function getQuoteById(
   return data as Quote;
 }
 
+/**
+ * Single-tenant: get quote by ID without profile filter.
+ * All quotes belong to the same workspace, so we just need the quote ID.
+ */
+export async function getQuoteByIdUnfiltered(
+  id: string,
+): Promise<Quote | null> {
+  const supabase = await getSupabaseServer();
+  const { data, error } = await supabase
+    .from("quotes")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return data as Quote;
+}
+
 export async function createQuote(
   profileId: string,
   input: QuoteInsert,
