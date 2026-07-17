@@ -20,6 +20,21 @@ export async function listItems(quoteId: string): Promise<QuoteItem[]> {
 }
 
 /**
+ * Single-tenant: list items without RLS filter.
+ */
+export async function listItemsUnfiltered(quoteId: string): Promise<QuoteItem[]> {
+  const supabase = await getSupabaseServer();
+  const { data, error } = await supabase
+    .from("quote_items")
+    .select("*")
+    .eq("quote_id", quoteId)
+    .order("position", { ascending: true });
+
+  if (error || !data) return [];
+  return data as QuoteItem[];
+}
+
+/**
  * Adds a line item, then recomputes the parent quote's subtotal/total.
  * Ownership of the quote is checked before insert.
  */

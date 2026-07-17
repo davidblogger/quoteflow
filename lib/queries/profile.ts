@@ -48,6 +48,22 @@ export async function getCurrentProfile(): Promise<Profile | null> {
 }
 
 /**
+ * Single-tenant: gets the workspace profile using service role.
+ * Used by public pages like PDF that don't require auth.
+ */
+export async function getProfileAdmin(): Promise<Profile | null> {
+  const supabaseAdmin = await getSupabaseAdmin();
+
+  const { data, error } = await supabaseAdmin
+    .from("profiles")
+    .select("*")
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return data as Profile;
+}
+
+/**
  * Like {@link getCurrentProfile}, but tries to create the profile row
  * on-the-fly when it's missing. Returns the row once it exists (either
  * just-created or already there).

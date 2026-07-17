@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
 import { hasLocale, getDictionary, type Locale } from "../../../../dictionaries";
-import { getSupabaseServer } from "@/lib/supabase/server";
 import { getQuoteByIdUnfiltered } from "@/lib/queries/quotes";
 import { getClientByIdUnfiltered } from "@/lib/queries/clients";
-import { listItems } from "@/lib/queries/quote-items";
-import { getCurrentProfile } from "@/lib/queries/profile";
+import { listItemsUnfiltered } from "@/lib/queries/quote-items";
+import { getProfileAdmin } from "@/lib/queries/profile";
 import { ArrowRightIcon } from "@/app/components/icons/Icons";
 import { AutoPrint } from "./auto-print";
 
@@ -16,16 +15,10 @@ export default async function QuotePdfPage(props: {
   const { lang, id } = await props.params;
   if (!hasLocale(lang)) redirect(`/${lang}`);
 
-  const supabase = await getSupabaseServer();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect(`/${lang}/login?next=/${lang}/app/quotes/${id}/pdf`);
-
   const [quote, profile, items, client] = await Promise.all([
     getQuoteByIdUnfiltered(id),
-    getCurrentProfile(),
-    listItems(id),
+    getProfileAdmin(),
+    listItemsUnfiltered(id),
     getQuoteByIdUnfiltered(id).then(async (q) =>
       q ? getClientByIdUnfiltered(q.client_id) : null,
     ),
