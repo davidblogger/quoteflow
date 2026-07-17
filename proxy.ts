@@ -39,7 +39,8 @@ function extractLocale(pathname: string): Locale {
 
 function isProtected(restOfPath: string): boolean {
   // PDF routes are public — no auth required
-  if (/\/quotes\/[^/]+\/pdf$/.test(restOfPath)) {
+  // restOfPath is like /app/quotes/[id]/pdf
+  if (/^\/app\/quotes\/[^/]+\/pdf$/.test(restOfPath)) {
     return false;
   }
   return (
