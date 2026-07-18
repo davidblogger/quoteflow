@@ -23,7 +23,7 @@ export function WorkflowTip({ status, copy }: WorkflowTipProps) {
   const tip = copy[status as keyof typeof copy];
 
   return (
-    <aside className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-sm dark:border-white/10 dark:bg-white/[0.04]">
+    <aside className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3.5 text-sm dark:border-white/10 dark:bg-[#0f0f1a]">
       <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600 dark:bg-white/10 dark:text-white">
         <LightbulbIcon className="size-4" />
       </span>
