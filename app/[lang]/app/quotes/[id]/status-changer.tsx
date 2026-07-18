@@ -47,7 +47,7 @@ export function QuoteStatusChanger({
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="status"
-          className="text-xs font-medium uppercase tracking-wider text-white/55"
+          className="text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-white/55"
         >
           {copy.label}
         </label>
@@ -56,10 +56,10 @@ export function QuoteStatusChanger({
             id="status"
             name="status"
             defaultValue={currentStatus}
-            className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-white/[0.03] px-4 pr-10 text-sm text-white transition-colors focus:outline-none focus:bg-white/[0.05] focus:border-white/25"
+            className="h-11 w-full appearance-none rounded-xl border border-neutral-200 bg-neutral-50 px-4 pr-10 text-sm text-neutral-900 transition-colors focus:outline-none focus:border-neutral-400 dark:border-white/10 dark:bg-white/[0.03] dark:text-white"
           >
             {QUOTE_STATUSES.map((s) => (
-              <option key={s} value={s} className="bg-[#0a0e1a] text-white">
+              <option key={s} value={s} className="bg-white text-neutral-900 dark:bg-[#0a0e1a] dark:text-white">
                 {labels[s]}
               </option>
             ))}
@@ -70,7 +70,7 @@ export function QuoteStatusChanger({
             fill="none"
             stroke="currentColor"
             strokeWidth="1.6"
-            className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-white/40"
+            className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-neutral-400 dark:text-white/40"
           >
             <path d="m6 9 6 6 6-6" />
           </svg>

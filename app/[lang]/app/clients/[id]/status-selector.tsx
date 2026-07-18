@@ -37,7 +37,7 @@ export function ClientStatusSelector({
 
       <label
         htmlFor="client-status"
-        className="text-[10px] font-semibold uppercase tracking-wider text-white/45"
+        className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-white/45"
       >
         {copy.label}
       </label>
@@ -47,10 +47,10 @@ export function ClientStatusSelector({
           id="client-status"
           name="status"
           defaultValue={currentStatus}
-          className="h-9 appearance-none rounded-full border border-white/10 bg-white/[0.04 pl-3 pr-8 text-xs font-medium text-white transition-colors hover:border-white/20 focus:outline-none focus:border-white/30"
+          className="h-9 appearance-none rounded-full border border-neutral-200 bg-neutral-50 pl-3 pr-8 text-xs font-medium text-neutral-700 transition-colors hover:border-neutral-300 focus:outline-none focus:border-neutral-400 dark:border-white/10 dark:bg-white/[0.04] dark:text-white"
         >
           {STATUSES.map((s) => (
-            <option key={s} value={s} className="bg-[#0a0e1a] text-white">
+            <option key={s} value={s} className="bg-white text-neutral-900 dark:bg-[#0a0e1a] dark:text-white">
               {copy[s]}
             </option>
           ))}
@@ -61,7 +61,7 @@ export function ClientStatusSelector({
           fill="none"
           stroke="currentColor"
           strokeWidth="1.6"
-          className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-white/40"
+          className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-neutral-400 dark:text-white/40"
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
