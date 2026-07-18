@@ -221,8 +221,7 @@ export async function GET(
   return new NextResponse(html, {
     status: 200,
     headers: {
-      "Content-Type": "text/html",
-      "Content-Disposition": `attachment; filename="${quote.title.replace(/[^a-zA-Z0-9]/g, "-")}-${id.slice(0, 8)}.pdf"`,
+      "Content-Type": "text/html; charset=utf-8",
     },
   });
   } catch (error) {
