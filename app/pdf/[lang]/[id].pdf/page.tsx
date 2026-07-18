@@ -45,7 +45,7 @@ export default async function QuotePdfPage(props: {
   const validUntil = quote.valid_until
     ? new Date(quote.valid_until).toLocaleDateString(lang, {
         day: "2-digit",
-        month: "long",
+        month: "short",
         year: "numeric",
       })
     : null;
@@ -65,9 +65,7 @@ export default async function QuotePdfPage(props: {
         <p className="text-xs text-neutral-500">{copy.autoPrintHint}</p>
       </div>
 
-      <article
-        className="mx-auto mt-6 flex max-w-3xl flex-col gap-8 bg-white p-6 text-black sm:p-10 print:mt-0 print:p-8"
-      >
+      <article className="mx-auto mt-6 flex max-w-3xl flex-col gap-8 bg-white p-6 text-black sm:p-10 print:mt-0 print:p-8">
         <header className="flex flex-col gap-2 border-b border-neutral-200 pb-6">
           <div className="flex items-start justify-between gap-4">
             <div className="flex flex-col">
@@ -131,40 +129,26 @@ export default async function QuotePdfPage(props: {
           <table className="w-full border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-neutral-300 text-xs uppercase tracking-wider text-neutral-600">
-                <th className="py-2 pr-3 font-medium">
-                  {copy.table.description}
-                </th>
-                <th className="py-2 pr-3 text-right font-medium">
-                  {copy.table.quantity}
-                </th>
-                <th className="py-2 pr-3 text-right font-medium">
-                  {copy.table.unitPrice}
-                </th>
-                <th className="py-2 text-right font-medium">
-                  {copy.table.subtotal}
-                </th>
+                <th className="py-2 pr-3 font-medium">{copy.table.description}</th>
+                <th className="py-2 pr-3 text-right font-medium">{copy.table.quantity}</th>
+                <th className="py-2 pr-3 text-right font-medium">{copy.table.unitPrice}</th>
+                <th className="py-2 text-right font-medium">{copy.table.subtotal}</th>
               </tr>
             </thead>
             <tbody>
               {items.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={4}
-                    className="py-6 text-center text-sm text-neutral-500"
-                  >
+                  <td colSpan={4} className="py-6 text-center text-sm text-neutral-500">
                     {copy.noItems}
                   </td>
                 </tr>
               ) : (
                 items.map((it) => {
-                  const lineSubtotal =
-                    Number(it.quantity) * Number(it.unit_price);
+                  const lineSubtotal = Number(it.quantity) * Number(it.unit_price);
                   return (
                     <tr key={it.id} className="border-b border-neutral-100 align-top">
                       <td className="py-2 pr-3 text-neutral-800">
-                        <span className="whitespace-pre-wrap">
-                          {it.description}
-                        </span>
+                        <span className="whitespace-pre-wrap">{it.description}</span>
                       </td>
                       <td className="py-2 pr-3 text-right tabular-nums text-neutral-800">
                         {Number(it.quantity)}
@@ -187,25 +171,17 @@ export default async function QuotePdfPage(props: {
           <dl className="flex flex-col gap-1.5 text-sm">
             <div className="flex items-center justify-between text-neutral-700">
               <dt>{copy.totals.subtotal}</dt>
-              <dd className="tabular-nums">
-                {currencyFormatter.format(Number(quote.subtotal))}
-              </dd>
+              <dd className="tabular-nums">{currencyFormatter.format(Number(quote.subtotal))}</dd>
             </div>
             {Number(quote.tax_rate) > 0 && (
               <div className="flex items-center justify-between text-neutral-700">
-                <dt>
-                  {copy.totals.tax} ({quote.tax_rate}%)
-                </dt>
-                <dd className="tabular-nums">
-                  {currencyFormatter.format(taxAmount)}
-                </dd>
+                <dt>{copy.totals.tax} ({quote.tax_rate}%)</dt>
+                <dd className="tabular-nums">{currencyFormatter.format(taxAmount)}</dd>
               </div>
             )}
             <div className="flex items-center justify-between border-t border-neutral-300 pt-2 text-base font-semibold text-neutral-900">
               <dt>{copy.totals.total}</dt>
-              <dd className="tabular-nums">
-                {currencyFormatter.format(Number(quote.total))}
-              </dd>
+              <dd className="tabular-nums">{currencyFormatter.format(Number(quote.total))}</dd>
             </div>
           </dl>
         </section>
