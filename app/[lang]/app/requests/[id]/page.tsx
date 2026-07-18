@@ -62,7 +62,7 @@ export default async function RequestDetailPage(props: {
       <div>
         <a
           href={listHref}
-          className="inline-flex items-center gap-1.5 text-sm text-white/60 transition-colors hover:text-white"
+          className="inline-flex items-center gap-1.5 text-sm text-neutral-500 transition-colors hover:text-neutral-900 dark:text-white/60 dark:hover:text-white"
         >
           <ArrowRightIcon className="size-4 rotate-180" />
           {copy.backCta}
@@ -71,14 +71,14 @@ export default async function RequestDetailPage(props: {
 
       <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/[0.04] text-white/70 ring-1 ring-white/10">
+          <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-neutral-100 text-neutral-500 ring-1 ring-neutral-200 dark:bg-white/[0.04] dark:text-white/70 dark:ring-white/10">
             <InboxIcon className="size-5" />
           </span>
           <div className="flex flex-col gap-1">
-            <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-3xl">
               {request.name}
             </h1>
-            <p className="text-sm text-white/55">{request.email}</p>
+            <p className="text-sm text-neutral-500 dark:text-white/55">{request.email}</p>
           </div>
         </div>
         <RequestStatusBadge
@@ -91,7 +91,7 @@ export default async function RequestDetailPage(props: {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <section className="glass rounded-2xl p-5 lg:col-span-2">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+          <h2 className="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
             {copy.sections.contact}
           </h2>
           <dl className="grid gap-4 sm:grid-cols-2">
@@ -104,7 +104,7 @@ export default async function RequestDetailPage(props: {
         </section>
 
         <section className="glass rounded-2xl p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+          <h2 className="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
             {copy.sections.status}
           </h2>
           <StatusChanger
@@ -118,30 +118,30 @@ export default async function RequestDetailPage(props: {
         </section>
 
         <section className="glass rounded-2xl p-5 lg:col-span-2">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+          <h2 className="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
             {copy.sections.message}
           </h2>
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-white/80">
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-neutral-700 dark:text-white/80">
             {request.message}
           </p>
         </section>
 
         <section className="glass rounded-2xl p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+          <h2 className="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
             {copy.sections.meta}
           </h2>
           <dl className="flex flex-col gap-3 text-xs">
             <div>
-              <dt className="text-white/45">{copy.fields.createdAt}</dt>
-              <dd className="mt-0.5 text-white/85">{createdAt}</dd>
+              <dt className="text-neutral-400 dark:text-white/45">{copy.fields.createdAt}</dt>
+              <dd className="mt-0.5 text-neutral-700 dark:text-white/85">{createdAt}</dd>
             </div>
             <div>
-              <dt className="text-white/45">{copy.fields.updatedAt}</dt>
-              <dd className="mt-0.5 text-white/85">{updatedAt}</dd>
+              <dt className="text-neutral-400 dark:text-white/45">{copy.fields.updatedAt}</dt>
+              <dd className="mt-0.5 text-neutral-700 dark:text-white/85">{updatedAt}</dd>
             </div>
             <div>
-              <dt className="text-white/45">{copy.fields.id}</dt>
-              <dd className="mt-0.5 break-all font-mono text-[11px] text-white/60">
+              <dt className="text-neutral-400 dark:text-white/45">{copy.fields.id}</dt>
+              <dd className="mt-0.5 break-all font-mono text-[11px] text-neutral-500 dark:text-white/60">
                 {request.id}
               </dd>
             </div>
@@ -156,10 +156,10 @@ export default async function RequestDetailPage(props: {
                   <UsersIcon className="size-5" />
                 </span>
                 <div className="flex flex-col gap-1">
-                  <h2 className="text-sm font-semibold text-white">
+                  <h2 className="text-sm font-semibold text-neutral-900 dark:text-white">
                     {copy.createClient.title}
                   </h2>
-                  <p className="max-w-xl text-sm text-white/65">
+                  <p className="max-w-xl text-sm text-neutral-500 dark:text-white/65">
                     {copy.createClient.description}
                   </p>
                 </div>
@@ -194,14 +194,14 @@ function DetailRow({
   const display = isEmpty ? (empty ?? "—") : value;
   return (
     <div className="flex flex-col gap-0.5">
-      <dt className="text-xs uppercase tracking-wider text-white/40">{label}</dt>
-      <dd className="text-sm text-white/85">
+      <dt className="text-xs uppercase tracking-wider text-neutral-400 dark:text-white/40">{label}</dt>
+      <dd className="text-sm text-neutral-700 dark:text-white/85">
         {href && !isEmpty ? (
           <a href={href} className="text-accent-2 underline-offset-4 hover:underline">
             {display}
           </a>
         ) : (
-          <span className={isEmpty ? "text-white/35" : ""}>{display}</span>
+          <span className={isEmpty ? "text-neutral-300 dark:text-white/35" : ""}>{display}</span>
         )}
       </dd>
     </div>
@@ -217,11 +217,11 @@ function NotFoundState({
 }) {
   return (
     <div className="mx-auto flex w-full max-w-md flex-col items-center gap-4 py-20 text-center">
-      <h1 className="text-2xl font-semibold text-white">{copy.title}</h1>
-      <p className="text-sm text-white/60">{copy.description}</p>
+      <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white">{copy.title}</h1>
+      <p className="text-sm text-neutral-500 dark:text-white/60">{copy.description}</p>
       <a
         href={listHref}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-5 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-white/15 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
       >
         {copy.backCta}
       </a>

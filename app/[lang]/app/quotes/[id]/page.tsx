@@ -116,7 +116,7 @@ export default async function QuoteDetailPage(props: {
       <div>
         <a
           href={listHref}
-          className="inline-flex items-center gap-1.5 text-sm text-white/60 transition-colors hover:text-white"
+          className="inline-flex items-center gap-1.5 text-sm text-neutral-500 transition-colors hover:text-neutral-900 dark:text-white/60 dark:hover:text-white"
         >
           <ArrowRightIcon className="size-4 rotate-180" />
           {copy.detail.backCta}
@@ -125,14 +125,14 @@ export default async function QuoteDetailPage(props: {
 
       <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/[0.04] text-white/70 ring-1 ring-white/10">
+          <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-neutral-100 text-neutral-500 ring-1 ring-neutral-200 dark:bg-white/[0.04] dark:text-white/70 dark:ring-white/10">
             <FileTextIcon className="size-5" />
           </span>
           <div className="flex flex-col gap-1">
-            <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-3xl">
               {quote.title}
             </h1>
-            <p className="text-sm text-white/55">
+            <p className="text-sm text-neutral-500 dark:text-white/55">
               {client?.name ?? copy.detail.empty}
             </p>
           </div>
@@ -144,14 +144,14 @@ export default async function QuoteDetailPage(props: {
                 href={`/api/pdf/${lang}/${quote.id}`}
                 target="_blank"
                 rel="noopener"
-                className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+                className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-white/15 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
               >
                 {copy.detail.pdf.downloadCta}
               </a>
               {client?.email && emailHref && (
                 <a
                   href={emailHref}
-                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-white/15 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
                 >
                   <MailIcon className="size-3.5" />
                   {copy.detail.share.email}
@@ -162,7 +162,7 @@ export default async function QuoteDetailPage(props: {
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener"
-                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+                  className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-white/15 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
                 >
                   <WhatsAppIcon className="size-3.5" />
                   {copy.detail.share.whatsApp}
@@ -198,26 +198,26 @@ export default async function QuoteDetailPage(props: {
         />
 
         <section className="glass rounded-2xl p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+          <h2 className="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
             {copy.detail.sections.totals}
           </h2>
           <dl className="flex flex-col gap-2 text-sm">
             <div className="flex items-center justify-between">
-              <dt className="text-white/60">{copy.detail.fields.subtotal}</dt>
-              <dd className="text-white/85">
+              <dt className="text-neutral-500 dark:text-white/60">{copy.detail.fields.subtotal}</dt>
+              <dd className="text-neutral-700 dark:text-white/85">
                 {currencyFormatter.format(quote.subtotal)}
               </dd>
             </div>
-            <div className="flex items-center justify-between border-t border-white/5 pt-2">
-              <dt className="font-medium text-white">
+            <div className="flex items-center justify-between border-t border-neutral-200 pt-2 dark:border-white/5">
+              <dt className="font-medium text-neutral-900 dark:text-white">
                 {copy.detail.fields.total}
               </dt>
-              <dd className="text-lg font-semibold text-white">
+              <dd className="text-lg font-semibold text-neutral-900 dark:text-white">
                 {currencyFormatter.format(quote.total)}
               </dd>
             </div>
           </dl>
-          <div className="mt-6 border-t border-white/5 pt-5">
+          <div className="mt-6 border-t border-neutral-200 pt-5 dark:border-white/5">
             <QuoteStatusChanger
               quoteId={quote.id}
               currentStatus={quote.status}
@@ -229,7 +229,7 @@ export default async function QuoteDetailPage(props: {
         </section>
 
         <section className="glass rounded-2xl p-5 lg:col-span-2">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+          <h2 className="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
             {copy.detail.sections.info}
           </h2>
           <dl className="grid gap-4 sm:grid-cols-2">
@@ -243,11 +243,11 @@ export default async function QuoteDetailPage(props: {
             />
           </dl>
           {quote.notes && (
-            <div className="mt-5 border-t border-white/5 pt-5">
-              <h3 className="mb-2 text-xs uppercase tracking-wider text-white/40">
+            <div className="mt-5 border-t border-neutral-200 pt-5 dark:border-white/5">
+              <h3 className="mb-2 text-xs uppercase tracking-wider text-neutral-400 dark:text-white/40">
                 {copy.detail.fields.notes}
               </h3>
-              <p className="whitespace-pre-wrap text-sm text-white/75">
+              <p className="whitespace-pre-wrap text-sm text-neutral-700 dark:text-white/75">
                 {quote.notes}
               </p>
             </div>
@@ -255,21 +255,21 @@ export default async function QuoteDetailPage(props: {
         </section>
 
         <section className="glass rounded-2xl p-5">
-          <h2 className="mb-4 text-sm font-semibold text-white">
+          <h2 className="mb-4 text-sm font-semibold text-neutral-900 dark:text-white">
             {copy.detail.sections.meta}
           </h2>
           <dl className="flex flex-col gap-3 text-xs">
             <div>
-              <dt className="text-white/45">{copy.detail.fields.createdAt}</dt>
-              <dd className="mt-0.5 text-white/85">{createdAt}</dd>
+              <dt className="text-neutral-400 dark:text-white/45">{copy.detail.fields.createdAt}</dt>
+              <dd className="mt-0.5 text-neutral-700 dark:text-white/85">{createdAt}</dd>
             </div>
             <div>
-              <dt className="text-white/45">{copy.detail.fields.updatedAt}</dt>
-              <dd className="mt-0.5 text-white/85">{updatedAt}</dd>
+              <dt className="text-neutral-400 dark:text-white/45">{copy.detail.fields.updatedAt}</dt>
+              <dd className="mt-0.5 text-neutral-700 dark:text-white/85">{updatedAt}</dd>
             </div>
             <div>
-              <dt className="text-white/45">{copy.detail.fields.id}</dt>
-              <dd className="mt-0.5 break-all font-mono text-[11px] text-white/60">
+              <dt className="text-neutral-400 dark:text-white/45">{copy.detail.fields.id}</dt>
+              <dd className="mt-0.5 break-all font-mono text-[11px] text-neutral-500 dark:text-white/60">
                 {quote.id}
               </dd>
             </div>
@@ -292,8 +292,8 @@ function Row({
   const isEmpty = !value;
   return (
     <div className="flex flex-col gap-0.5">
-      <dt className="text-xs uppercase tracking-wider text-white/40">{label}</dt>
-      <dd className={`text-sm ${isEmpty ? "text-white/35" : "text-white/85"}`}>
+      <dt className="text-xs uppercase tracking-wider text-neutral-400 dark:text-white/40">{label}</dt>
+      <dd className={`text-sm ${isEmpty ? "text-neutral-300 dark:text-white/35" : "text-neutral-700 dark:text-white/85"}`}>
         {isEmpty ? (empty ?? "—") : value}
       </dd>
     </div>
@@ -309,11 +309,11 @@ function NotFoundState({
 }) {
   return (
     <div className="mx-auto flex w-full max-w-md flex-col items-center gap-4 py-20 text-center">
-      <h1 className="text-2xl font-semibold text-white">{copy.title}</h1>
-      <p className="text-sm text-white/60">{copy.description}</p>
+      <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white">{copy.title}</h1>
+      <p className="text-sm text-neutral-500 dark:text-white/60">{copy.description}</p>
       <a
         href={listHref}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-5 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-white/15 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
       >
         {copy.backCta}
       </a>
