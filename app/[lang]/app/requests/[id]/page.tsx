@@ -159,7 +159,7 @@ export default async function RequestDetailPage(props: {
                   <h2 className="text-sm font-semibold text-neutral-900 dark:text-white">
                     {copy.createClient.title}
                   </h2>
-                  <p className="max-w-xl text-sm text-neutral-500 dark:text-white/65">
+                  <p className="max-w-xl text-sm text-neutral-600 dark:text-white/65">
                     {copy.createClient.description}
                   </p>
                 </div>
