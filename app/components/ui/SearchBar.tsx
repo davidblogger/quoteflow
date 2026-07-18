@@ -316,7 +316,7 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
 
   return (
     <div className="relative flex h-10 flex-1 items-center">
-      <span className="pointer-events-none absolute left-3.5 flex items-center text-white/40">
+      <span className="pointer-events-none absolute left-3.5 flex items-center text-neutral-400 dark:text-white/40">
         <SearchIcon className="size-4" />
       </span>
       <input
@@ -331,7 +331,7 @@ export function SearchBar({ lang, placeholder }: SearchBarProps) {
         aria-controls="search-dropdown"
         aria-expanded={isOpen}
         autoComplete="off"
-        className="h-10 w-full rounded-xl border border-white/10 bg-white/[0.03] pl-10 pr-4 text-sm text-white placeholder:text-white/40 transition-colors focus:outline-none focus:bg-white/[0.06] focus:border-white/20"
+        className="h-10 w-full rounded-xl border border-neutral-200 bg-neutral-100 pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 transition-colors focus:outline-none focus:border-neutral-400 dark:border-white/10 dark:bg-white/[0.03] dark:text-white dark:placeholder:text-white/40 dark:focus:border-white/20"
       />
 
       {isOpen && typeof window !== "undefined" && createPortal(dropdown, document.body)}
