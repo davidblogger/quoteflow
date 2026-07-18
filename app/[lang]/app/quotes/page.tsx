@@ -48,10 +48,10 @@ export default async function QuotesPage(props: {
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-3xl">
             {copy.title}
           </h1>
-          <p className="text-sm text-white/55">{copy.subtitle}</p>
+          <p className="text-sm text-neutral-500 dark:text-white/55">{copy.subtitle}</p>
         </div>
         <Button href={newHref} size="md">
           <PlusIcon className="size-4" />
@@ -61,11 +61,11 @@ export default async function QuotesPage(props: {
 
       {quotes.length === 0 ? (
         <div className="glass flex flex-col items-center gap-4 rounded-2xl px-6 py-14 text-center">
-          <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/[0.04] text-white/70 ring-1 ring-white/10">
+          <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-neutral-100 text-neutral-500 ring-1 ring-neutral-200 dark:bg-white/[0.04] dark:text-white/70 dark:ring-white/10">
             <FileTextIcon className="size-5" />
           </span>
-          <h2 className="text-lg font-semibold text-white">{copy.empty.title}</h2>
-          <p className="max-w-md text-sm text-white/60">
+          <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">{copy.empty.title}</h2>
+          <p className="max-w-md text-sm text-neutral-500 dark:text-white/60">
             {copy.empty.description}
           </p>
           <Button href={newHref} variant="secondary" size="md">
@@ -79,7 +79,7 @@ export default async function QuotesPage(props: {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-white/5 text-xs uppercase tracking-wider text-white/40">
+                <tr className="border-b border-neutral-200 text-xs uppercase tracking-wider text-neutral-500 dark:border-white/5 dark:text-white/40">
                   <th className="px-5 py-3 font-medium">{copy.columns.title}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.client}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.status}</th>
@@ -88,24 +88,24 @@ export default async function QuotesPage(props: {
                   <th className="px-5 py-3 font-medium">{copy.columns.createdAt}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-neutral-200 dark:divide-white/5">
                 {quotes.map((q) => {
                   const client = clientsById.get(q.client_id);
                   const href = `/${lang}/app/quotes/${q.id}`;
                   return (
                     <tr
                       key={q.id}
-                      className="text-white/80 transition-colors hover:bg-white/[0.03]"
+                      className="text-neutral-700 transition-colors hover:bg-neutral-50 dark:text-white/80 dark:hover:bg-white/[0.03]"
                     >
                       <td className="px-5 py-3.5 align-top">
                         <a
                           href={href}
-                          className="-mx-1 block rounded px-1 py-0.5 font-medium text-white transition-colors hover:text-white"
+                          className="-mx-1 block rounded px-1 py-0.5 font-medium text-neutral-900 transition-colors hover:text-neutral-600 dark:text-white dark:hover:text-white"
                         >
                           {q.title}
                         </a>
                       </td>
-                      <td className="px-5 py-3.5 align-top text-white/75">
+                      <td className="px-5 py-3.5 align-top text-neutral-500 dark:text-white/75">
                         {client?.name ?? "—"}
                       </td>
                       <td className="px-5 py-3.5 align-top">
@@ -114,13 +114,13 @@ export default async function QuotesPage(props: {
                           labels={copy.statusBadge}
                         />
                       </td>
-                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-white/75">
+                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-neutral-500 dark:text-white/75">
                         {new Intl.NumberFormat(lang, {
                           style: "currency",
                           currency: q.currency,
                         }).format(q.total)}
                       </td>
-                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-white/55">
+                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-neutral-400 dark:text-white/55">
                         {q.valid_until
                           ? new Date(q.valid_until).toLocaleDateString(lang, {
                               day: "2-digit",
@@ -129,7 +129,7 @@ export default async function QuotesPage(props: {
                             })
                           : "—"}
                       </td>
-                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-white/55">
+                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-neutral-400 dark:text-white/55">
                         {new Date(q.created_at).toLocaleDateString(lang, {
                           day: "2-digit",
                           month: "short",

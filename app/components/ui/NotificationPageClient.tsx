@@ -110,7 +110,7 @@ export function NotificationPageClient({ lang, copy }: NotificationPageProps) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <span className="text-white/40">Loading...</span>
+        <span className="text-neutral-400 dark:text-white/40">Loading...</span>
       </div>
     );
   }
@@ -118,7 +118,7 @@ export function NotificationPageClient({ lang, copy }: NotificationPageProps) {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-3xl">
           {copy.title}
         </h1>
         {hasUnread && (
@@ -134,29 +134,29 @@ export function NotificationPageClient({ lang, copy }: NotificationPageProps) {
 
       {notifications.length === 0 ? (
         <div className="glass flex flex-col items-center gap-4 rounded-2xl px-6 py-14 text-center">
-          <InboxIcon className="size-10 text-white/20" />
-          <p className="text-white/50">{copy.empty}</p>
+          <InboxIcon className="size-10 text-neutral-300 dark:text-white/20" />
+          <p className="text-neutral-500 dark:text-white/50">{copy.empty}</p>
         </div>
       ) : (
         <div className="glass overflow-hidden rounded-2xl">
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-neutral-200 dark:divide-white/5">
             {notifications.map((notification) => (
               <button
                 key={notification.id}
                 type="button"
                 onClick={() => markOneRead(notification.id)}
-                className={`flex w-full cursor-pointer items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-white/[0.03] ${
-                  !notification.read_at ? "bg-white/[0.02]" : ""
+                className={`flex w-full cursor-pointer items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-neutral-50 dark:hover:bg-white/[0.03] ${
+                  !notification.read_at ? "bg-neutral-50 dark:bg-white/[0.02]" : ""
                 }`}
               >
                 <span className="mt-0.5 shrink-0">{notificationIcon(notification.type)}</span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-white transition-colors hover:text-white/90">{notification.title}</p>
+                  <p className="text-sm font-medium text-neutral-900 transition-colors hover:text-neutral-600 dark:text-white dark:hover:text-white/90">{notification.title}</p>
                   {notification.message && (
-                    <p className="mt-0.5 text-xs text-white/50 line-clamp-2">{notification.message}</p>
+                    <p className="mt-0.5 text-xs text-neutral-500 line-clamp-2 dark:text-white/50">{notification.message}</p>
                   )}
                 </div>
-                <span className="shrink-0 text-xs text-white/40">
+                <span className="shrink-0 text-xs text-neutral-400 dark:text-white/40">
                   {relativeTime(notification.created_at, copy.ago, copy.justNow)}
                 </span>
               </button>

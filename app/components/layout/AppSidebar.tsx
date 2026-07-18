@@ -67,7 +67,7 @@ export function AppSidebar({
   ];
 
   return (
-    <aside className="hidden h-full w-64 shrink-0 flex-col gap-6 border-r border-white/5 bg-[#060814]/40 backdrop-blur-xl print:hidden lg:flex">
+    <aside className="hidden h-full w-64 shrink-0 flex-col gap-6 border-r border-neutral-200 bg-white backdrop-blur-xl dark:border-white/5 dark:bg-[#060814]/40 print:hidden lg:flex">
       <div className="flex h-16 items-center px-5">{logo}</div>
 
       <nav
@@ -101,7 +101,7 @@ function NavGroup({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-white/35">
+      <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-white/35">
         {title}
       </p>
       <ul className="flex flex-col gap-0.5">
@@ -115,8 +115,8 @@ function NavGroup({
                 aria-current={active ? "page" : undefined}
                 className={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
                   active
-                    ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
-                    : "text-white/65 hover:bg-white/5 hover:text-white"
+                    ? "bg-neutral-200 text-neutral-900 shadow-[inset_0_1px_0_rgba(0,0,0,0.05)] dark:bg-white/10 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                    : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:text-white/65 dark:hover:bg-white/5 dark:hover:text-white"
                 }`}
               >
                 <Icon className="size-4" />

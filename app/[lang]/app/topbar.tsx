@@ -4,6 +4,7 @@ import { Logo } from "@/app/components/ui/Logo";
 import { DashboardMobileMenu } from "@/app/components/layout/DashboardMobileMenu";
 import { NotificationBell } from "@/app/components/ui/notification-bell";
 import { SearchBar } from "@/app/components/ui/SearchBar";
+import { ThemeToggle } from "@/app/components/ui/ThemeToggle";
 
 type TopbarProps = {
   lang: Locale;
@@ -34,7 +35,7 @@ type TopbarProps = {
 
 export function Topbar({ lang, email, copy, followupBadge, unreadNotifications }: TopbarProps) {
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-white/5 bg-[#060814]/60 px-4 backdrop-blur-xl print:hidden sm:gap-4 sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-neutral-200 bg-white/80 px-4 backdrop-blur-xl dark:border-white/5 dark:bg-[#060814]/60 print:hidden sm:gap-4 sm:px-6">
       <DashboardMobileMenu
         lang={lang}
         brand={copy.brand}
@@ -49,19 +50,21 @@ export function Topbar({ lang, email, copy, followupBadge, unreadNotifications }
         placeholder={copy.topbar.search}
       />
 
+      <ThemeToggle />
+
       <NotificationBell
         unreadCount={unreadNotifications}
         lang={lang}
       />
 
-      <div className="flex items-center gap-3 border-l border-white/10 pl-3 sm:pl-4">
+      <div className="flex items-center gap-3 border-l border-neutral-200 pl-3 dark:border-white/10 sm:pl-4">
         <div className="hidden flex-col text-right sm:flex">
-          <span className="text-xs font-medium text-white">{email}</span>
+          <span className="text-xs font-medium text-neutral-700 dark:text-white">{email}</span>
         </div>
         <form action={signOutAction.bind(null, lang)}>
           <button
             type="submit"
-            className="inline-flex h-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+            className="inline-flex h-9 items-center justify-center rounded-full border border-neutral-200 bg-white px-4 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-50 dark:border-white/15 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
           >
             {copy.topbar.signOut}
           </button>

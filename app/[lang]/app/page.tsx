@@ -123,10 +123,10 @@ export default async function AppOverview(
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-3xl">
             {copy.greeting.replace("{name}", displayName)}
           </h1>
-          <p className="text-sm text-white/55">{copy.title}</p>
+          <p className="text-sm text-neutral-500 dark:text-white/55">{copy.title}</p>
         </div>
         <div className="flex items-center gap-2">
           <Button size="md" href={`/${lang}/quotes/new`}>
@@ -142,11 +142,11 @@ export default async function AppOverview(
       >
         {kpis.map((kpi) => (
           <div key={kpi.label} className="glass rounded-2xl p-5">
-            <p className="text-sm font-medium text-white/75">{kpi.label}</p>
-            <p className="mt-3 text-3xl font-semibold tracking-tight text-white">
+            <p className="text-sm font-medium text-neutral-600 dark:text-white/75">{kpi.label}</p>
+            <p className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
               {kpi.value}
             </p>
-            <p className="mt-1 text-xs text-white/45">{kpi.note}</p>
+            <p className="mt-1 text-xs text-neutral-400 dark:text-white/45">{kpi.note}</p>
           </div>
         ))}
       </section>
@@ -157,48 +157,48 @@ export default async function AppOverview(
           className="glass rounded-2xl p-5 lg:col-span-2"
         >
           <header className="mb-4 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-white">{copy.tableTitle}</h2>
+            <h2 className="text-sm font-semibold text-neutral-900 dark:text-white">{copy.tableTitle}</h2>
             <a
               href={`/${lang}/app/requests`}
-              className="text-xs text-white/40 transition-colors hover:text-white"
+              className="text-xs text-neutral-400 transition-colors hover:text-neutral-900 dark:text-white/40 dark:hover:text-white"
             >
               {copy.viewAll} →
             </a>
           </header>
           {recentRequests.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/10 px-4 py-12 text-center">
-              <p className="text-sm text-white/65">{copy.emptyRequests}</p>
+            <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-neutral-300 px-4 py-12 text-center dark:border-white/10">
+              <p className="text-sm text-neutral-500 dark:text-white/65">{copy.emptyRequests}</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-white/5 text-xs uppercase tracking-wider text-white/40">
+                  <tr className="border-b border-neutral-200 text-xs uppercase tracking-wider text-neutral-500 dark:border-white/5 dark:text-white/40">
                     <th className="pb-3 pr-4 font-medium">{copy.columns.client}</th>
                     <th className="pb-3 pr-4 font-medium">{copy.columns.service}</th>
                     <th className="pb-3 pr-4 font-medium">{copy.columns.status}</th>
                     <th className="pb-3 font-medium">{copy.columns.ago}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-neutral-200 dark:divide-white/5">
                   {recentRequests.map((r) => (
-                    <tr key={r.id} className="text-white/80">
+                    <tr key={r.id} className="text-neutral-700 dark:text-white/80">
                       <td className="py-3 pr-4">
                         <a
                           href={`/${lang}/app/requests/${r.id}`}
-                          className="block hover:text-white"
+                          className="block hover:text-neutral-900 dark:hover:text-white"
                         >
-                          <span className="font-medium">{r.name}</span>
-                          <span className="ml-2 text-xs text-white/50">
+                          <span className="font-medium text-neutral-900 dark:text-white">{r.name}</span>
+                          <span className="ml-2 text-xs text-neutral-500 dark:text-white/50">
                             {r.company ?? r.email}
                           </span>
                         </a>
                       </td>
-                      <td className="py-3 pr-4 text-white/65">{r.service ?? "—"}</td>
+                      <td className="py-3 pr-4 text-neutral-500 dark:text-white/65">{r.service ?? "—"}</td>
                       <td className="py-3 pr-4">
                         <RequestStatusBadge status={r.status} labels={requestsDict} />
                       </td>
-                      <td className="py-3 whitespace-nowrap text-xs text-white/50">
+                      <td className="py-3 whitespace-nowrap text-xs text-neutral-400 dark:text-white/50">
                         {timeAgo(r.created_at)}
                       </td>
                     </tr>
@@ -211,13 +211,13 @@ export default async function AppOverview(
 
         <section aria-label={copy.activityTitle} className="glass rounded-2xl p-5">
           <header className="mb-4 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-neutral-900 dark:text-white">
               {copy.activityTitle}
             </h2>
-            <span className="text-xs text-white/40">{copy.activityToday}</span>
+            <span className="text-xs text-neutral-400 dark:text-white/40">{copy.activityToday}</span>
           </header>
           {recentActivity.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/55">
+            <p className="rounded-xl border border-dashed border-neutral-300 px-4 py-10 text-center text-sm text-neutral-500 dark:border-white/10 dark:text-white/55">
               {copy.emptyKpis}
             </p>
           ) : (
@@ -226,16 +226,16 @@ export default async function AppOverview(
                 <a
                   key={activity.id}
                   href={`/${lang}${activityHref(activity)}`}
-                  className="flex items-start gap-3 rounded-lg p-2 -mx-2 transition-colors hover:bg-white/[0.03]"
+                  className="flex items-start gap-3 rounded-lg p-2 -mx-2 transition-colors hover:bg-neutral-100 dark:hover:bg-white/[0.03]"
                 >
                   <span className="mt-0.5 shrink-0">{activityIcon(activity.type)}</span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm text-white/80 truncate">{activity.title}</p>
+                    <p className="text-sm text-neutral-700 truncate dark:text-white/80">{activity.title}</p>
                     {activity.message && (
-                      <p className="text-xs text-white/40 truncate">{activity.message}</p>
+                      <p className="text-xs text-neutral-400 truncate dark:text-white/40">{activity.message}</p>
                     )}
                   </div>
-                  <span className="shrink-0 text-xs text-white/40">
+                  <span className="shrink-0 text-xs text-neutral-400 dark:text-white/40">
                     {timeAgo(activity.created_at)}
                   </span>
                 </a>

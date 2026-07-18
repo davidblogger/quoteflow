@@ -75,10 +75,10 @@ export default async function FollowupPage(props: {
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
       <header className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-3xl">
           {copy.title}
         </h1>
-        <p className="text-sm text-white/55">{copy.subtitle}</p>
+        <p className="text-sm text-neutral-500 dark:text-white/55">{copy.subtitle}</p>
       </header>
 
       <nav
@@ -96,8 +96,8 @@ export default async function FollowupPage(props: {
               aria-current={active ? "page" : undefined}
               className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
                 active
-                  ? "bg-white text-[#060814]"
-                  : "border border-white/10 bg-white/[0.03] text-white/65 hover:bg-white/[0.06] hover:text-white"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-[#060814]"
+                  : "border border-neutral-200 bg-neutral-50 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:border-white/10 dark:bg-white/[0.03] dark:text-white/65 dark:hover:bg-white/[0.06] dark:hover:text-white"
               }`}
             >
               <span>{label}</span>
@@ -105,8 +105,8 @@ export default async function FollowupPage(props: {
                 <span
                   className={`inline-flex min-w-[1.25rem] items-center justify-center rounded-full px-1.5 text-[10px] ${
                     active
-                      ? "bg-[#060814] text-white"
-                      : "bg-white/10 text-white/55"
+                      ? "bg-white text-neutral-900 dark:bg-[#060814] dark:text-white"
+                      : "bg-neutral-200 text-neutral-600 dark:bg-white/10 dark:text-white/55"
                   }`}
                 >
                   {count}
@@ -163,7 +163,7 @@ function FollowupTable({
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-white/5 text-xs uppercase tracking-wider text-white/40">
+            <tr className="border-b border-neutral-200 text-xs uppercase tracking-wider text-neutral-500 dark:border-white/5 dark:text-white/40">
               <th className="px-4 py-3 font-medium">{copy.table.subject}</th>
               <th className="px-4 py-3 font-medium">{copy.table.client}</th>
               <th className="px-4 py-3 text-right font-medium">
@@ -176,7 +176,7 @@ function FollowupTable({
               ></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-neutral-200 dark:divide-white/5">
             {followups.map((f) => (
               <FollowupRow
                 key={f.id}
@@ -215,21 +215,21 @@ function EmptyState({
   if (activeTab === "completed") {
     return (
       <div className="glass flex flex-col items-center gap-2 rounded-2xl px-6 py-14 text-center">
-        <p className="text-sm font-medium text-white">{copy.title}</p>
-        <p className="max-w-md text-xs text-white/55">{copy.description}</p>
+        <p className="text-sm font-medium text-neutral-900 dark:text-white">{copy.title}</p>
+        <p className="max-w-md text-xs text-neutral-500 dark:text-white/55">{copy.description}</p>
       </div>
     );
   }
   return (
     <div className="glass flex flex-col items-center gap-4 rounded-2xl px-6 py-14 text-center">
-      <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/[0.04] text-white/70 ring-1 ring-white/10">
+      <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-neutral-100 text-neutral-500 ring-1 ring-neutral-200 dark:bg-white/[0.04] dark:text-white/70 dark:ring-white/10">
         <UsersIcon className="size-5" />
       </span>
-      <h2 className="text-lg font-semibold text-white">{copy.title}</h2>
-      <p className="max-w-md text-sm text-white/60">{copy.description}</p>
+      <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">{copy.title}</h2>
+      <p className="max-w-md text-sm text-neutral-500 dark:text-white/60">{copy.description}</p>
       <a
         href={ctaHref}
-        className="inline-flex h-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
+        className="inline-flex h-10 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 px-4 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-white/15 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
       >
         {copy.cta}
       </a>

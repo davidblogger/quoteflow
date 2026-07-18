@@ -52,10 +52,10 @@ export default async function RequestsPage(props: {
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-3xl">
             {copy.title}
           </h1>
-          <p className="text-sm text-white/55">{copy.subtitle}</p>
+          <p className="text-sm text-neutral-500 dark:text-white/55">{copy.subtitle}</p>
         </div>
         <Button href={`/${lang}/solicitar`} size="md">
           <PlusIcon className="size-4" />
@@ -82,8 +82,8 @@ export default async function RequestsPage(props: {
               aria-current={active ? "page" : undefined}
               className={`rounded-full px-4 py-1.5 text-xs font-medium transition-colors ${
                 active
-                  ? "bg-white text-[#060814]"
-                  : "border border-white/10 bg-white/[0.03] text-white/65 hover:bg-white/[0.06] hover:text-white"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-[#060814]"
+                  : "border border-neutral-200 bg-neutral-50 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:border-white/10 dark:bg-white/[0.03] dark:text-white/65 dark:hover:bg-white/[0.06] dark:hover:text-white"
               }`}
             >
               {item.label}
@@ -94,8 +94,8 @@ export default async function RequestsPage(props: {
 
       {requests.length === 0 ? (
         <div className="glass flex flex-col items-center gap-4 rounded-2xl px-6 py-14 text-center">
-          <h2 className="text-lg font-semibold text-white">{copy.empty.title}</h2>
-          <p className="max-w-md text-sm text-white/60">{copy.empty.description}</p>
+          <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">{copy.empty.title}</h2>
+          <p className="max-w-md text-sm text-neutral-500 dark:text-white/60">{copy.empty.description}</p>
           <Button href={`/${lang}/solicitar`} variant="secondary" size="md">
             {copy.empty.openFormCta}
           </Button>
@@ -105,7 +105,7 @@ export default async function RequestsPage(props: {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-white/5 text-xs uppercase tracking-wider text-white/40">
+                <tr className="border-b border-neutral-200 text-xs uppercase tracking-wider text-neutral-500 dark:border-white/5 dark:text-white/40">
                   <th className="px-5 py-3 font-medium">{copy.columns.client}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.company}</th>
                   <th className="px-5 py-3 font-medium">{copy.columns.service}</th>
@@ -114,34 +114,34 @@ export default async function RequestsPage(props: {
                   <th className="px-5 py-3 font-medium">{copy.columns.received}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-neutral-200 dark:divide-white/5">
                 {requests.map((r) => {
                   const href = `/${lang}/app/requests/${r.id}`;
                   return (
                     <tr
                       key={r.id}
-                      className="text-white/80 transition-colors hover:bg-white/[0.03]"
+                      className="text-neutral-700 transition-colors hover:bg-neutral-50 dark:text-white/80 dark:hover:bg-white/[0.03]"
                     >
                       <td className="px-5 py-3.5 align-top">
                         <a
                           href={href}
-                          className="-mx-1 block rounded px-1 py-0.5 transition-colors hover:text-white"
+                          className="-mx-1 block rounded px-1 py-0.5 transition-colors hover:text-neutral-900 dark:hover:text-white"
                         >
-                          <span className="block font-medium text-white">
+                          <span className="block font-medium text-neutral-900 dark:text-white">
                             {r.name}
                           </span>
-                          <span className="block text-xs text-white/50">
+                          <span className="block text-xs text-neutral-500 dark:text-white/50">
                             {r.email}
                           </span>
                         </a>
                       </td>
-                      <td className="px-5 py-3.5 align-top text-white/75">
+                      <td className="px-5 py-3.5 align-top text-neutral-500 dark:text-white/75">
                         {r.company ?? "—"}
                       </td>
-                      <td className="px-5 py-3.5 align-top text-white/75">
+                      <td className="px-5 py-3.5 align-top text-neutral-500 dark:text-white/75">
                         {r.service ?? "—"}
                       </td>
-                      <td className="max-w-xs truncate px-5 py-3.5 align-top text-white/65">
+                      <td className="max-w-xs truncate px-5 py-3.5 align-top text-neutral-500 dark:text-white/65">
                         {r.message}
                       </td>
                       <td className="px-5 py-3.5 align-top">
@@ -150,7 +150,7 @@ export default async function RequestsPage(props: {
                           labels={copy.statusBadge}
                         />
                       </td>
-                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-white/55">
+                      <td className="px-5 py-3.5 align-top whitespace-nowrap text-xs text-neutral-400 dark:text-white/55">
                         {new Date(r.created_at).toLocaleDateString(lang, {
                           day: "2-digit",
                           month: "short",
