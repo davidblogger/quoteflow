@@ -149,7 +149,7 @@ export default async function RequestDetailPage(props: {
         </section>
 
         {request.status === "converted" && (
-          <section style={{ backgroundColor: '#ffffff', borderColor: 'rgba(0,0,0,0.12)' }} className="rounded-2xl border p-5 lg:col-span-3 dark:border-white/10 dark:bg-white/[0.04]">
+          <section style={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb' }} className="rounded-2xl border p-5 lg:col-span-3">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-4">
                 <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-success/15 text-success">
