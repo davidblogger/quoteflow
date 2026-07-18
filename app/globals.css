@@ -155,10 +155,10 @@ section {
 }
 
 @utility glass {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.08);
 }
 
@@ -169,10 +169,10 @@ section {
 }
 
 @utility glass-strong {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: #ffffff;
   backdrop-filter: blur(24px) saturate(150%);
   -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.12);
 }
 
