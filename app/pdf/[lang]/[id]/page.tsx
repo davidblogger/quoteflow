@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { hasLocale, getDictionary, type Locale } from "../../../../dictionaries";
+import { hasLocale, getDictionary } from "@/app/[lang]/dictionaries";
+import type { Locale } from "@/app/[lang]/config";
 import { getQuoteByIdUnfiltered } from "@/lib/queries/quotes";
 import { getClientByIdUnfiltered } from "@/lib/queries/clients";
 import { listItemsUnfiltered } from "@/lib/queries/quote-items";

@@ -66,7 +66,7 @@ export default async function QuoteDetailPage(props: {
   const host = headersList.get("host") ?? "localhost:3000";
   const protocol = headersList.get("x-forwarded-proto") ?? "https";
   const siteUrl = `${protocol}://${host}`;
-  const pdfUrl = `${siteUrl}/${lang}/app/quotes/${quote.id}/pdf.pdf`;
+  const pdfUrl = `${siteUrl}/pdf/${lang}/${quote.id}`;
 
   const shareMessage = profile && client
     ? formatShareMessage({ quote, client, profile, pdfUrl, lang })
@@ -141,7 +141,7 @@ export default async function QuoteDetailPage(props: {
           {!editingHeader && (
             <>
               <a
-                href={`/${lang}/app/quotes/${quote.id}/pdf.pdf`}
+                href={`/pdf/${lang}/${quote.id}`}
                 target="_blank"
                 rel="noopener"
                 className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04 px-4 text-xs font-medium text-white transition-colors hover:bg-white/10"
