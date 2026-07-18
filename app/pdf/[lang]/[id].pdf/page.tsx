@@ -14,16 +14,43 @@ export default async function QuotePdfPage(props: {
   params: Promise<{ lang: string; id: string }>;
 }) {
   const { lang, id } = await props.params;
+  console.log("[PDF] lang:", lang, "id:", id);
   if (!hasLocale(lang)) redirect(`/${lang}`);
 
-  const [quote, profile, items, client] = await Promise.all([
-    getQuoteByIdUnfiltered(id),
-    getProfileAdmin(),
-    listItemsUnfiltered(id),
-    getQuoteByIdUnfiltered(id).then(async (q) =>
-      q ? getClientByIdUnfiltered(q.client_id) : null,
-    ),
-  ]);
+  let quote, profile, items, client;
+  try {
+    quote = await getQuoteByIdUnfiltered(id);
+    console.log("[PDF] quote:", quote ? "found" : "null");
+  } catch (e) {
+    console.error("[PDF] getQuoteByIdUnfiltered error:", e);
+    throw e;
+  }
+
+  try {
+    profile = await getProfileAdmin();
+    console.log("[PDF] profile:", profile ? "found" : "null");
+  } catch (e) {
+    console.error("[PDF] getProfileAdmin error:", e);
+    throw e;
+  }
+
+  try {
+    items = await listItemsUnfiltered(id);
+    console.log("[PDF] items count:", items.length);
+  } catch (e) {
+    console.error("[PDF] listItemsUnfiltered error:", e);
+    throw e;
+  }
+
+  if (quote) {
+    try {
+      client = await getClientByIdUnfiltered(quote.client_id);
+      console.log("[PDF] client:", client ? "found" : "null");
+    } catch (e) {
+      console.error("[PDF] getClientByIdUnfiltered error:", e);
+      throw e;
+    }
+  }
 
   if (!quote) redirect(`/${lang}/app/quotes`);
 
