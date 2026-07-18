@@ -12,30 +12,35 @@ export async function GET(
   request: Request,
   props: { params: Promise<{ lang: string; id: string }> }
 ) {
-  const { lang, id } = await props.params;
+  try {
+    const { lang, id } = await props.params;
+    console.log("[PDF API] lang:", lang, "id:", id);
 
-  if (!hasLocale(lang)) {
-    return new NextResponse("Not found", { status: 404 });
-  }
+    if (!hasLocale(lang)) {
+      return new NextResponse("Invalid locale", { status: 400 });
+    }
 
-  const quote = await getQuoteByIdUnfiltered(id);
-  if (!quote) {
-    return new NextResponse("Quote not found", { status: 404 });
-  }
+    const quote = await getQuoteByIdUnfiltered(id);
+    console.log("[PDF API] quote:", quote ? "found" : "null");
+    if (!quote) {
+      return new NextResponse("Quote not found", { status: 404 });
+    }
 
-  const [profile, items, client] = await Promise.all([
-    getProfileAdmin(),
-    listItemsUnfiltered(id),
-    quote.client_id ? getClientByIdUnfiltered(quote.client_id) : null,
-  ]);
+    const [profile, items, client] = await Promise.all([
+      getProfileAdmin(),
+      listItemsUnfiltered(id),
+      quote.client_id ? getClientByIdUnfiltered(quote.client_id) : null,
+    ]);
+    console.log("[PDF API] profile:", profile ? "found" : "null", "items:", items.length);
 
-  const dict = await getDictionary(lang as Locale);
-  const copy = dict.app.quotes.detail.pdf;
+    const dict = await getDictionary(lang as Locale);
+    const copy = dict.app.quotes.detail.pdf;
+    console.log("[PDF API] dict loaded");
 
-  const currencyFormatter = new Intl.NumberFormat(lang, {
-    style: "currency",
-    currency: quote.currency,
-  });
+    const currencyFormatter = new Intl.NumberFormat(lang, {
+      style: "currency",
+      currency: quote.currency,
+    });
 
   const taxAmount = Number(quote.subtotal) * (Number(quote.tax_rate) / 100);
   const issuedAt = new Date(quote.created_at).toLocaleDateString(lang, {
@@ -220,4 +225,8 @@ export async function GET(
       "Content-Disposition": `attachment; filename="${quote.title.replace(/[^a-zA-Z0-9]/g, "-")}-${id.slice(0, 8)}.pdf"`,
     },
   });
+  } catch (error) {
+    console.error("[PDF API] Error:", error);
+    return new NextResponse("Internal server error: " + (error instanceof Error ? error.message : String(error)), { status: 500 });
+  }
 }
