@@ -12,7 +12,7 @@ export function NotificationBell({ unreadCount, lang }: NotificationBellProps) {
   return (
     <Link
       href={`/${lang}/app/notifications`}
-      className="relative inline-flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/70 transition-colors hover:bg-white/[0.06] hover:text-white"
+      className="relative inline-flex size-10 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-100 text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-900 dark:border-white/10 dark:bg-white/[0.03] dark:text-white/70 dark:hover:bg-white/[0.06] dark:hover:text-white"
     >
       <BellIcon className="size-4" />
       {unreadCount > 0 && (
