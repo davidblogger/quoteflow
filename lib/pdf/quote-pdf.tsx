@@ -5,27 +5,11 @@ import {
   Text,
   View,
   StyleSheet,
-  Font,
 } from "@react-pdf/renderer";
-
-Font.register({
-  family: "Inter",
-  fonts: [
-    {
-      src: "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff2",
-      fontWeight: 400,
-    },
-    {
-      src: "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hjp-Ek-_EeA.woff2",
-      fontWeight: 600,
-    },
-  ],
-});
 
 const styles = StyleSheet.create({
   page: {
     padding: 40,
-    fontFamily: "Inter",
     fontSize: 10,
     color: "#111827",
   },
@@ -49,7 +33,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 600,
+    fontWeight: "bold",
     color: "#111827",
     marginTop: 4,
   },
@@ -59,7 +43,7 @@ const styles = StyleSheet.create({
   },
   companyName: {
     fontSize: 14,
-    fontWeight: 600,
+    fontWeight: "bold",
     color: "#111827",
   },
   companyDetail: {
@@ -84,7 +68,7 @@ const styles = StyleSheet.create({
   },
   infoValue: {
     fontSize: 11,
-    fontWeight: 600,
+    fontWeight: "bold",
     color: "#111827",
   },
   infoSubValue: {
@@ -117,7 +101,7 @@ const styles = StyleSheet.create({
   col1: { width: "50%" },
   col2: { width: "15%", textAlign: "right" },
   col3: { width: "18%", textAlign: "right" },
-  col4: { width: "17%", textAlign: "right", fontWeight: 600 },
+  col4: { width: "17%", textAlign: "right", fontWeight: "bold" },
   cell: {
     fontSize: 10,
     color: "#1f2937",
@@ -153,12 +137,12 @@ const styles = StyleSheet.create({
   },
   totalsFinalLabel: {
     fontSize: 12,
-    fontWeight: 600,
+    fontWeight: "bold",
     color: "#111827",
   },
   totalsFinalValue: {
     fontSize: 12,
-    fontWeight: 600,
+    fontWeight: "bold",
     color: "#111827",
   },
   notes: {
